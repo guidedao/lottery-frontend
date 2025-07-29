@@ -1,4 +1,9 @@
 {
     "title": "GuideDAO Lottery",
-    "description": "GuideDAO Lottery"
+    "description": "GuideDAO Lottery",
+
+    "notFound": {
+        "title": "Не найдено (404)",
+        "description": "Этой страницы не существует!"
+    }
 }

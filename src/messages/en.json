@@ -1,0 +1,19 @@
+{
+    "title": "GuideDAO Lottery",
+    "description": "GuideDAO Lottery",
+
+    "notFound": {
+        "title": "Not found (404)",
+        "description": "This page cannot be found!"
+    },
+
+    "header": {
+        "title": "Hello GuideDAO",
+        "wallet": "Wallet TODO"
+    },
+
+    "home": {
+        "title": "Lottery soon... 🎁 ",
+        "footer_text": "made by GuideDAO"
+    }
+}

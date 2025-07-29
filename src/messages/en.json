@@ -7,7 +7,13 @@
         "description": "This page cannot be found!"
     },
 
+    "header": {
+        "title": "Hello GuideDAO",
+        "wallet": "Wallet TODO"
+    },
+
     "home": {
-        "title": "Lottery soon... 🎁 "
+        "title": "Lottery soon... 🎁 ",
+        "footer_text": "made by GuideDAO"
     }
 }

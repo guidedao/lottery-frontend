@@ -49,7 +49,13 @@ The main source code is located in the `src` directory and organized as follows:
 
 ```
 src/
-  app/         # Main application entry point, global styles, and layout
+  _app/        # Main application layout and page (next-globe-gen)
+    layout.tsx # Root layout component
+    page.tsx   # Root page component
+  app/         # Next.js app directory with internationalization
+    (i18n)/    # Internationalization routes
+      en/      # English language pages
+      ru/      # Russian language pages
   components/  # Reusable UI components
     footer/    # Footer-related components
     header/    # Header and navigation components
@@ -57,8 +63,17 @@ src/
   config/      # Configuration files and constants
   hooks/       # Custom React hooks
   lib/         # Utility functions and libraries
+  messages/    # Internationalization message files
+  styles/      # Global styles and CSS
   types/       # TypeScript type definitions and interfaces
+  middleware.ts # Next.js middleware for routing
 ```
+
+## Internationalization
+
+This project uses [next-globe-gen](https://github.com/next-globe-gen/next-globe-gen) for internationalization (i18n). This TypeScript package makes it easy to add multi-language support to Next.js apps with automatic language routes, locale detection, and smart translations.
+
+For a comprehensive guide on implementing Next.js localization with next-globe-gen, check out the [Lokalise tutorial](https://lokalise.com/blog/nextjs-localization/).
 
 ## Web3 Libraries
 

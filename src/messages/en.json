@@ -5,5 +5,9 @@
     "notFound": {
         "title": "Not found (404)",
         "description": "This page cannot be found!"
+    },
+
+    "home": {
+        "title": "Lottery soon... 🎁 "
     }
 }

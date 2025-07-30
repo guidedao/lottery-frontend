@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import '@/styles/globals.css';
 
 import { useLocale } from 'next-globe-gen';
+import { Web3Provider } from '@/components/providers/Web3Provider';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -27,7 +28,9 @@ export default function RootLayout({
     const locale = useLocale();
     return (
         <html lang={locale}>
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+                <Web3Provider>{children}</Web3Provider>
+            </body>
         </html>
     );
 }

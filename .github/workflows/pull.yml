@@ -1,0 +1,24 @@
+name: Pull changed translations from Lokalise
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Pull from Lokalise
+        uses: lokalise/lokalise-pull-action@v3.13.0
+        with:
+          api_token: ${{ secrets.LOKALISE_API_TOKEN }}
+          project_id: 74253067688a1e18e95e17.59238618
+          base_lang: ru
+          translations_path: |
+            src/messages
+          file_format: json
+          flat_naming: true
+          pr_labels: lokalise
+          # To pull everything including RU:
+          # always_pull_base: true

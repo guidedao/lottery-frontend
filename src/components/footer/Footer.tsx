@@ -16,10 +16,10 @@ export function Footer({ totalParticipants = 22, winner = '???' }: FooterProps) 
         <div className="flex justify-between items-center text-white">
           {/* Left side - Navigation links */}
           <div className="flex flex-col gap-2">
-            <button className="text-white text-xl font-normal text-left hover:text-gray-300 transition-colors">
+            <button className="text-white text-xl font-normal text-left hover:text-gray-300 transition-colors cursor-pointer">
               about
             </button>
-            <button className="text-white text-xl font-normal text-left hover:text-gray-300 transition-colors">
+            <button className="text-white text-xl font-normal text-left hover:text-gray-300 transition-colors cursor-pointer">
               FAQ
             </button>
           </div>

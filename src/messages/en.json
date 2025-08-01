@@ -8,8 +8,14 @@
     },
 
     "header": {
-        "title": "Hello GuideDAO",
-        "wallet": "Wallet TODO"
+        "title": "Hello GuideDAO"
+    },
+
+    "wallet": {
+        "connect": "Connect Wallet",
+        "connecting": "Connecting...",
+        "connected": "Connected",
+        "wrongNetwork": "Wrong Network"
     },
 
     "home": {

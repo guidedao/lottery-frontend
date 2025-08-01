@@ -8,8 +8,14 @@
     },
 
     "header": {
-        "title": "Привет GuideDAO",
-        "wallet": "Кошелек TODO"
+        "title": "Привет GuideDAO"
+    },
+
+    "wallet": {
+        "connect": "Подключить кошелек",
+        "connecting": "Подключение...",
+        "connected": "Подключен",
+        "wrongNetwork": "Неверная сеть"
     },
 
     "home": {

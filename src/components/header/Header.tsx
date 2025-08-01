@@ -2,7 +2,7 @@
 
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { Button } from '@/components/ui/button';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { WalletConnectButton } from '@/components/ui/WalletConnectButton';
 
 import { Menu } from 'lucide-react';
 import { useTranslations } from 'next-globe-gen';
@@ -24,7 +24,7 @@ export default function Header() {
 
                 {/* Right side - Wallet connect and menu */}
                 <div className='flex items-center gap-3'>
-                    <ConnectButton />
+                    <WalletConnectButton />
 
                     <Button variant='ghost' size='icon' className='text-white hover:bg-white/10'>
                         <Menu className='h-5 w-5' />

@@ -3,6 +3,7 @@
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { Button } from '@/components/ui/button';
 import { WalletConnectButton } from '@/components/ui/WalletConnectButton';
+import Image from 'next/image';
 
 import { Menu } from 'lucide-react';
 import { useTranslations } from 'next-globe-gen';
@@ -10,16 +11,22 @@ import { useTranslations } from 'next-globe-gen';
 export default function Header() {
     const t = useTranslations('header');
     return (
-        <header className='fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm border-b border-white/10'>
+        <header className='fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-sm'>
             <div className='container mx-auto px-4 py-3 flex items-center justify-between'>
                 {/* Left side - Language switcher */}
-                <div className='flex items-center'>
+                <div className='flex items-center gap-3'>
                     <LanguageSwitcher />
                 </div>
 
-                {/* Center - Logo/Brand */}
-                <div className='flex items-center'>
-                    <h1 className='text-green-400 font-mono text-lg font-bold'>{t('title')}</h1>
+                {/* Center - Logo */}
+                <div className='flex items-center justify-center'>
+                    <Image
+                        src='/images/logo-text.png'
+                        alt='GuideDAO Lottery'
+                        width={200}
+                        height={50}
+                        className='h-auto'
+                    />
                 </div>
 
                 {/* Right side - Wallet connect and menu */}

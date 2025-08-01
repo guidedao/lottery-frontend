@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import '@/styles/globals.css';
 
 import { useLocale } from 'next-globe-gen';
-import { Web3Provider } from '@/components/providers/Web3Provider';
+import { Web3Provider } from '@/providers/Web3Provider';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',

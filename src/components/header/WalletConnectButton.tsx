@@ -2,7 +2,7 @@
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useTranslations } from 'next-globe-gen';
-import { Button } from './button';
+import { Button } from '@/components/ui/button';
 
 export function WalletConnectButton() {
     const t = useTranslations();

@@ -5,6 +5,14 @@ const withNextGlobeGen = createNextGlobeGenPlugin();
 
 const nextConfig: NextConfig = {
   /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+  },
 };
 
 export default withNextGlobeGen(nextConfig);

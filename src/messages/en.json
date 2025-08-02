@@ -21,5 +21,12 @@
     "home": {
         "title": "Lottery soon... 🎁 ",
         "footer_text": "made by GuideDAO"
+    },
+
+    "footer": {
+        "about": "about",
+        "faq": "FAQ",
+        "totalParticipants": "total participants",
+        "winner": "winner"
     }
 }

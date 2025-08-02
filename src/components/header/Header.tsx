@@ -2,7 +2,7 @@
 
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { Button } from '@/components/ui/button';
-import { WalletConnectButton } from '@/components/ui/WalletConnectButton';
+import { WalletConnectButton } from '@/components/header/WalletConnectButton';
 import Image from 'next/image';
 
 import { Menu } from 'lucide-react';

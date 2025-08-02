@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { getTranslations, useTranslations } from 'next-globe-gen';
-import { Timer } from '@/components/ui/Timer';
+import { Timer } from '@/components/Main/Timer/Timer';
 import { Footer } from '@/components/footer/Footer';
 
 export function generateMetadata(): Metadata {

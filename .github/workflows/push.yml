@@ -1,0 +1,23 @@
+name: Push base language translations to Lokalise
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Push to Lokalise
+        uses: lokalise/lokalise-push-action@v3.6.1
+        with:
+          api_token: ${{ secrets.LOKALISE_API_TOKEN }}
+          project_id: 74253067688a1e18e95e17.59238618
+          base_lang: ru
+          translations_path: |
+            src/messages
+          file_format: json
+          flat_naming: true
+          # Might be useful, though experimetal
+          # use_tag_tracking: true

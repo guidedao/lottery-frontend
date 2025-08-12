@@ -84,6 +84,8 @@ This project uses the following libraries for Web3 integration:
 
 ## Learn More
 
+
+
 To learn more about Next.js, check out the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) – learn about Next.js features and API.

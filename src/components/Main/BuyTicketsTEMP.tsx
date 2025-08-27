@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import useBuyTickets from '@/hooks/useBuyTickets';
 import useLotteryState from '@/hooks/useLotteryState';
+import useParticipantStatus from '@/hooks/useParticipantStatus';
 import { LotteryStatus } from '@/types/enums';
 
 import { useAccount } from 'wagmi';
@@ -14,6 +15,7 @@ export default function BuyTicketsTEMP() {
     const [ticketsAmount, setTicketsAmount] = useState<number>(1);
     const { buyTickets, isLoading, isError, error, isSuccess } = useBuyTickets();
     const { lotteryState } = useLotteryState();
+    const { isActualParticipant } = useParticipantStatus();
     const { address } = useAccount();
 
     // Don't render component if wallet is not connected
@@ -42,7 +44,17 @@ export default function BuyTicketsTEMP() {
 
     return (
         <div className='flex flex-col gap-4 p-6 bg-white rounded-lg shadow-md'>
-            <h2 className='text-2xl font-bold text-gray-900'>Buy Lottery Tickets</h2>
+            <h2 className='text-2xl font-bold text-gray-900'>
+                {isActualParticipant ? 'Buy More Lottery Tickets' : 'Buy Lottery Tickets'}
+            </h2>
+
+            {isActualParticipant && (
+                <div className='bg-blue-50 border border-blue-200 rounded-md p-3'>
+                    <p className='text-sm text-blue-800'>
+                        You are already registered in this lottery. You can buy additional tickets.
+                    </p>
+                </div>
+            )}
 
             <div className='space-y-4'>
                 <div>
@@ -80,7 +92,7 @@ export default function BuyTicketsTEMP() {
                     disabled={!isRegistrationOpen || isLoading || ticketsAmount <= 0}
                     className='w-full'
                     size='lg'>
-                    {isLoading ? 'Processing...' : 'Buy Tickets'}
+                    {isLoading ? 'Processing...' : isActualParticipant ? 'Buy More Tickets' : 'Buy Tickets'}
                 </Button>
 
                 {!isRegistrationOpen && (
@@ -93,7 +105,13 @@ export default function BuyTicketsTEMP() {
                     </p>
                 )}
 
-                {isSuccess && <p className='text-sm text-green-600 text-center'>Tickets purchased successfully!</p>}
+                {isSuccess && (
+                    <p className='text-sm text-green-600 text-center'>
+                        {isActualParticipant
+                            ? 'Additional tickets purchased successfully!'
+                            : 'Tickets purchased successfully!'}
+                    </p>
+                )}
             </div>
         </div>
     );

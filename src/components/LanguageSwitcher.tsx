@@ -23,9 +23,7 @@ export default function LanguageSwitcher() {
     return (
         <Select value={activeLocale} onValueChange={handleLanguageChange}>
             <SelectTrigger className='w-[80px] bg-transparent border-none text-white hover:bg-white/10 cursor-pointer'>
-                <SelectValue>
-                    {getLanguageDisplay(activeLocale)}
-                </SelectValue>
+                <SelectValue>{getLanguageDisplay(activeLocale)}</SelectValue>
             </SelectTrigger>
             <SelectContent>
                 {schema.locales.map((locale) => (

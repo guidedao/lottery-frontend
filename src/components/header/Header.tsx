@@ -1,15 +1,12 @@
 'use client';
 
 import LanguageSwitcher from '@/components/LanguageSwitcher';
-import { Button } from '@/components/ui/button';
 import { WalletConnectButton } from '@/components/header/WalletConnectButton';
-import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 
 import { Menu } from 'lucide-react';
-import { useTranslations } from 'next-globe-gen';
 
 export default function Header() {
-    const t = useTranslations('header');
     return (
         <header className='fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-sm'>
             <div className='container mx-auto px-4 py-3 flex items-center justify-between'>
@@ -20,9 +17,7 @@ export default function Header() {
 
                 {/* Center - Logo */}
                 <div className='flex items-center justify-center'>
-                    <h1 className='text-white text-2xl font-bold cursor-pointer'>
-                        Guide DAO
-                    </h1>
+                    <h1 className='text-white text-2xl font-bold cursor-pointer'>Guide DAO</h1>
                 </div>
 
                 {/* Right side - Wallet connect and menu */}

@@ -22,6 +22,14 @@ export default function useBuyTickets() {
                 throw new Error('Wallet not connected');
             }
 
+            // Check if user is already a participant
+            const isActualParticipant = await readContract(config, {
+                address: projectConfig.lotteryCA as `0x${string}`,
+                abi: lotteryABI,
+                functionName: 'isActualParticipant',
+                args: [address]
+            });
+
             // Get ticket price from the contract
             const ticketPrice = await readContract(config, {
                 address: projectConfig.lotteryCA as `0x${string}`,
@@ -32,17 +40,32 @@ export default function useBuyTickets() {
 
             const totalCost = (ticketPrice as bigint) * BigInt(ticketsAmount);
 
-            return writeContract(config, {
-                address: projectConfig.lotteryCA as `0x${string}`,
-                abi: lotteryABI,
-                functionName: 'enter',
-                args: [BigInt(ticketsAmount), encryptedContactDetails as `0x${string}`],
-                value: totalCost
-            });
+            // Call appropriate function based on participant status
+            if (isActualParticipant) {
+                // User is already a participant, use buyMoreTickets
+                return writeContract(config, {
+                    address: projectConfig.lotteryCA as `0x${string}`,
+                    abi: lotteryABI,
+                    functionName: 'buyMoreTickets',
+                    args: [BigInt(ticketsAmount)],
+                    value: totalCost
+                });
+            } else {
+                // User is not a participant, use enter
+                return writeContract(config, {
+                    address: projectConfig.lotteryCA as `0x${string}`,
+                    abi: lotteryABI,
+                    functionName: 'enter',
+                    args: [BigInt(ticketsAmount), encryptedContactDetails as `0x${string}`],
+                    value: totalCost
+                });
+            }
         },
         onSuccess: () => {
             // Invalidate and refetch lottery state after successful purchase
             queryClient.invalidateQueries({ queryKey: [TanstackKeys.useLotteryState] });
+            // Also invalidate participant status to update UI
+            queryClient.invalidateQueries({ queryKey: [TanstackKeys.useParticipantStatus] });
         }
     });
 

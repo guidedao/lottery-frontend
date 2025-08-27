@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import BuyTicketsTEMP from '@/components/Main/BuyTicketsTEMP';
 import { LotteryStatusDisplay } from '@/components/Main/LotteryStatusDisplayTEMP';
 import { Timer } from '@/components/Main/Timer/Timer';
 import { Footer } from '@/components/footer/Footer';
@@ -35,6 +36,7 @@ export default function Home() {
                         <Timer hours={0} minutes={55} seconds={3} />
                     </div>
                     <LotteryStatusDisplay />
+                    <BuyTicketsTEMP />
                 </div>
             </main>
 

@@ -27,7 +27,7 @@ const DEFAULT_LOTTERY_STATE: LotteryState = {
 export default function useLotteryState() {
     const config = useConfig();
 
-    const { data, refetch } = useQuery({
+    const { data, refetch, isLoading } = useQuery({
         queryKey: [TanstackKeys.useLotteryState],
         queryFn: async () => {
             const [status, lotteryNumber, participantsCount, ticketPrice, registrationEndTime, lastWinner] =
@@ -86,6 +86,7 @@ export default function useLotteryState() {
 
     return {
         lotteryState,
-        refetch
+        refetch,
+        isLoading
     };
 }

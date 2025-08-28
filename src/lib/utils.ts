@@ -49,3 +49,19 @@ export function isLotteryActive(status: LotteryStatus): boolean {
 export function canRegister(status: LotteryStatus): boolean {
     return status === LotteryStatus.OpenedForRegistration;
 }
+
+export const formatTime = (time: number) => `${time}`.padStart(2, '0');
+
+/**
+ * Returns hours, minutes, and seconds left until `endTime`.
+ * @param endTime - timestamp in **milliseconds**
+ */
+export const getTimeLeft = (endTimeMs: number): { hours: number; minutes: number; seconds: number } => {
+    const diffSec = Math.max(Math.floor((endTimeMs - Date.now()) / 1000), 0);
+
+    return {
+        hours: Math.floor(diffSec / 3600),
+        minutes: Math.floor((diffSec % 3600) / 60),
+        seconds: diffSec % 60
+    };
+};

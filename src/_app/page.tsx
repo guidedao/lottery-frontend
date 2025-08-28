@@ -33,7 +33,7 @@ export default function Home() {
                 {/* Content */}
                 <div className='relative z-10 flex flex-col items-center px-4 pt-20 pb-32'>
                     <div className='text-center mb-8'>
-                        <Timer hours={0} minutes={55} seconds={3} />
+                        <Timer />
                     </div>
                     <LotteryStatusDisplay />
                     <BuyTicketsTEMP />

@@ -17,7 +17,7 @@ const LoadingTimer = ({ count = 3 }) => (
 );
 
 export function Timer() {
-    const { lotteryState, isLoading } = useLotteryState();
+    const { lotteryState, isLoading, refetch } = useLotteryState();
     const { registrationEndTime } = lotteryState;
     const [timeLeft, setTimeLeft] = useState('');
     const reqAnimFrameId = useRef<number | null>(null);
@@ -34,7 +34,11 @@ export function Timer() {
                 setTimeLeft(`${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`);
             }
 
-            if (hours > 0 || minutes > 0 || seconds > 0) {
+            const isTimeOver = hours === 0 && minutes === 0 && seconds === 0;
+
+            if (isTimeOver) {
+                refetch();
+            } else {
                 reqAnimFrameId.current = requestAnimationFrame(updateTime);
             }
         };
@@ -46,7 +50,7 @@ export function Timer() {
                 cancelAnimationFrame(reqAnimFrameId.current);
             }
         };
-    }, [registrationEndTime]);
+    }, [registrationEndTime, refetch]);
 
     return (
         <div className='flex flex-col items-center justify-center min-h-[300px]'>

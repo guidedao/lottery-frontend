@@ -1,7 +1,3 @@
-/*
-	Installed from https://reactbits.dev/ts/tailwind/
-*/
-
 'use client';
 
 import React, { CSSProperties, useEffect, useRef } from 'react';

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist, Geist_Mono, Keania_One, Roboto } from 'next/font/google';
+import localFont from 'next/font/local';
 
 import Header from '@/components/header/Header';
 import { Web3Provider } from '@/providers/Web3Provider';
@@ -17,6 +18,23 @@ const geistMono = Geist_Mono({
     subsets: ['latin']
 });
 
+export const roboto = Roboto({
+    subsets: ['latin'],
+    weight: ['400', '700'],
+    variable: '--font-roboto'
+});
+
+export const keaniaOne = Keania_One({
+    subsets: ['latin'],
+    weight: '400',
+    variable: '--font-keania-one'
+});
+
+export const agave = localFont({
+    src: '../../public/fonts/Agave/Agave-Bold.woff',
+    variable: '--font-agave'
+});
+
 export const metadata: Metadata = {
     title: { template: '%s | GuideDAO Lottery', default: 'GuideDAO Lottery' }
 };
@@ -29,7 +47,8 @@ export default function RootLayout({
     const locale = useLocale();
     return (
         <html lang={locale}>
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+            <body
+                className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} ${keaniaOne.variable} ${agave.variable} antialiased`}>
                 <Web3Provider>
                     <Header />
                     {children}

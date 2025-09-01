@@ -14,6 +14,10 @@ import React, { CSSProperties, useEffect, useRef } from 'react';
 	Installed from https://reactbits.dev/ts/tailwind/
 */
 
+/*
+	Installed from https://reactbits.dev/ts/tailwind/
+*/
+
 class Grad {
     x: number;
     y: number;
@@ -398,13 +402,6 @@ const Waves: React.FC<WavesProps> = ({
                 ...style
             }}
             className={`absolute top-0 left-0 w-full h-full overflow-hidden ${className}`}>
-            {/* <div
-                className='absolute top-0 left-0 bg-[#160000] rounded-full w-[0.5rem] h-[0.5rem]'
-                style={{
-                    transform: 'translate3d(calc(var(--x) - 50%), calc(var(--y) - 50%), 0)',
-                    willChange: 'transform'
-                }}
-            /> */}
             <canvas ref={canvasRef} className='block w-full h-full' />
         </div>
     );

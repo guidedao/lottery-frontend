@@ -82,6 +82,17 @@ This project uses the following libraries for Web3 integration:
 - [Wagmi](https://wagmi.sh/react/why) – A collection of React Hooks for Ethereum, designed for ease of use and flexibility.
 - [RainbowKit](https://rainbowkit.com/docs/) – A React library for connecting Ethereum wallets with a beautiful, customizable UI.
 
+## Fonts
+
+This project uses the following fonts:
+
+- **Agave**
+  - License: [SIL Open Font License (OFL)](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL) (free, commercial use allowed)  
+- **Roboto**
+  - License: [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) (free, commercial use allowed)  
+- **Keania One**
+  - License: [SIL Open Font License (OFL)](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL) (free, commercial use allowed)  
+
 ## Learn More
 
 To learn more about Next.js, check out the following resources:

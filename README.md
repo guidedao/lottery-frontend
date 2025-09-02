@@ -66,31 +66,48 @@ Main code lives in `src`:
 
 ```
 src/
-  _app/            # Shared layout/page used by localized routes
+  _app/                      # Shared layout/page used by localized routes
     layout.tsx
     page.tsx
+    [...catchAll]/           # next-globe-gen helper route
   app/
-    (i18n)/        # Localized routes generated via next-globe-gen
+    (i18n)/                  # Localized routes generated via next-globe-gen
       en/
         layout.tsx
         page.tsx
       ru/
         layout.tsx
         page.tsx
-  blocks/          # Visual blocks (e.g., backgrounds)
+  blocks/                    # Visual blocks (e.g., backgrounds)
   components/
-    header/        # Header, wallet connect
+    LanguageSwitcher.tsx     # Locale switcher (next-globe-gen)
+    header/
+      Header.tsx             # App header
+      WalletConnectButton.tsx# Connect + terms dialog orchestration
+      WalletControls.tsx     # Network/account buttons
+      TermsDialog.tsx        # AlertDialog-based consent modal
     footer/
-    Main/          # Lottery UI (TEMP components)
-    ui/            # Reusable UI primitives (button, input, select)
-  config/          # Project-level config (e.g., contract address)
-  hooks/           # React query + wagmi hooks (state, buy, participant)
-  lib/             # utils, ABIs, web3 config
-  messages/        # i18n messages (en/ru)
-  providers/       # Web3Provider (Wagmi + RainbowKit + React Query)
-  styles/          # Global styles (Tailwind 4)
-  types/           # Enums and types
-  middleware.ts    # Locale middleware (next-globe-gen)
+      Footer.tsx
+    Main/                    # Lottery UI (temporary components)
+    ui/                      # Reusable UI primitives (button, input, select, alert-dialog)
+  config/
+    projectConfig.ts         # Contract address
+    termsConfig.ts           # Terms config (version, URL)
+  hooks/
+    useLotteryState.ts       # Lottery on-chain state
+    useParticipantStatus.ts  # Participant check
+    useBuyTickets.ts         # Enter / buyMoreTickets
+    useTermsSignature.ts     # Off-chain terms signature
+  lib/
+    abis/                    # Contract ABIs
+    utils.ts                 # Helpers
+    web3-config.ts           # Wagmi/RainbowKit config
+  messages/                  # i18n messages (en/ru)
+  providers/
+    Web3Provider.tsx         # Wagmi + RainbowKit + React Query
+  styles/                    # Global styles (Tailwind 4)
+  types/                     # Enums and types
+  middleware.ts              # Locale middleware (next-globe-gen)
 ```
 
 ## Internationalization (i18n)
@@ -116,6 +133,13 @@ Key hooks:
 - `useLotteryState` – reads `status`, `lotteryNumber`, `participantsCount`, `ticketPrice`, `registrationEndTime`, `lastWinner`.
 - `useParticipantStatus` – checks if the connected address is a current participant.
 - `useBuyTickets` – calls `enter` or `buyMoreTickets` depending on participant status; invalidates queries after success.
+
+## Terms Signature Flow
+
+- Flow: connect wallet first → a modal prompts to sign Terms → if declined or the signature fails, the wallet disconnects.
+- Storage: acceptance is saved in `localStorage` per address and version; bump `TERMS_VERSION` to force re-consent.
+
+Note: This is an off-chain consent. 
 
 ## Code Quality
 

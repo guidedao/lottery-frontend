@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 
 import Waves from '@/blocks/Backgrounds/Waves/Waves';
 import BuyTicketsTEMP from '@/components/Main/BuyTicketsTEMP';

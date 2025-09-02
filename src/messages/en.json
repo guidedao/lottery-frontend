@@ -28,5 +28,14 @@
         "faq": "FAQ",
         "totalParticipants": "total participants",
         "winner": "winner"
+    },
+
+    "terms": {
+        "banner": "Please review and sign the Terms of Service.",
+        "link": "View Terms",
+        "sign": "Sign Terms",
+        "signing": "Signing...",
+        "later": "Later",
+        "error": "Signature failed"
     }
 }

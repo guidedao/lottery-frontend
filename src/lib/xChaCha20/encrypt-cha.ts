@@ -2,16 +2,11 @@
 // Produces raw payload bytes: ephPub(32) || nonce(24) || ciphertext(plain+16).
 import { x25519 } from '@noble/curves/ed25519';
 
+import { hexToBytes } from './utils/hex';
 import sodium from 'libsodium-wrappers';
 
 function assert(condition: unknown, msg: string): asserts condition {
     if (!condition) throw new Error(msg);
-}
-
-function hexToBytes(hex: string): Uint8Array {
-    const h = hex.startsWith('0x') ? hex.slice(2) : hex;
-    assert(/^[0-9a-fA-F]*$/.test(h) && h.length % 2 === 0, 'Invalid hex');
-    return new Uint8Array(h.match(/.{1,2}/g)!.map((b) => parseInt(b, 16)));
 }
 
 /**

@@ -16,8 +16,8 @@ function assert(condition: unknown, msg: string): asserts condition {
 export async function encryptWithAdminPub(message: string, adminPubHex?: string): Promise<Uint8Array> {
     await sodium.ready;
 
-    const pubHex = (adminPubHex ?? process.env.ADMIN_PUB_HEX ?? process.env.NEXT_PUBLIC_ADMIN_PUB_HEX ?? '').trim();
-    assert(pubHex, 'ADMIN_PUB_HEX is not set');
+    const pubHex = (adminPubHex ?? process.env.NEXT_PUBLIC_ADMIN_PUB_HEX ?? '').trim();
+    assert(pubHex, 'NEXT_PUBLIC_ADMIN_PUB_HEX is not set');
     const adminPub = hexToBytes(pubHex);
     assert(adminPub.length === 32, 'Admin public key must be 32 bytes (64 hex chars)');
 

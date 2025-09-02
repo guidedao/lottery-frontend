@@ -54,7 +54,7 @@ function main() {
   const pubHex = Buffer.from(pub).toString('hex');
 
   console.log(`ADMIN_PRIV_HEX=${privHex}`);
-  console.log(`ADMIN_PUB_HEX=${pubHex}`);
+  console.log(`NEXT_PUBLIC_ADMIN_PUB_HEX=${pubHex}`);
 
   if (process.argv.includes('--write')) {
     try {

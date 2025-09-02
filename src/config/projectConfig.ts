@@ -1,3 +1,3 @@
 export const projectConfig = {
-    lotteryCA: '0x30e3928CD2A210Cb763E5aFD787ee278038d8A08'
+    lotteryCA: '0x712b1F30179eF68C93c1700d7c40E2645465832F'
 };

@@ -1,32 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import TermsDialog from '@/components/header/TermsDialog';
 import WalletControls from '@/components/header/WalletControls';
 import { Button } from '@/components/ui/button';
-import useTermsSignature from '@/hooks/useTermsSignature';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 import { useTranslations } from 'next-globe-gen';
-import { useAccount, useDisconnect } from 'wagmi';
 
 export function WalletConnectButton() {
     const t = useTranslations();
-    const { disconnect } = useDisconnect();
-    const { hasSigned, signTerms, isSigning, error } = useTermsSignature();
-    const [dialogOpen, setDialogOpen] = useState(false);
     const [, /*unused*/ setPending] = useState(false);
-    const { isConnected } = useAccount();
-
-    // Open the Terms dialog right after connect if not signed
-    useEffect(() => {
-        if (isConnected && !hasSigned) {
-            setDialogOpen(true);
-        } else {
-            setDialogOpen(false);
-        }
-    }, [isConnected, hasSigned]);
 
     return (
         <ConnectButton.Custom>
@@ -40,10 +24,7 @@ export function WalletConnectButton() {
                 mounted
             }) => {
                 const ready = mounted && authenticationStatus !== 'loading';
-                const connected =
-                    ready && account && chain && (!authenticationStatus || authenticationStatus === 'authenticated');
-
-                // Dialog visibility controlled by top-level effect (useAccount + hasSigned)
+                const connected = ready && account && chain && authenticationStatus === 'authenticated';
 
                 return (
                     <div
@@ -53,7 +34,6 @@ export function WalletConnectButton() {
                         })}>
                         {(() => {
                             if (!connected) {
-                                // Default connect button; signature prompt handled globally after connect
                                 return (
                                     <Button
                                         onClick={() => {
@@ -76,35 +56,14 @@ export function WalletConnectButton() {
                                 );
                             }
 
-                            // Connected: show network/account controls; terms dialog managed below
-
-                            // Connected + terms satisfied
+                            // Connected & authenticated: show network/account controls
                             return (
-                                <>
-                                    <WalletControls
-                                        chain={chain}
-                                        account={account}
-                                        openAccountModal={openAccountModal}
-                                        openChainModal={openChainModal}
-                                    />
-
-                                    <TermsDialog
-                                        open={dialogOpen}
-                                        onOpenChange={setDialogOpen}
-                                        isSigning={isSigning}
-                                        errorMessage={error?.message ?? null}
-                                        onSign={async () => {
-                                            try {
-                                                await signTerms();
-                                            } catch {
-                                                disconnect();
-                                            }
-                                        }}
-                                        onDecline={() => {
-                                            disconnect();
-                                        }}
-                                    />
-                                </>
+                                <WalletControls
+                                    chain={chain}
+                                    account={account}
+                                    openAccountModal={openAccountModal}
+                                    openChainModal={openChainModal}
+                                />
                             );
                         })()}
                     </div>

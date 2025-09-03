@@ -1,12 +1,14 @@
 'use client';
 
 import { config } from '@/lib/web3-config';
+import { projectConfig } from '@/config/projectConfig';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
-import { RainbowKitSiweNextAuthProvider } from '@rainbow-me/rainbowkit-siwe-next-auth';
-import { SessionProvider } from 'next-auth/react';
-import type { Session } from 'next-auth';
+import { type GetSiweMessageOptions, RainbowKitSiweNextAuthProvider } from '@rainbow-me/rainbowkit-siwe-next-auth';
 import '@rainbow-me/rainbowkit/styles.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+import type { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
 import { WagmiProvider } from 'wagmi';
 
 const queryClient = new QueryClient();
@@ -17,14 +19,15 @@ interface Web3ProviderProps {
 }
 
 export function Web3Provider({ children, session }: Web3ProviderProps) {
+    const getSiweMessageOptions: GetSiweMessageOptions = () => ({
+        statement: projectConfig.messageToSign
+    });
     return (
         <WagmiProvider config={config}>
             <SessionProvider refetchInterval={0} session={session}>
                 <QueryClientProvider client={queryClient}>
-                    <RainbowKitSiweNextAuthProvider>
-                        <RainbowKitProvider>
-                            {children}
-                        </RainbowKitProvider>
+                    <RainbowKitSiweNextAuthProvider getSiweMessageOptions={getSiweMessageOptions}>
+                        <RainbowKitProvider>{children}</RainbowKitProvider>
                     </RainbowKitSiweNextAuthProvider>
                 </QueryClientProvider>
             </SessionProvider>

@@ -29,11 +29,11 @@ export const authOptions: NextAuthOptions = {
 
                     // Extract CSRF token (nonce) from NextAuth cookie
                     const cookieHeader = req?.headers?.cookie ?? '';
-          const csrfRaw = cookieHeader
-            .split(';')
-            .map((s: string) => s.trim())
-            .find((c: string) => c.startsWith('next-auth.csrf-token='))
-            ?.split('=')[1];
+                    const csrfRaw = cookieHeader
+                        .split(';')
+                        .map((s: string) => s.trim())
+                        .find((c: string) => c.startsWith('next-auth.csrf-token='))
+                        ?.split('=')[1];
                     const csrfToken = csrfRaw ? decodeURIComponent(csrfRaw).split('|')[0] : undefined;
                     if (!csrfToken) return null;
 

@@ -1,7 +1,7 @@
 'use client';
 
-import { config } from '@/lib/web3-config';
 import { projectConfig } from '@/config/projectConfig';
+import { config } from '@/lib/web3-config';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { type GetSiweMessageOptions, RainbowKitSiweNextAuthProvider } from '@rainbow-me/rainbowkit-siwe-next-auth';
 import '@rainbow-me/rainbowkit/styles.css';

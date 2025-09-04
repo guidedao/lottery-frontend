@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Waves from '@/blocks/Backgrounds/Waves/Waves';
 import BuyTicketsTEMP from '@/components/Main/BuyTicketsTEMP';
 import { LotteryStatusDisplay } from '@/components/Main/LotteryStatusDisplayTEMP';
+import ReturnTicketsPanel from '@/components/Main/ReturnTicketsPanel';
 import { Timer } from '@/components/Main/Timer/Timer';
 import { Footer } from '@/components/footer/Footer';
 
@@ -48,6 +49,7 @@ export default function Home() {
                         {/* Left: Buy tickets */}
                         <div>
                             <BuyTicketsTEMP />
+                            <ReturnTicketsPanel />
                         </div>
                         {/* Right: Lottery state */}
                         <div>

@@ -78,6 +78,13 @@ export default function BuyTicketsTEMP() {
 
     const isRegistrationOpen = lotteryState.status === LotteryStatus.OpenedForRegistration;
     const totalCost = lotteryState.ticketPrice * BigInt(ticketsAmount);
+    const totalTickets = Number(lotteryState.totalTicketsCount ?? 0);
+    const yourTickets = isActualParticipant ? userTicketsCount : 0;
+    const yourChance = totalTickets > 0 ? (yourTickets / totalTickets) * 100 : 0;
+    const predictedTotal = totalTickets + (ticketsAmount || 0);
+    const predictedYours = yourTickets + (ticketsAmount || 0);
+    const predictedChance = predictedTotal > 0 ? (predictedYours / predictedTotal) * 100 : 0;
+    const fmtPct = (v: number) => v.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
 
     return (
         <div className='flex flex-col gap-4 p-6 bg-white rounded-lg shadow-md'>
@@ -92,7 +99,6 @@ export default function BuyTicketsTEMP() {
                             You are already registered in this lottery. You can buy additional tickets.
                         </p>
                     </div>
-
                     <div className='bg-gray-50 p-4 rounded-md'>
                         <div className='flex justify-between items-center'>
                             <span className='text-sm text-gray-600'>Your Tickets:</span>
@@ -103,6 +109,10 @@ export default function BuyTicketsTEMP() {
                             <span className='font-medium'>
                                 {refundAmount ? `${Number(refundAmount) / 1e18} ETH` : '0 ETH'}
                             </span>
+                        </div>
+                        <div className='flex justify-between items-center mt-2'>
+                            <span className='text-sm text-gray-600'>Your Win Chance:</span>
+                            <span className='font-medium'>{fmtPct(yourChance)}%</span>
                         </div>
                     </div>
                 </>
@@ -131,7 +141,7 @@ export default function BuyTicketsTEMP() {
                                 Contact Details (encrypted on submit)
                             </label>
                             <span className='text-xs text-gray-500'>
-                                {Math.max(0, 60 - contactDetails.length)} left
+                                {Math.max(0, 80 - contactDetails.length)} left
                             </span>
                         </div>
                         <Input
@@ -141,7 +151,7 @@ export default function BuyTicketsTEMP() {
                             onChange={(e) => setContactDetails(e.target.value)}
                             placeholder='Email, Telegram, or other contact info'
                             className='w-full'
-                            maxLength={60}
+                            maxLength={80}
                             disabled={!isRegistrationOpen || isLoading || isEncrypting}
                         />
                         {!hasAdminPub && (
@@ -164,6 +174,10 @@ export default function BuyTicketsTEMP() {
                         <span className='font-bold text-lg'>
                             {totalCost ? `${Number(totalCost) / 1e18} ETH` : 'Loading...'}
                         </span>
+                    </div>
+                    <div className='flex justify-between items-center mt-2'>
+                        <span className='text-sm text-gray-600'>Chance After Purchase:</span>
+                        <span className='font-medium'>{fmtPct(predictedChance)}%</span>
                     </div>
                 </div>
 

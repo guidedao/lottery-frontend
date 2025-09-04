@@ -56,10 +56,6 @@ npm start
   - WalletConnect projectId is currently hardcoded for development; replace for production as needed.
 - Contract ABI: `src/lib/abis/lotteryABI.ts`
 
-Notes:
-- The app expects users to connect a wallet on Arbitrum Sepolia. RainbowKit will guide network switching if needed.
-- `BuyTicketsTEMP` uses a placeholder `encryptedContactDetails: '0x'`. Replace with real encryption when integrating.
-
 ## Project Structure
 
 Main code lives in `src`:

@@ -146,10 +146,21 @@ Key hooks:
 The previous custom Wagmi message-signing flow has been replaced with RainbowKit Sign-In with Ethereum (SIWE) integrated with NextAuth.
 
 - Provider: `src/providers/Web3Provider.tsx` wraps `RainbowKitProvider` with `RainbowKitSiweNextAuthProvider` and NextAuth's `SessionProvider`.
-- Auth route: `src/app/api/auth/[...nextauth]/route.ts` uses NextAuth Credentials provider to verify SIWE messages with Viem.
+- Auth options (shared): `src/lib/auth.ts` exports `authOptions` (Credentials provider + callbacks).
+- Auth route: `src/app/api/auth/[...nextauth]/route.ts` imports `authOptions` and exports only `GET` and `POST` handlers via `NextAuth(authOptions)` (do not export other fields from route files).
 - Flow: connect wallet → RainbowKit prompts to sign a SIWE message → NextAuth creates a session → UI treats the user as authenticated.
 - UI gating: `WalletConnectButton.tsx` considers the user connected only when `authenticationStatus === 'authenticated'`.
 - Customization: adjust the SIWE message statement via `getSiweMessageOptions` in `Web3Provider.tsx`.
+
+Server-side session usage:
+- Import `authOptions` from `@/lib/auth` and pass it to `getServerSession(authOptions)`.
+- Example: `src/_app/test-decrypt-temp/page.tsx`.
+
+Troubleshooting SIWE verification:
+- Ensure `NEXTAUTH_URL` matches the app origin (protocol + host + optional port); the SIWE `domain` must match this host.
+- Set `NEXTAUTH_SECRET` in `.env.local` (a strong random string).
+- Make sure cookies are present; verification uses the `next-auth.csrf-token` cookie value as the SIWE `nonce`.
+- If you see “Error verifying signature”, check that the wallet is on the correct chain (Arbitrum Sepolia) and retry.
 
 
 Required env (see example.env.local):

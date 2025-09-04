@@ -57,7 +57,8 @@ export const authOptions: NextAuthOptions = {
                     // Validate SIWE message fields & signature
                     const parsed = parseSiweMessage(message);
 
-                    const domain = (() => {
+                    // Resolve expected domain strictly from NEXTAUTH_URL
+                    const envHost = (() => {
                         const url = process.env.NEXTAUTH_URL ?? '';
                         try {
                             return url ? new URL(url).host : undefined;
@@ -65,12 +66,25 @@ export const authOptions: NextAuthOptions = {
                             return undefined;
                         }
                     })();
+                    if (!envHost) return null;
+                    const domain = envHost;
+
+                    // Resolve nonce: prefer CSRF cookie; if absent, fall back to parsed.nonce
+                    const nonce = (() => {
+                        const fromMessage = parsed.nonce;
+                        if (!csrfToken) return fromMessage;
+                        // If both exist and mismatch, reject
+                        if (fromMessage && csrfToken && fromMessage !== csrfToken) return undefined;
+                        return csrfToken;
+                    })();
+
+                    if (!nonce) return null;
 
                     const ok = await verifySiweMessage(publicClient, {
                         address: parsed.address!,
-                        domain: domain ?? parsed.domain ?? 'localhost',
+                        domain,
                         message,
-                        nonce: csrfToken,
+                        nonce,
                         signature
                     });
 

@@ -6,7 +6,18 @@ import { LotteryStatus } from '@/types/enums';
 
 export function LotteryStatusDisplay() {
     const { lotteryState } = useLotteryState();
-    const { status, participantsCount, lotteryNumber, ticketPrice, registrationEndTime, lastWinner } = lotteryState;
+    const {
+        status,
+        participantsCount,
+        lotteryNumber,
+        ticketPrice,
+        registrationEndTime,
+        lastWinner,
+        maxParticipantsNumber,
+        registrationDuration,
+        refundWindow,
+        totalTicketsCount
+    } = lotteryState;
 
     return (
         <div className='bg-white/10 backdrop-blur-sm rounded-lg p-6 text-white'>
@@ -31,6 +42,12 @@ export function LotteryStatusDisplay() {
                     <span className='text-lg font-bold text-green-400'>{participantsCount}</span>
                 </div>
 
+                {/* Max Participants */}
+                <div className='flex items-center justify-between'>
+                    <span className='text-lg font-medium'>Max Participants:</span>
+                    <span className='text-lg font-bold text-green-300'>{maxParticipantsNumber}</span>
+                </div>
+
                 {/* Ticket Price */}
                 <div className='flex items-center justify-between'>
                     <span className='text-lg font-medium'>Ticket Price:</span>
@@ -49,6 +66,14 @@ export function LotteryStatusDisplay() {
                     </span>
                 </div>
 
+                {/* Registration Duration */}
+                <div className='flex items-center justify-between'>
+                    <span className='text-lg font-medium'>Registration Duration:</span>
+                    <span className='text-lg font-bold text-orange-300'>
+                        {registrationDuration ? `${Number(registrationDuration)} sec` : 'Not set'}
+                    </span>
+                </div>
+
                 {/* Last Winner */}
                 <div className='flex items-center justify-between'>
                     <span className='text-lg font-medium'>Last Winner:</span>
@@ -59,14 +84,22 @@ export function LotteryStatusDisplay() {
                     </span>
                 </div>
 
-                {/* Action Buttons based on Status */}
-                <div className='pt-4'>
-                    {canRegister(status) && (
-                        <button className='w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition-colors'>
-                            Register for Lottery
-                        </button>
-                    )}
+                {/* Total Tickets Count */}
+                <div className='flex items-center justify-between'>
+                    <span className='text-lg font-medium'>Total Tickets:</span>
+                    <span className='text-lg font-bold text-purple-300'>{totalTicketsCount}</span>
+                </div>
 
+                {/* Refund Window */}
+                <div className='flex items-center justify-between'>
+                    <span className='text-lg font-medium'>Refund Window:</span>
+                    <span className='text-lg font-bold text-pink-300'>
+                        {refundWindow ? `${Number(refundWindow)} sec` : 'Not set'}
+                    </span>
+                </div>
+
+                {/* Status Notices (no actions) */}
+                <div className='pt-4'>
                     {status === LotteryStatus.WaitingForReveal && (
                         <div className='text-center text-yellow-400 font-medium'>
                             Waiting for winner to be revealed...
@@ -91,6 +124,10 @@ export function LotteryStatusDisplay() {
                         <div>Raw Ticket Price: {ticketPrice?.toString() || '0'}</div>
                         <div>Raw Registration End Time: {registrationEndTime?.toString() || '0'}</div>
                         <div>Raw Last Winner: {lastWinner || '0x0000000000000000000000000000000000000000'}</div>
+                        <div>Raw Max Participants: {maxParticipantsNumber}</div>
+                        <div>Raw Registration Duration: {registrationDuration?.toString() || '0'}</div>
+                        <div>Raw Refund Window: {refundWindow?.toString() || '0'}</div>
+                        <div>Raw Total Tickets: {totalTicketsCount}</div>
                     </div>
                 </div>
             </div>

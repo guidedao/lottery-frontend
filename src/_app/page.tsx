@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Waves from '@/blocks/Backgrounds/Waves/Waves';
 import BuyTicketsTEMP from '@/components/Main/BuyTicketsTEMP';
 import { LotteryStatusDisplay } from '@/components/Main/LotteryStatusDisplayTEMP';
+import ReturnTicketsPanel from '@/components/Main/ReturnTicketsPanel';
 import { Timer } from '@/components/Main/Timer/Timer';
 import { Footer } from '@/components/footer/Footer';
 
@@ -39,13 +40,22 @@ export default function Home() {
                 <div className='fixed inset-0 bg-black/40' />
 
                 {/* Content */}
-                <div className='container mx-auto relative z-10 flex items-center flex-col px-4 pt-20 pb-32'>
+                <div className='container mx-auto relative z-10 flex flex-col px-4 pt-20 pb-32 gap-8'>
                     <div className='text-center'>
                         <Timer />
                     </div>
 
-                    <LotteryStatusDisplay />
-                    <BuyTicketsTEMP />
+                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 items-start'>
+                        {/* Left: Buy tickets */}
+                        <div>
+                            <BuyTicketsTEMP />
+                            <ReturnTicketsPanel />
+                        </div>
+                        {/* Right: Lottery state */}
+                        <div>
+                            <LotteryStatusDisplay />
+                        </div>
+                    </div>
                 </div>
             </main>
 

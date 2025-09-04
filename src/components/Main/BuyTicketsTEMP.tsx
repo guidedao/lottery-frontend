@@ -9,6 +9,7 @@ import useLotteryState from '@/hooks/useLotteryState';
 import useParticipantStatus from '@/hooks/useParticipantStatus';
 import { LotteryStatus } from '@/types/enums';
 
+import { useSession } from 'next-auth/react';
 import { useAccount } from 'wagmi';
 
 export default function BuyTicketsTEMP() {
@@ -17,9 +18,10 @@ export default function BuyTicketsTEMP() {
     const { lotteryState } = useLotteryState();
     const { isActualParticipant } = useParticipantStatus();
     const { address } = useAccount();
+    const { status: authStatus } = useSession();
 
     // Don't render component if wallet is not connected
-    if (!address) {
+    if (!address || authStatus !== 'authenticated') {
         return null;
     }
 

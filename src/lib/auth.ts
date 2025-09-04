@@ -46,13 +46,14 @@ export const authOptions: NextAuthOptions = {
                         if (Array.isArray(v)) return v.join('; ');
                         return '';
                     })();
-                    const csrfRaw = cookieHeader
-                        .split(';')
-                        .map((s: string) => s.trim())
-                        .find((c: string) => c.startsWith('next-auth.csrf-token='))
-                        ?.split('=')[1];
+                    const getCookie = (name: string) =>
+                        cookieHeader
+                            .split(';')
+                            .map((s: string) => s.trim())
+                            .find((c: string) => c.startsWith(`${name}=`))
+                            ?.split('=')[1];
+                    const csrfRaw = getCookie('__Host-next-auth.csrf-token') ?? getCookie('next-auth.csrf-token');
                     const csrfToken = csrfRaw ? decodeURIComponent(csrfRaw).split('|')[0] : undefined;
-                    if (!csrfToken) return null;
 
                     // Validate SIWE message fields & signature
                     const parsed = parseSiweMessage(message);

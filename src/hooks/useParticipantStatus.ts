@@ -4,32 +4,56 @@ import { TanstackKeys } from '@/types/enums';
 import { useQuery } from '@tanstack/react-query';
 
 import { useAccount, useConfig } from 'wagmi';
-import { readContract } from 'wagmi/actions';
+import { readContracts } from 'wagmi/actions';
+
+interface ParticipantStatusData {
+    isActualParticipant: boolean;
+    userTicketsCount: number;
+    refundAmount: bigint;
+}
+
+const DEFAULT_PARTICIPANT_STATUS: ParticipantStatusData = {
+    isActualParticipant: false,
+    userTicketsCount: 0,
+    refundAmount: 0n
+};
 
 export default function useParticipantStatus() {
     const config = useConfig();
     const { address } = useAccount();
 
-    const { data: isActualParticipant, refetch } = useQuery({
+    const { data, refetch } = useQuery({
         queryKey: [TanstackKeys.useParticipantStatus, address],
-        queryFn: async () => {
-            if (!address) {
-                return false;
-            }
+        queryFn: async (): Promise<ParticipantStatusData> => {
+            if (!address) return DEFAULT_PARTICIPANT_STATUS;
 
-            return readContract(config, {
-                address: projectConfig.lotteryCA as `0x${string}`,
-                abi: lotteryABI,
-                functionName: 'isActualParticipant',
-                args: [address]
-            }) as Promise<boolean>;
+            const ca = projectConfig.lotteryCA as `0x${string}`;
+
+            const [isActualParticipant, userTicketsCount, refundAmount] = await readContracts(config, {
+                allowFailure: false,
+                contracts: [
+                    { address: ca, abi: lotteryABI, functionName: 'isActualParticipant', args: [address] },
+                    { address: ca, abi: lotteryABI, functionName: 'userTicketsCount', args: [address] },
+                    { address: ca, abi: lotteryABI, functionName: 'refundAmount', args: [address] }
+                ]
+            });
+
+            return {
+                isActualParticipant: isActualParticipant as unknown as boolean,
+                userTicketsCount: Number(userTicketsCount),
+                refundAmount: refundAmount as unknown as bigint
+            };
         },
         enabled: !!address,
         refetchInterval: 1000 * 60 // Refetch every minute
     });
 
+    const result = (data as ParticipantStatusData) ?? DEFAULT_PARTICIPANT_STATUS;
+
     return {
-        isActualParticipant: isActualParticipant ?? false,
+        isActualParticipant: result.isActualParticipant,
+        userTicketsCount: result.userTicketsCount,
+        refundAmount: result.refundAmount,
         refetch
     };
 }

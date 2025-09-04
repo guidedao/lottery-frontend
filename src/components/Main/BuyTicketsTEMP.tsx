@@ -20,7 +20,7 @@ export default function BuyTicketsTEMP() {
     const [isEncrypting, setIsEncrypting] = useState<boolean>(false);
     const { buyTickets, isLoading, isError, error, isSuccess } = useBuyTickets();
     const { lotteryState } = useLotteryState();
-    const { isActualParticipant } = useParticipantStatus();
+    const { isActualParticipant, userTicketsCount, refundAmount } = useParticipantStatus();
     const { address } = useAccount();
     const { status: authStatus } = useSession();
 
@@ -86,11 +86,26 @@ export default function BuyTicketsTEMP() {
             </h2>
 
             {isActualParticipant && (
-                <div className='bg-blue-50 border border-blue-200 rounded-md p-3'>
-                    <p className='text-sm text-blue-800'>
-                        You are already registered in this lottery. You can buy additional tickets.
-                    </p>
-                </div>
+                <>
+                    <div className='bg-blue-50 border border-blue-200 rounded-md p-3'>
+                        <p className='text-sm text-blue-800'>
+                            You are already registered in this lottery. You can buy additional tickets.
+                        </p>
+                    </div>
+
+                    <div className='bg-gray-50 p-4 rounded-md'>
+                        <div className='flex justify-between items-center'>
+                            <span className='text-sm text-gray-600'>Your Tickets:</span>
+                            <span className='font-medium'>{userTicketsCount}</span>
+                        </div>
+                        <div className='flex justify-between items-center mt-2'>
+                            <span className='text-sm text-gray-600'>Your Refund:</span>
+                            <span className='font-medium'>
+                                {refundAmount ? `${Number(refundAmount) / 1e18} ETH` : '0 ETH'}
+                            </span>
+                        </div>
+                    </div>
+                </>
             )}
 
             <div className='space-y-4'>

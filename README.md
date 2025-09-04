@@ -66,48 +66,55 @@ Main code lives in `src`:
 
 ```
 src/
-  _app/                      # Shared layout/page used by localized routes
+  _app/                        # Shared layout/page used by localized routes
     layout.tsx
     page.tsx
-    [...catchAll]/           # next-globe-gen helper route
+    [...catchAll]/             # next-globe-gen helper route
+    test-decrypt-temp/         # Admin-only test UI for encrypt/decrypt
+      page.tsx                 # Server-gated page (403 if not admin)
+      ClientPanel.tsx          # Client UI for encryption/decryption
   app/
-    (i18n)/                  # Localized routes generated via next-globe-gen
+    (i18n)/                    # Localized routes generated via next-globe-gen
       en/
         layout.tsx
         page.tsx
       ru/
         layout.tsx
         page.tsx
-  blocks/                    # Visual blocks (e.g., backgrounds)
+    api/
+      auth/[...nextauth]/route.ts  # NextAuth + SIWE route
+      admin/decrypt/route.ts       # Admin-only decrypt endpoint
+  blocks/                      # Visual blocks (e.g., backgrounds)
   components/
-    LanguageSwitcher.tsx     # Locale switcher (next-globe-gen)
+    LanguageSwitcher.tsx       # Locale switcher (next-globe-gen)
     header/
-      Header.tsx             # App header
-      WalletConnectButton.tsx# Connect + terms dialog orchestration
-      WalletControls.tsx     # Network/account buttons
-      TermsDialog.tsx        # AlertDialog-based consent modal
+      Header.tsx               # App header
+      WalletConnectButton.tsx  # Connect button (gated by SIWE auth)
+      WalletControls.tsx       # Network/account buttons
     footer/
       Footer.tsx
-    Main/                    # Lottery UI (temporary components)
-    ui/                      # Reusable UI primitives (button, input, select, alert-dialog)
+    Main/                      # Lottery UI (temporary components)
+    ui/                        # Reusable UI primitives (button, input, select, alert-dialog)
   config/
-    projectConfig.ts         # Contract address
-    termsConfig.ts           # Terms config (version, URL)
+    projectConfig.ts           # Contract address
   hooks/
-    useLotteryState.ts       # Lottery on-chain state
-    useParticipantStatus.ts  # Participant check
-    useBuyTickets.ts         # Enter / buyMoreTickets
-    useTermsSignature.ts     # Off-chain terms signature
+    useLotteryState.ts         # Lottery on-chain state
+    useParticipantStatus.ts    # Participant check
+    useBuyTickets.ts           # Enter / buyMoreTickets
   lib/
-    abis/                    # Contract ABIs
-    utils.ts                 # Helpers
-    web3-config.ts           # Wagmi/RainbowKit config
-  messages/                  # i18n messages (en/ru)
+    abis/                      # Contract ABIs
+    utils.ts                   # Helpers
+    web3-config.ts             # Wagmi/RainbowKit config
+    xChaCha20/
+      encrypt-cha.ts           # Encrypt with admin X25519 public key
+      decrypt-cha.ts           # Decrypt with admin X25519 private key
+      utils/hex.ts             # Hex helpers
+  messages/                    # i18n messages (en/ru)
   providers/
-    Web3Provider.tsx         # Wagmi + RainbowKit + React Query
-  styles/                    # Global styles (Tailwind 4)
-  types/                     # Enums and types
-  middleware.ts              # Locale middleware (next-globe-gen)
+    Web3Provider.tsx           # Wagmi + RainbowKit + SIWE + React Query
+  styles/                      # Global styles (Tailwind 4)
+  types/                       # Enums and types
+  middleware.ts                # Locale middleware (next-globe-gen)
 ```
 
 ## Internationalization (i18n)
@@ -136,10 +143,44 @@ Key hooks:
 
 ## Terms Signature Flow
 
-- Flow: connect wallet first → a modal prompts to sign Terms → if declined or the signature fails, the wallet disconnects.
-- Storage: acceptance is saved in `localStorage` per address and version; bump `TERMS_VERSION` to force re-consent.
+The previous custom Wagmi message-signing flow has been replaced with RainbowKit Sign-In with Ethereum (SIWE) integrated with NextAuth.
 
-Note: This is an off-chain consent. 
+- Provider: `src/providers/Web3Provider.tsx` wraps `RainbowKitProvider` with `RainbowKitSiweNextAuthProvider` and NextAuth's `SessionProvider`.
+- Auth route: `src/app/api/auth/[...nextauth]/route.ts` uses NextAuth Credentials provider to verify SIWE messages with Viem.
+- Flow: connect wallet → RainbowKit prompts to sign a SIWE message → NextAuth creates a session → UI treats the user as authenticated.
+- UI gating: `WalletConnectButton.tsx` considers the user connected only when `authenticationStatus === 'authenticated'`.
+- Customization: adjust the SIWE message statement via `getSiweMessageOptions` in `Web3Provider.tsx`.
+
+
+Required env (see example.env.local):
+- `NEXTAUTH_URL`, `NEXTAUTH_SECRET`
+
+## Encryption
+
+This project includes simple x25519 + XChaCha20-Poly1305 helpers to encrypt data to the admin's public key on the client and decrypt it on the server.
+
+- Encrypt (client): `src/lib/xChaCha20/encrypt-cha.ts`
+  - Generates an ephemeral x25519 keypair and encrypts using XChaCha20-Poly1305 (AD = ephPub).
+  - Output format: `ephPub(32) || nonce(24) || ciphertext(plain+16)` (returned as bytes; encode to hex in UI).
+  - Uses `NEXT_PUBLIC_ADMIN_PUB_HEX` (32-byte x25519 public key in hex).
+- Decrypt (server): `src/lib/xChaCha20/decrypt-cha.ts`
+  - Derives the same shared secret with the admin private key and decrypts.
+  - Uses `ADMIN_PRIV_HEX` (32-byte x25519 private key in hex; server only).
+- Admin API: `src/app/api/admin/decrypt/route.ts`
+  - POST JSON `{ payloadHex: string }` (hex string, `0x` optional).
+  - Requires SIWE-authenticated session and that `token.sub` equals `ADMIN_WALLET`.
+  - Returns `{ message }` or an error with proper status codes (401/403/400).
+- Admin-only UI (demo): `src/_app/test-decrypt-temp/page.tsx`
+  - Server-gated page (403 if not admin) that shows a client panel to encrypt and call the decrypt API.
+
+Environment variables (see `example.env.local`):
+- `NEXT_PUBLIC_ADMIN_PUB_HEX` — admin public x25519 key (client-visible, safe).
+- `ADMIN_PRIV_HEX` — admin private x25519 key (server-only, keep secret!).
+- `ADMIN_WALLET` — Ethereum address allowed to use admin endpoints/pages.
+
+Security notes:
+- Never expose `ADMIN_PRIV_HEX` to the client. Place it in `.env.local` (server runtime).
+- `ADMIN_WALLET` check prevents non-admin users from decrypting via API/UI.
 
 ## Code Quality
 

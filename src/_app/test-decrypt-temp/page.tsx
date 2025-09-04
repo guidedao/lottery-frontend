@@ -1,4 +1,4 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 
 import AdminDecryptClient from './ClientPanel';
 import { getServerSession } from 'next-auth';

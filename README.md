@@ -103,6 +103,7 @@ src/
     useBuyTickets.ts           # Enter / buyMoreTickets
   lib/
     abis/                      # Contract ABIs
+    auth.ts                    # NextAuth SIWE options (shared)
     utils.ts                   # Helpers
     web3-config.ts             # Wagmi/RainbowKit config
     xChaCha20/
@@ -156,11 +157,20 @@ Server-side session usage:
 - Import `authOptions` from `@/lib/auth` and pass it to `getServerSession(authOptions)`.
 - Example: `src/_app/test-decrypt-temp/page.tsx`.
 
+SIWE domain policy (strict):
+- The server derives the expected SIWE domain strictly from `NEXTAUTH_URL` (host only). No other fallbacks are used.
+- Production example: `NEXTAUTH_URL=https://lottery-frontend-jade.vercel.app`
+- Development example: `NEXTAUTH_URL=http://localhost:3000`
+
+CSRF/Nonce cookie:
+- In production NextAuth sets `__Host-next-auth.csrf-token`; in development it may set `next-auth.csrf-token`.
+- The server reads either of these and uses its value (before the `|`) as the SIWE nonce. If both message nonce and cookie exist but differ, verification is rejected.
+
 Troubleshooting SIWE verification:
-- Ensure `NEXTAUTH_URL` matches the app origin (protocol + host + optional port); the SIWE `domain` must match this host.
-- Set `NEXTAUTH_SECRET` in `.env.local` (a strong random string).
-- Make sure cookies are present; verification uses the `next-auth.csrf-token` cookie value as the SIWE `nonce`.
-- If you see “Error verifying signature”, check that the wallet is on the correct chain (Arbitrum Sepolia) and retry.
+- Ensure `NEXTAUTH_URL` host matches the host users visit (subdomain and port must match; paths like `/en` don’t matter).
+- Set `NEXTAUTH_SECRET` to a strong random string (consistent per environment).
+- Confirm your wallet is on Arbitrum Sepolia (Chain ID 421614).
+- If you hit “Error verifying signature”, clear site cookies and try again.
 
 
 Required env (see example.env.local):

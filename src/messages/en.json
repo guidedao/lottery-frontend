@@ -6,27 +6,61 @@
         "title": "Not found (404)",
         "description": "This page cannot be found!"
     },
-
     "header": {
         "title": "Hello GuideDAO"
     },
-
     "wallet": {
         "connect": "Connect Wallet",
         "connecting": "Connecting...",
         "connected": "Connected",
         "wrongNetwork": "Wrong Network"
     },
-
     "home": {
         "title": "Lottery soon... 🎁 ",
-        "footer_text": "made by GuideDAO"
+        "footer_text": "made by GuideDAO",
+        "join": "Join",
+        "return_tickets": "Return tickets",
+        "buy_tickets": "Buy tickets",
+        "buy_lottery_tickets": "Buy lottery tickets",
+        "buy_more_tickets": "Buy more tickets",
+        "buy_more_lottery_tickets": "Buy More Lottery Tickets",
+        "joined_for_now": "joined for now",
+        "you_already_have": "you already have",
+        "ticket_price": "Ticket Price",
+        "participants": "participant(s)",
+        "winner": "Winner",
+        "close": "Close",
+        "already_registered_in_this_lottery": "You are already registered in this lottery. You can buy additional tickets.",
+        "your_tickets": "Your tickets",
+        "your_refund": "your refund",
+        "your_win_chance": "Your Win Chance",
+        "number_of_tickets": "Number of Tickets",
+        "contact_details": "Contact Details (encrypted on submit)",
+        "amount": "Amount",
+        "Max": "Max.",
+        "return_period_has_ended": "Return period has ended.",
+        "Error": "Error",
+        "tickets_returned_successfully": "Tickets returned successfully.",
+        "returning": "Returning…",
+        "return_selected": "Return selected",
+        "return_all": "Return all",
+        "contact_info_placeholder": "Email, Telegram, or other contact info",
+        "total_cost": "Total Cost",
+        "Loading": "Loading...",
+        "chance_after_purchase": "Chance After Purchase",
+        "registration_is_currently_closed": "Registration is currently closed",
+        "failed_to_buy_tickets": "Failed to buy tickets",
+        "additional_tickets_purchased_successfully": "Additional tickets purchased successfully!",
+        "tickets_purchased_successfully!": "Tickets purchased successfully!",
+        "Processing": "Processing…",
+        "register_&_buy_tickets": "Register & Buy Tickets",
+        "tickets": "ticket(s)"
     },
-
     "footer": {
-        "about": "about",
+        "about": "About",
         "faq": "FAQ",
-        "totalParticipants": "total participants",
-        "winner": "winner"
+        "totalParticipants": "Total participants",
+        "maxParticipants": "Participants limit",
+        "winner": "Winner"
     }
 }

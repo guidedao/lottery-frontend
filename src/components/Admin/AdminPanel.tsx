@@ -2,12 +2,14 @@
 
 import { useEffect, useMemo, useState } from 'react';
 
+import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import useLotteryState from '@/hooks/useLotteryState';
 import useParticipantsMulticall, { type ParticipantInfoRow } from '@/hooks/useParticipantsMulticall';
 
 import CopyIconButton from './CopyIconButton';
 import ExportCsvButton from './ExportCsvButton';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 type DecryptState = {
     value?: string | null;
@@ -23,7 +25,15 @@ function shortHex(hex: string, take = 10) {
 export default function AdminPanel() {
     const { lotteryState } = useLotteryState();
     const { lotteryNumber } = lotteryState;
-    const { participants, isLoading, isError } = useParticipantsMulticall();
+    const [selectedLottery, setSelectedLottery] = useState<number>(lotteryNumber);
+    useEffect(() => {
+        // Initialize to current when data loads; clamp if over current
+        if (selectedLottery === 0 && lotteryNumber > 0) setSelectedLottery(lotteryNumber);
+        if (selectedLottery > lotteryNumber) setSelectedLottery(lotteryNumber);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [lotteryNumber]);
+
+    const { participants, isLoading, isError } = useParticipantsMulticall({ lotteryNumber: selectedLottery });
 
     const [decMap, setDecMap] = useState<Record<string, DecryptState>>({});
     const [copiedAddr, setCopiedAddr] = useState<Record<string, boolean>>({});
@@ -97,21 +107,52 @@ export default function AdminPanel() {
 
     return (
         <div className='container mx-auto px-4 py-28'>
-            <div className='mb-6 flex items-center justify-between gap-4'>
-                <h1 className='text-2xl font-bold'>Admin Panel</h1>
-                <ExportCsvButton
-                    participants={rows}
-                    decMap={decMap}
-                    lotteryNumber={lotteryNumber}
-                    disabled={isLoading || !hasParticipants}
-                />
+            <div className='mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between'>
+                <div>
+                    <h1 className='text-2xl font-bold'>Admin Panel</h1>
+                    <div className='mt-2 text-sm text-muted-foreground'>Current lottery number: {lotteryNumber}</div>
+                </div>
+                <div className='flex items-center gap-2'>
+                    <div className='text-sm text-muted-foreground'>View lottery #</div>
+                    <div className='flex items-center gap-1'>
+                        <button
+                            type='button'
+                            className='h-9 w-9 inline-flex items-center justify-center rounded-md border text-muted-foreground hover:text-foreground hover:bg-accent'
+                            onClick={() => setSelectedLottery((n) => Math.max(0, n - 1))}
+                            aria-label='Previous lottery'>
+                            <ChevronLeft className='size-4' />
+                        </button>
+                        <Input
+                            type='number'
+                            inputMode='numeric'
+                            className='w-28 text-center'
+                            min={0}
+                            max={lotteryNumber}
+                            value={selectedLottery}
+                            onChange={(e) => {
+                                const v = Number(e.target.value);
+                                if (Number.isFinite(v)) setSelectedLottery(Math.max(0, Math.min(v, lotteryNumber)));
+                            }}
+                        />
+                        <button
+                            type='button'
+                            className='h-9 w-9 inline-flex items-center justify-center rounded-md border text-muted-foreground hover:text-foreground hover:bg-accent'
+                            onClick={() => setSelectedLottery((n) => Math.min(lotteryNumber, n + 1))}
+                            aria-label='Next lottery'>
+                            <ChevronRight className='size-4' />
+                        </button>
+                    </div>
+                    <ExportCsvButton
+                        participants={rows}
+                        decMap={decMap}
+                        lotteryNumber={selectedLottery}
+                        disabled={isLoading || !hasParticipants}
+                    />
+                </div>
             </div>
 
-            <div className='mb-6'>
-                <div className='text-lg text-muted-foreground'>
-                    Current lottery index: {lotteryNumber}. Total participants in this lottery:{' '}
-                    {participants?.length}{' '}
-                </div>
+            <div className='mb-6 text-sm text-muted-foreground'>
+                Showing participants for lottery #{selectedLottery}. Count: {participants?.length}
             </div>
 
             {isError && (

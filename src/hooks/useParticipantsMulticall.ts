@@ -14,52 +14,105 @@ export interface ParticipantInfoRow {
     encryptedContactDetails: `0x${string}` | string;
 }
 
-export default function useParticipantsMulticall() {
+type UseParticipantsOptions = { lotteryNumber?: number };
+
+export default function useParticipantsMulticall(opts?: UseParticipantsOptions) {
     const config = useConfig();
     const { lotteryState } = useLotteryState();
 
-    const { lotteryNumber, participantsCount } = lotteryState;
+    const currentLottery = lotteryState.lotteryNumber;
+    const selectedLottery = opts?.lotteryNumber ?? currentLottery;
+    const isCurrentLottery = selectedLottery === currentLottery;
+    const currentCount = lotteryState.participantsCount;
+    const maxParticipants = lotteryState.maxParticipantsNumber || 0;
+
+    // Build a stable query that can serve both current and historical lotteries
+    const queryKey = [
+        TanstackKeys.useParticipantsMulticall,
+        selectedLottery,
+        isCurrentLottery ? currentCount : 'historical'
+    ] as const;
 
     const { data, refetch, isLoading, isFetching, isError, error } = useQuery({
-        enabled: participantsCount > 0,
-        queryKey: [TanstackKeys.useParticipantsMulticall, lotteryNumber, participantsCount],
+        enabled: isCurrentLottery ? currentCount > 0 : selectedLottery >= 0,
+        queryKey,
         queryFn: async () => {
             const contractAddress = projectConfig.lotteryCA as `0x${string}`;
 
-            // 1) Fetch all participant addresses by index
-            const participantCalls = Array.from({ length: participantsCount }, (_, i) => ({
-                address: contractAddress,
-                abi: lotteryABI,
-                functionName: 'participants' as const,
-                args: [BigInt(lotteryNumber), BigInt(i)]
-            }));
+            const zeroAddressRe = /^0x0+$/i;
+            const CHUNK = 128;
 
-            const addresses = (await readContracts(config, {
-                allowFailure: false,
-                contracts: participantCalls
-            })) as unknown as string[];
+            const fetchAddressesCurrent = async (): Promise<string[]> => {
+                if (currentCount <= 0) return [];
+                const calls = Array.from({ length: currentCount }, (_, i) => ({
+                    address: contractAddress,
+                    abi: lotteryABI,
+                    functionName: 'participants' as const,
+                    args: [BigInt(selectedLottery), BigInt(i)]
+                }));
+                const res = (await readContracts(config, {
+                    allowFailure: false,
+                    contracts: calls
+                })) as unknown as string[];
+                return res;
+            };
 
-            if (!addresses.length) return [] as ParticipantInfoRow[];
+            const fetchAddressesHistorical = async (): Promise<string[]> => {
+                const limit = Math.max(0, maxParticipants);
+                if (limit === 0) return [];
+                const out: string[] = [];
+                for (let start = 0; start < limit; start += CHUNK) {
+                    const end = Math.min(limit, start + CHUNK);
+                    const calls = Array.from({ length: end - start }, (_, j) => ({
+                        address: contractAddress,
+                        abi: lotteryABI,
+                        functionName: 'participants' as const,
+                        args: [BigInt(selectedLottery), BigInt(start + j)]
+                    }));
+                    const res = (await readContracts(config, {
+                        allowFailure: true,
+                        contracts: calls
+                    })) as unknown as Array<{ result?: string }>;
 
-            // 2) Fetch detailed info for each participant address
+                    let stop = false;
+                    for (const item of res) {
+                        const addr = item?.result as string | undefined;
+                        if (!addr || zeroAddressRe.test(addr)) {
+                            stop = true;
+                            break;
+                        }
+                        out.push(addr);
+                    }
+                    if (stop) break;
+                }
+                return out;
+            };
+
+            const addresses = isCurrentLottery ? await fetchAddressesCurrent() : await fetchAddressesHistorical();
+
+            if (addresses.length === 0) return [] as ParticipantInfoRow[];
+
+            // Pull per-user info
             const infoCalls = addresses.map((addr) => ({
                 address: contractAddress,
                 abi: lotteryABI,
                 functionName: 'participantsInfo' as const,
-                args: [BigInt(lotteryNumber), addr as `0x${string}`]
+                args: [BigInt(selectedLottery), addr as `0x${string}`]
             }));
 
             const infos = (await readContracts(config, {
-                allowFailure: false,
+                allowFailure: !isCurrentLottery, // be strict for current lottery; tolerant for historical
                 contracts: infoCalls
-            })) as unknown as [bigint, bigint, `0x${string}`][];
+            })) as unknown as Array<[bigint, bigint, `0x${string}`] | { result?: [bigint, bigint, `0x${string}`] }>;
 
             const rows: ParticipantInfoRow[] = addresses.map((addr, idx) => {
-                const [ticketsBought, participantIndex, encryptedContactDetails] = infos[idx] as unknown as [
-                    bigint,
-                    bigint,
-                    `0x${string}`
-                ];
+                // Handle both allowFailure=false tuple and allowFailure=true object shapes
+                const item = infos[idx] as
+                    | [bigint, bigint, `0x${string}`]
+                    | { result?: [bigint, bigint, `0x${string}`] };
+                const tuple = Array.isArray(item) ? item : item?.result;
+                const fallback: [bigint, bigint, `0x${string}`] = [0n, BigInt(idx), '0x' as `0x${string}`];
+                const [ticketsBought, participantIndex, encryptedContactDetails] = tuple || fallback;
                 return {
                     address: addr,
                     ticketsBought: Number(ticketsBought),
@@ -68,11 +121,10 @@ export default function useParticipantsMulticall() {
                 } satisfies ParticipantInfoRow;
             });
 
-            // Ensure sorted by participantIndex ascending
             rows.sort((a, b) => a.participantIndex - b.participantIndex);
             return rows;
         },
-        refetchInterval: 1000 * 60 // 1 minute
+        refetchInterval: 1000 * 60
     });
 
     return {

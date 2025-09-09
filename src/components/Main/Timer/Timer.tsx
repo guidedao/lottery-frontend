@@ -13,6 +13,8 @@ const LoadingTimer = ({ count = 3 }) => (
                 {idx < arr.length - 1 && ':'}
             </span>
         ))}
+        {/* Modal for debugging */}
+        {/* <LotteryStatusModal /> */}
     </div>
 );
 
@@ -53,10 +55,8 @@ export function Timer() {
     }, [registrationEndTime, refetch]);
 
     return (
-        <div className='flex flex-col items-center justify-center min-h-[300px]'>
-            <div
-                className='text-white text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-wider'
-                style={{ fontFamily: 'monospace' }}>
+        <div className='flex flex-col justify-center'>
+            <div className='flex text-white text-6xl sm:text-7xl md:text-8xl lg:text-7xl font-bold tracking-wider font-roboto'>
                 {isLoading ? <LoadingTimer /> : timeLeft}
             </div>
         </div>

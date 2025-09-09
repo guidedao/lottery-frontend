@@ -11,16 +11,23 @@ import { encryptWithAdminPub } from '@/lib/xChaCha20/encrypt-cha';
 import { LotteryStatus } from '@/types/enums';
 
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-globe-gen';
 import { useAccount } from 'wagmi';
 
 export default function BuyTicketsTEMP() {
+    const t = useTranslations();
     const [ticketsAmount, setTicketsAmount] = useState<number>(1);
     const [contactDetails, setContactDetails] = useState<string>('');
     const [encError, setEncError] = useState<string | null>(null);
     const [isEncrypting, setIsEncrypting] = useState<boolean>(false);
     const { buyTickets, isLoading, isError, error, isSuccess } = useBuyTickets();
-    const { lotteryState } = useLotteryState();
-    const { isActualParticipant, userTicketsCount, refundAmount } = useParticipantStatus();
+    const { lotteryState, refetch: refetchLotteryState } = useLotteryState();
+    const {
+        isActualParticipant,
+        userTicketsCount,
+        refundAmount,
+        refetch: refetchParticipantState
+    } = useParticipantStatus();
     const { address } = useAccount();
     const { status: authStatus } = useSession();
 
@@ -55,7 +62,9 @@ export default function BuyTicketsTEMP() {
                 encrypted = bytesToHex(payload);
             }
 
-            buyTickets({ ticketsAmount, encryptedContactDetails: encrypted });
+            await buyTickets({ ticketsAmount, encryptedContactDetails: encrypted });
+            refetchLotteryState();
+            refetchParticipantState();
         } catch (e) {
             const msg = e instanceof Error ? e.message : String(e);
             setEncError(`Encryption failed: ${msg}`);
@@ -87,31 +96,30 @@ export default function BuyTicketsTEMP() {
     const fmtPct = (v: number) => v.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
 
     return (
-        <div className='flex flex-col gap-4 p-6 bg-white rounded-lg shadow-md'>
+        // <div className='flex flex-col gap-4 p-6 bg-white rounded-lg shadow-md'>
+        <div className='flex flex-col gap-4'>
             <h2 className='text-2xl font-bold text-gray-900'>
-                {isActualParticipant ? 'Buy More Lottery Tickets' : 'Buy Lottery Tickets'}
+                {isActualParticipant ? t('home.buy_more_lottery_tickets') : t('home.buy_lottery_tickets')}
             </h2>
 
             {isActualParticipant && (
                 <>
                     <div className='bg-blue-50 border border-blue-200 rounded-md p-3'>
-                        <p className='text-sm text-blue-800'>
-                            You are already registered in this lottery. You can buy additional tickets.
-                        </p>
+                        <p className='text-sm text-blue-800'>{t('home.already_registered_in_this_lottery')}</p>
                     </div>
                     <div className='bg-gray-50 p-4 rounded-md'>
                         <div className='flex justify-between items-center'>
-                            <span className='text-sm text-gray-600'>Your Tickets:</span>
+                            <span className='text-sm text-gray-600'>{t('home.your_tickets')}:</span>
                             <span className='font-medium'>{userTicketsCount}</span>
                         </div>
                         <div className='flex justify-between items-center mt-2'>
-                            <span className='text-sm text-gray-600'>Your Refund:</span>
+                            <span className='text-sm text-gray-600'>{t('home.your_refund')}:</span>
                             <span className='font-medium'>
                                 {refundAmount ? `${Number(refundAmount) / 1e18} ETH` : '0 ETH'}
                             </span>
                         </div>
                         <div className='flex justify-between items-center mt-2'>
-                            <span className='text-sm text-gray-600'>Your Win Chance:</span>
+                            <span className='text-sm text-gray-600'>{t('home.your_win_chance')}:</span>
                             <span className='font-medium'>{fmtPct(yourChance)}%</span>
                         </div>
                     </div>
@@ -121,7 +129,7 @@ export default function BuyTicketsTEMP() {
             <div className='space-y-4'>
                 <div>
                     <label htmlFor='tickets-amount' className='block text-sm font-medium text-gray-700 mb-2'>
-                        Number of Tickets
+                        {t('home.number_of_tickets')}
                     </label>
                     <Input
                         id='tickets-amount'
@@ -138,7 +146,7 @@ export default function BuyTicketsTEMP() {
                     <div>
                         <div className='flex items-baseline justify-between mb-2'>
                             <label htmlFor='contact-details' className='block text-sm font-medium text-gray-700'>
-                                Contact Details (encrypted on submit)
+                                {t('home.contact_details')}
                             </label>
                             <span className='text-xs text-gray-500'>
                                 {Math.max(0, 80 - contactDetails.length)} left
@@ -149,7 +157,7 @@ export default function BuyTicketsTEMP() {
                             type='text'
                             value={contactDetails}
                             onChange={(e) => setContactDetails(e.target.value)}
-                            placeholder='Email, Telegram, or other contact info'
+                            placeholder={t('home.contact_info_placeholder')}
                             className='w-full'
                             maxLength={80}
                             disabled={!isRegistrationOpen || isLoading || isEncrypting}
@@ -164,22 +172,40 @@ export default function BuyTicketsTEMP() {
 
                 <div className='bg-gray-50 p-4 rounded-md'>
                     <div className='flex justify-between items-center'>
-                        <span className='text-sm text-gray-600'>Ticket Price:</span>
+                        <span className='text-sm text-gray-600'>{t('home.ticket_price')}:</span>
                         <span className='font-medium'>
                             {lotteryState.ticketPrice ? `${Number(lotteryState.ticketPrice) / 1e18} ETH` : 'Loading...'}
                         </span>
                     </div>
                     <div className='flex justify-between items-center mt-2'>
-                        <span className='text-sm text-gray-600'>Total Cost:</span>
+                        <span className='text-sm text-gray-600'>{t('home.total_cost')}:</span>
                         <span className='font-bold text-lg'>
-                            {totalCost ? `${Number(totalCost) / 1e18} ETH` : 'Loading...'}
+                            {totalCost ? `${Number(totalCost) / 1e18} ETH` : t('home.Loading')}
                         </span>
                     </div>
                     <div className='flex justify-between items-center mt-2'>
-                        <span className='text-sm text-gray-600'>Chance After Purchase:</span>
+                        <span className='text-sm text-gray-600'>{t('home.chance_after_purchase')}:</span>
                         <span className='font-medium'>{fmtPct(predictedChance)}%</span>
                     </div>
                 </div>
+
+                {!isRegistrationOpen && (
+                    <p className='text-sm text-red-600 text-center'>{t('home.registration_is_currently_closed')}</p>
+                )}
+
+                {(isError || encError) && (
+                    <p className='text-sm text-red-600 text-center'>
+                        {t('home.Error')}: {encError || error?.message || t('home.failed_to_buy_tickets')}
+                    </p>
+                )}
+
+                {isSuccess && (
+                    <p className='text-sm text-green-600 text-center'>
+                        {isActualParticipant
+                            ? t('home.additional_tickets_purchased_successfully')
+                            : t('home.tickets_purchased_successfully')}
+                    </p>
+                )}
 
                 <Button
                     onClick={handleBuyTickets}
@@ -190,32 +216,14 @@ export default function BuyTicketsTEMP() {
                         ticketsAmount <= 0 ||
                         (!isActualParticipant && (!contactDetails.trim() || !hasAdminPub))
                     }
-                    className='w-full'
+                    className='w-full cursor-pointer'
                     size='lg'>
                     {isLoading || isEncrypting
-                        ? 'Processing...'
+                        ? t('home.Processing')
                         : isActualParticipant
-                          ? 'Buy More Tickets'
-                          : 'Register & Buy Tickets'}
+                          ? t('home.buy_more_tickets')
+                          : t('home.register_&_buy_tickets')}
                 </Button>
-
-                {!isRegistrationOpen && (
-                    <p className='text-sm text-red-600 text-center'>Registration is currently closed</p>
-                )}
-
-                {(isError || encError) && (
-                    <p className='text-sm text-red-600 text-center'>
-                        Error: {encError || error?.message || 'Failed to buy tickets'}
-                    </p>
-                )}
-
-                {isSuccess && (
-                    <p className='text-sm text-green-600 text-center'>
-                        {isActualParticipant
-                            ? 'Additional tickets purchased successfully!'
-                            : 'Tickets purchased successfully!'}
-                    </p>
-                )}
             </div>
         </div>
     );

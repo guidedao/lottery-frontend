@@ -128,8 +128,10 @@ export default function AdminPanel() {
                         <TableHeader>
                             <TableRow>
                                 <TableHead className='w-24'>User #</TableHead>
+                                <TableHead className='w-24 text-center'>Tickets</TableHead>
                                 <TableHead className='w-[420px]'>Wallet address</TableHead>
-                                <TableHead className='w-[320px]'>Encrypted payload</TableHead>
+
+                                <TableHead className='w-[300px]'>Encrypted payload</TableHead>
                                 <TableHead className='w-[560px]'>Decrypted payload</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -140,6 +142,7 @@ export default function AdminPanel() {
                                 return (
                                     <TableRow key={`${p.participantIndex}-${p.address}`}>
                                         <TableCell>{p.participantIndex}</TableCell>
+                                        <TableCell className='text-center'>{p.ticketsBought}</TableCell>
                                         <TableCell>
                                             <div className='flex items-center gap-2'>
                                                 <span className='font-mono whitespace-nowrap'>{p.address}</span>

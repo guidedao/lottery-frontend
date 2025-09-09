@@ -54,6 +54,7 @@ export default function useParticipantStatus() {
         isActualParticipant: result.isActualParticipant,
         userTicketsCount: result.userTicketsCount,
         refundAmount: result.refundAmount,
+        canReturn: result.isActualParticipant && result.userTicketsCount > 0,
         refetch
     };
 }

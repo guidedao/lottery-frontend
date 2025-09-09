@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 
 import Waves from '@/blocks/Backgrounds/Waves/Waves';
-import BuyTicketsTEMP from '@/components/Main/BuyTicketsTEMP';
-import { LotteryStatusDisplay } from '@/components/Main/LotteryStatusDisplayTEMP';
-import ReturnTicketsPanel from '@/components/Main/ReturnTicketsPanel';
-import { Timer } from '@/components/Main/Timer/Timer';
+import TicketTimer from '@/components/Main/Timer/TicketTimer';
+import { TicketWidgets } from '@/components/Main/Widgets/TicketWidgets';
 import { Footer } from '@/components/footer/Footer';
 
 import { getTranslations } from 'next-globe-gen';
@@ -41,25 +39,16 @@ export default function Home() {
 
                 {/* Content */}
                 <div className='container mx-auto relative z-10 flex flex-col px-4 pt-20 pb-32 gap-8'>
-                    <div className='text-center'>
-                        <Timer />
-                    </div>
-
-                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 items-start'>
-                        {/* Left: Buy tickets */}
-                        <div>
-                            <BuyTicketsTEMP />
-                            <ReturnTicketsPanel />
-                        </div>
+                    <div className='flex lg:flex-row w-full flex-col lg:mt-[140px] mt-[48px] gap-10 sm:gap-12 items-start lg:gap-20'>
+                        {/* Left: Timer  & lottery ticket */}
+                        <TicketTimer />
                         {/* Right: Lottery state */}
-                        <div>
-                            <LotteryStatusDisplay />
-                        </div>
+                        <TicketWidgets />
                     </div>
                 </div>
             </main>
 
-            <Footer totalParticipants={22} winner='???' />
+            <Footer />
         </>
     );
 }

@@ -66,12 +66,10 @@ export default function useBuyTickets() {
             if (hash) {
                 try {
                     await waitForTransactionReceipt(config, { hash });
-                    // Transaction confirmed, now invalidate queries
                     queryClient.invalidateQueries({ queryKey: [TanstackKeys.useLotteryState] });
                     queryClient.invalidateQueries({ queryKey: [TanstackKeys.useParticipantStatus] });
                 } catch (error) {
                     console.error('Error waiting for transaction confirmation:', error);
-                    // Still invalidate queries even if confirmation fails
                     queryClient.invalidateQueries({ queryKey: [TanstackKeys.useLotteryState] });
                     queryClient.invalidateQueries({ queryKey: [TanstackKeys.useParticipantStatus] });
                 }

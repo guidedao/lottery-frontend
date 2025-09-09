@@ -99,8 +99,10 @@ export default function AdminPanel() {
             <h1 className='text-2xl font-bold mb-6'>Admin Panel</h1>
 
             <div className='mb-6'>
-                <div className='text-sm text-muted-foreground'>Current lottery number</div>
-                <div className='text-3xl font-semibold'>{lotteryNumber}</div>
+                <div className='text-lg text-muted-foreground'>
+                    Current lottery index: {lotteryNumber}. Total participants in this lottery:{' '}
+                    {participants?.length}{' '}
+                </div>
             </div>
 
             {isError && (

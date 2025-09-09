@@ -20,7 +20,6 @@ export function LotteryStatusDisplay() {
     } = lotteryState;
 
     return (
-        // <div className='bg-white/10 backdrop-blur-sm rounded-lg p-6 text-white'>
         <div className='text-white'>
             <div className='space-y-4'>
                 {/* Status Display */}

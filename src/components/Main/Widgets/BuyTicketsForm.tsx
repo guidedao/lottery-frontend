@@ -14,20 +14,15 @@ import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-globe-gen';
 import { useAccount } from 'wagmi';
 
-export default function BuyTicketsTEMP() {
+export default function BuyTicketsForm() {
     const t = useTranslations();
     const [ticketsAmount, setTicketsAmount] = useState<number>(1);
     const [contactDetails, setContactDetails] = useState<string>('');
     const [encError, setEncError] = useState<string | null>(null);
     const [isEncrypting, setIsEncrypting] = useState<boolean>(false);
     const { buyTickets, isLoading, isError, error, isSuccess } = useBuyTickets();
-    const { lotteryState, refetch: refetchLotteryState } = useLotteryState();
-    const {
-        isActualParticipant,
-        userTicketsCount,
-        refundAmount,
-        refetch: refetchParticipantState
-    } = useParticipantStatus();
+    const { lotteryState } = useLotteryState();
+    const { isActualParticipant, userTicketsCount, refundAmount } = useParticipantStatus();
     const { address } = useAccount();
     const { status: authStatus } = useSession();
 
@@ -63,8 +58,6 @@ export default function BuyTicketsTEMP() {
             }
 
             await buyTickets({ ticketsAmount, encryptedContactDetails: encrypted });
-            refetchLotteryState();
-            refetchParticipantState();
         } catch (e) {
             const msg = e instanceof Error ? e.message : String(e);
             setEncError(`Encryption failed: ${msg}`);
@@ -96,7 +89,6 @@ export default function BuyTicketsTEMP() {
     const fmtPct = (v: number) => v.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
 
     return (
-        // <div className='flex flex-col gap-4 p-6 bg-white rounded-lg shadow-md'>
         <div className='flex flex-col gap-4'>
             <h2 className='text-2xl font-bold text-gray-900'>
                 {isActualParticipant ? t('home.buy_more_lottery_tickets') : t('home.buy_lottery_tickets')}

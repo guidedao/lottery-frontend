@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dialog';
 import useParticipantStatus from '@/hooks/useParticipantStatus';
 
-import ReturnTicketsPanel from '../ReturnTicketsPanel';
+import ReturnTicketsPanel from '../Widgets/ReturnTicketsPanel';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-globe-gen';
 import { useAccount } from 'wagmi';

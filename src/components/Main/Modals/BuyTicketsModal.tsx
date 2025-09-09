@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -10,7 +12,7 @@ import {
 } from '@/components/ui/dialog';
 import useParticipantStatus from '@/hooks/useParticipantStatus';
 
-import BuyTicketsTEMP from '../Widgets/BuyTicketsForm';
+import BuyTicketsForm from '../Widgets/BuyTicketsForm';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-globe-gen';
 import { useAccount } from 'wagmi';
@@ -34,7 +36,7 @@ export function BuyTicketsModal() {
                 <DialogHeader className='sr-only'>
                     <DialogTitle>{t('home.buy_tickets')}</DialogTitle>
                 </DialogHeader>
-                <BuyTicketsTEMP />
+                <BuyTicketsForm />
 
                 <DialogFooter className='sm:justify-start'>
                     <DialogClose asChild>

@@ -51,7 +51,7 @@
         "registration_is_currently_closed": "Registration is currently closed",
         "failed_to_buy_tickets": "Failed to buy tickets",
         "additional_tickets_purchased_successfully": "Additional tickets purchased successfully!",
-        "tickets_purchased_successfully!": "Tickets purchased successfully!",
+        "tickets_purchased_successfully": "Tickets purchased successfully!",
         "Processing": "Processing…",
         "register_&_buy_tickets": "Register & Buy Tickets",
         "tickets": "ticket(s)"

@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -9,7 +11,7 @@ import {
     DialogTrigger
 } from '@/components/ui/dialog';
 
-import { LotteryStatusDisplay } from '../LotteryStatusPanel';
+import { LotteryStatusDisplay } from '../Widgets/LotteryStatusPanel';
 import { Info } from 'lucide-react';
 import { useTranslations } from 'next-globe-gen';
 

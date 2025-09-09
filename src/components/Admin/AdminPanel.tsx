@@ -7,6 +7,7 @@ import useLotteryState from '@/hooks/useLotteryState';
 import useParticipantsMulticall, { type ParticipantInfoRow } from '@/hooks/useParticipantsMulticall';
 
 import CopyIconButton from './CopyIconButton';
+import ExportCsvButton from './ExportCsvButton';
 
 type DecryptState = {
     value?: string | null;
@@ -96,7 +97,15 @@ export default function AdminPanel() {
 
     return (
         <div className='container mx-auto px-4 py-28'>
-            <h1 className='text-2xl font-bold mb-6'>Admin Panel</h1>
+            <div className='mb-6 flex items-center justify-between gap-4'>
+                <h1 className='text-2xl font-bold'>Admin Panel</h1>
+                <ExportCsvButton
+                    participants={rows}
+                    decMap={decMap}
+                    lotteryNumber={lotteryNumber}
+                    disabled={isLoading || !hasParticipants}
+                />
+            </div>
 
             <div className='mb-6'>
                 <div className='text-lg text-muted-foreground'>

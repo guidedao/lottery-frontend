@@ -66,6 +66,8 @@ src/
     layout.tsx
     page.tsx                       # Composes Timer + Buy + State; adds Return panel (left column)
     [...catchAll]/                 # next-globe-gen helper route
+    admin/
+      page.tsx                     # Admin page (server-gated) with participants table
     test-decrypt-temp/             # Admin-only test UI for encrypt/decrypt
       page.tsx                     # Server-gated page (403 if not admin)
       ClientPanel.tsx              # Client UI for encryption/decryption
@@ -75,9 +77,13 @@ src/
       en/
         layout.tsx
         page.tsx
+        admin/
+          page.tsx                 # i18n wrapper for _app/admin/page.tsx
       ru/
         layout.tsx
         page.tsx
+        admin/
+          page.tsx                 # i18n wrapper for _app/admin/page.tsx
     api/
       auth/[...nextauth]/route.ts  # NextAuth + SIWE route
       admin/decrypt/route.ts       # Admin-only decrypt endpoint
@@ -92,6 +98,10 @@ src/
       WalletControls.tsx           # Network/account buttons
     footer/
       Footer.tsx
+    Admin/
+      AdminPanel.tsx               # Admin UI: lottery selector, table, decrypt view, CSV export
+      CopyIconButton.tsx           # Reusable copy-to-clipboard icon button
+      ExportCsvButton.tsx          # Export current table view to CSV
     Main/
       BuyTicketsTEMP.tsx           # Buy/Register with contact encryption (SIWE-gated)
       ReturnTicketsPanel.tsx       # Return tickets (separate panel, status-gated)
@@ -107,6 +117,7 @@ src/
     useParticipantStatus.ts        # Multicall read: isActualParticipant, userTicketsCount, refundAmount
     useBuyTickets.ts               # Enter / buyMoreTickets with value; invalidates cached queries
     useReturnTickets.ts            # Return tickets; invalidates cached queries
+    useParticipantsMulticall.ts    # Participants table loader (current or specific lottery via { lotteryNumber })
 
   lib/
     abis/

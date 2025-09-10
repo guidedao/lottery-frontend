@@ -20,7 +20,7 @@ export function LotteryStatusDisplay() {
     } = lotteryState;
 
     return (
-        <div className='bg-white/10 backdrop-blur-sm rounded-lg p-6 text-white'>
+        <div className='text-white'>
             <div className='space-y-4'>
                 {/* Status Display */}
                 <div className='flex items-center justify-between'>
@@ -116,7 +116,7 @@ export function LotteryStatusDisplay() {
                 </div>
 
                 {/* Debug Info (remove in production) */}
-                <div className='mt-4 pt-4 border-t border-white/20'>
+                <div className='mt-4 pt-4 shadow'>
                     <div className='text-sm text-gray-400 space-y-1'>
                         <div>Raw Status Value: {status}</div>
                         <div>Is Active: {isLotteryActive(status) ? 'Yes' : 'No'}</div>

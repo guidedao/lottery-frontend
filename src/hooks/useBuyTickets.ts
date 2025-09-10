@@ -4,7 +4,7 @@ import { TanstackKeys } from '@/types/enums';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { useAccount, useConfig } from 'wagmi';
-import { readContract, writeContract } from 'wagmi/actions';
+import { readContract, waitForTransactionReceipt, writeContract } from 'wagmi/actions';
 
 interface BuyTicketsParams {
     ticketsAmount: number;
@@ -61,11 +61,19 @@ export default function useBuyTickets() {
                 });
             }
         },
-        onSuccess: () => {
-            // Invalidate and refetch lottery state after successful purchase
-            queryClient.invalidateQueries({ queryKey: [TanstackKeys.useLotteryState] });
-            // Also invalidate participant status to update UI
-            queryClient.invalidateQueries({ queryKey: [TanstackKeys.useParticipantStatus] });
+        onSuccess: async (hash) => {
+            // Wait for transaction to be confirmed before invalidating queries
+            if (hash) {
+                try {
+                    await waitForTransactionReceipt(config, { hash });
+                    queryClient.invalidateQueries({ queryKey: [TanstackKeys.useLotteryState] });
+                    queryClient.invalidateQueries({ queryKey: [TanstackKeys.useParticipantStatus] });
+                } catch (error) {
+                    console.error('Error waiting for transaction confirmation:', error);
+                    queryClient.invalidateQueries({ queryKey: [TanstackKeys.useLotteryState] });
+                    queryClient.invalidateQueries({ queryKey: [TanstackKeys.useParticipantStatus] });
+                }
+            }
         }
     });
 

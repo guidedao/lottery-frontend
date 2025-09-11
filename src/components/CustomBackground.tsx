@@ -6,7 +6,7 @@ export default function SiteBackground() {
     return (
         <div className='fixed inset-0 -z-10 pointer-events-none'>
             {/* Base dark background */}
-            <div className='absolute inset-0 bg-black' />
+            <div className='absolute inset-0 bg-background' />
 
             {/* Waves canvas */}
             <Waves
@@ -24,7 +24,7 @@ export default function SiteBackground() {
             />
 
             {/* Dark overlay for readability */}
-            <div className='absolute inset-0 bg-black/40' />
+            <div className='absolute inset-0 bg-background/40' />
         </div>
     );
 }

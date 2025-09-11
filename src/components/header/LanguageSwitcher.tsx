@@ -23,17 +23,17 @@ export default function LanguageSwitcher() {
 
     return (
         <Select value={activeLocale} onValueChange={handleLanguageChange}>
-            <SelectTrigger className='w-[94px] bg-transparent border-none text-white hover:bg-white/10 cursor-pointer'>
-                <Globe className='h-4 w-4 text-white' />
+            <SelectTrigger className='w-[94px] bg-transparent dark:bg-transparent border-none text-foreground hover:bg-transparent dark:hover:bg-transparent cursor-pointer shadow-none focus-visible:ring-0 focus-visible:border-transparent'>
+                <Globe className='h-4 w-4 text-foreground' />
 
                 <SelectValue>{getLanguageDisplay(activeLocale)}</SelectValue>
             </SelectTrigger>
-            <SelectContent className='bg-[rgba(15,15,20,0.95)] text-white border-white/10 backdrop-blur-xl'>
+            <SelectContent className='bg-background/10 border border-border/60 backdrop-blur-md shadow-none'>
                 {schema.locales.map((locale) => (
                     <SelectItem
                         key={locale}
                         value={locale}
-                        className='text-white/90 focus:bg-white/10 focus:text-white'>
+                        className='text-foreground/90 focus:bg-foreground/10 focus:text-foreground'>
                         {getLanguageDisplay(locale)}
                     </SelectItem>
                 ))}

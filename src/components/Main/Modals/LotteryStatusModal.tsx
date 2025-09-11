@@ -21,11 +21,11 @@ export function LotteryStatusModal() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Info className='text-white cursor-pointer' />
+                <Info className='text-foreground cursor-pointer' />
             </DialogTrigger>
-            <DialogContent className='sm:max-w-md bg-black/25 backdrop-blur-sm shadow-lg shadow-cyan-800/20 transition border-0'>
+            <DialogContent className='sm:max-w-md surface-glass-md shadow-lg shadow-cyan-800/20 transition'>
                 <DialogHeader>
-                    <DialogTitle className='text-white sr-only'>Lottery contract raw status</DialogTitle>
+                    <DialogTitle className='text-foreground sr-only'>Lottery contract raw status</DialogTitle>
                 </DialogHeader>
                 <LotteryStatusDisplay />
 

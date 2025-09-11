@@ -48,7 +48,7 @@ export default function RootLayout({
 }>) {
     const locale = useLocale();
     return (
-        <html lang={locale}>
+        <html lang={locale} className='dark'>
             <body
                 className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} ${keaniaOne.variable} ${agave.variable} antialiased`}>
                 <Web3Provider>

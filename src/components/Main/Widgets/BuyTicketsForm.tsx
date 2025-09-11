@@ -90,28 +90,28 @@ export default function BuyTicketsForm() {
 
     return (
         <div className='flex flex-col gap-4'>
-            <h2 className='text-2xl font-bold text-gray-900'>
+            <h2 className='text-2xl font-bold text-foreground'>
                 {isActualParticipant ? t('home.buy_more_lottery_tickets') : t('home.buy_lottery_tickets')}
             </h2>
 
             {isActualParticipant && (
                 <>
-                    <div className='bg-blue-50 border border-blue-200 rounded-md p-3'>
-                        <p className='text-sm text-blue-800'>{t('home.already_registered_in_this_lottery')}</p>
+                    <div className='surface-glass rounded-md p-3'>
+                        <p className='text-sm text-foreground'>{t('home.already_registered_in_this_lottery')}</p>
                     </div>
-                    <div className='bg-gray-50 p-4 rounded-md'>
+                    <div className='surface-glass p-4 rounded-md'>
                         <div className='flex justify-between items-center'>
-                            <span className='text-sm text-gray-600'>{t('home.your_tickets')}:</span>
+                            <span className='text-sm text-muted-foreground'>{t('home.your_tickets')}:</span>
                             <span className='font-medium'>{userTicketsCount}</span>
                         </div>
                         <div className='flex justify-between items-center mt-2'>
-                            <span className='text-sm text-gray-600'>{t('home.your_refund')}:</span>
+                            <span className='text-sm text-muted-foreground'>{t('home.your_refund')}:</span>
                             <span className='font-medium'>
                                 {refundAmount ? `${Number(refundAmount) / 1e18} ETH` : '0 ETH'}
                             </span>
                         </div>
                         <div className='flex justify-between items-center mt-2'>
-                            <span className='text-sm text-gray-600'>{t('home.your_win_chance')}:</span>
+                            <span className='text-sm text-muted-foreground'>{t('home.your_win_chance')}:</span>
                             <span className='font-medium'>{fmtPct(yourChance)}%</span>
                         </div>
                     </div>
@@ -120,7 +120,7 @@ export default function BuyTicketsForm() {
 
             <div className='space-y-4'>
                 <div>
-                    <label htmlFor='tickets-amount' className='block text-sm font-medium text-gray-700 mb-2'>
+                    <label htmlFor='tickets-amount' className='block text-sm font-medium text-muted-foreground mb-2'>
                         {t('home.number_of_tickets')}
                     </label>
                     <Input
@@ -137,10 +137,12 @@ export default function BuyTicketsForm() {
                 {!isActualParticipant && (
                     <div>
                         <div className='flex items-baseline justify-between mb-2'>
-                            <label htmlFor='contact-details' className='block text-sm font-medium text-gray-700'>
+                            <label
+                                htmlFor='contact-details'
+                                className='block text-sm font-medium text-muted-foreground'>
                                 {t('home.contact_details')}
                             </label>
-                            <span className='text-xs text-gray-500'>
+                            <span className='text-xs text-muted-foreground'>
                                 {Math.max(0, 80 - contactDetails.length)} left
                             </span>
                         </div>
@@ -155,44 +157,44 @@ export default function BuyTicketsForm() {
                             disabled={!isRegistrationOpen || isLoading || isEncrypting}
                         />
                         {!hasAdminPub && (
-                            <p className='text-xs text-red-600 mt-1'>
+                            <p className='text-xs text-destructive mt-1'>
                                 Encryption key not configured (NEXT_PUBLIC_ADMIN_PUB_HEX).
                             </p>
                         )}
                     </div>
                 )}
 
-                <div className='bg-gray-50 p-4 rounded-md'>
+                <div className='surface-glass p-4 rounded-md'>
                     <div className='flex justify-between items-center'>
-                        <span className='text-sm text-gray-600'>{t('home.ticket_price')}:</span>
+                        <span className='text-sm text-muted-foreground'>{t('home.ticket_price')}:</span>
                         <span className='font-medium'>
                             {lotteryState.ticketPrice ? `${Number(lotteryState.ticketPrice) / 1e18} ETH` : 'Loading...'}
                         </span>
                     </div>
                     <div className='flex justify-between items-center mt-2'>
-                        <span className='text-sm text-gray-600'>{t('home.total_cost')}:</span>
+                        <span className='text-sm text-muted-foreground'>{t('home.total_cost')}:</span>
                         <span className='font-bold text-lg'>
                             {totalCost ? `${Number(totalCost) / 1e18} ETH` : t('home.Loading')}
                         </span>
                     </div>
                     <div className='flex justify-between items-center mt-2'>
-                        <span className='text-sm text-gray-600'>{t('home.chance_after_purchase')}:</span>
+                        <span className='text-sm text-muted-foreground'>{t('home.chance_after_purchase')}:</span>
                         <span className='font-medium'>{fmtPct(predictedChance)}%</span>
                     </div>
                 </div>
 
                 {!isRegistrationOpen && (
-                    <p className='text-sm text-red-600 text-center'>{t('home.registration_is_currently_closed')}</p>
+                    <p className='text-sm text-destructive text-center'>{t('home.registration_is_currently_closed')}</p>
                 )}
 
                 {(isError || encError) && (
-                    <p className='text-sm text-red-600 text-center'>
+                    <p className='text-sm text-destructive text-center'>
                         {t('home.Error')}: {encError || error?.message || t('home.failed_to_buy_tickets')}
                     </p>
                 )}
 
                 {isSuccess && (
-                    <p className='text-sm text-green-600 text-center'>
+                    <p className='text-sm text-primary text-center'>
                         {isActualParticipant
                             ? t('home.additional_tickets_purchased_successfully')
                             : t('home.tickets_purchased_successfully')}

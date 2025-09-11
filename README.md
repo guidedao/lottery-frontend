@@ -93,11 +93,6 @@ src/
     icon.png
     favicon.ico
 
-  blocks/
-    Backgrounds/
-      Waves/
-        Waves.tsx
-
   components/
     header/
       Header.tsx                   # App header
@@ -125,6 +120,8 @@ src/
         ReturnTicketsPanel.tsx
         TicketWidget.tsx
         TicketWidgets.tsx
+    ui/blocks/Backgrounds/Waves/   # Background effect used by CustomBackground
+      Waves.tsx
     ui/                            # Reusable UI primitives (shadcn/ui)
       alert-dialog.tsx
       button.tsx
@@ -173,13 +170,35 @@ src/
   middleware.ts                    # Locale middleware (next-globe-gen)
 ```
 
+## Styling (globals.css)
+
+Dark-only theme with design tokens lives in `src/styles/globals.css`.
+
+- Root setup:
+  - Dark mode is forced via `<html class="dark">` in `src/_app/layout.tsx`.
+  - `.dark { color-scheme: dark; }` enables native dark scrollbars/inputs.
+- Tokens (in `.dark`):
+  - `--background`, `--foreground` – page background and primary text.
+  - `--card`, `--card-foreground` – solid surfaces.
+  - `--input` – glassy surface color used for translucent cards.
+  - `--border` – generic border color.
+  - `--muted-foreground` – secondary text.
+  - `--primary`, `--primary-foreground` – brand accent and its contrast text.
+  - `--popover`, `--popover-foreground` – overlays/popovers.
+- Tailwind mapping via `@theme inline` exposes tokens as utilities:
+  - Examples: `bg-background`, `text-foreground`, `bg-card`, `border-border`, `text-muted-foreground`, `bg-input/30`, `text-primary`.
+- Utilities for glass surfaces (added under `@layer utilities`):
+  - `.surface-glass` → `bg-input/30 border border-border backdrop-blur-xs`.
+  - `.surface-glass-md` → `bg-input/40 border border-border backdrop-blur`.
+  - Use them on cards/popovers instead of repeating classes.
+
 ## Internationalization (i18n)
 
 - i18n engine: `next-globe-gen`
 - Locales: English (`en`), Russian (`ru`) — see `i18n.config.ts`
 - Middleware: `src/middleware.ts` (re-exports next-globe-gen middleware) with a matcher to ignore Next internals/static.
 - Messages: `src/messages/en.json`, `src/messages/ru.json`
-- Language switcher: `src/components/LanguageSwitcher.tsx`
+- Language switcher: `src/components/header/LanguageSwitcher.tsx`
 
 Useful links:
 - next-globe-gen: https://github.com/next-globe-gen/next-globe-gen

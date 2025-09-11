@@ -53,15 +53,16 @@ export function canRegister(status: LotteryStatus): boolean {
 export const formatTime = (time: number) => `${time}`.padStart(2, '0');
 
 /**
- * Returns hours, minutes, and seconds left until `endTime`.
- * @param endTime - timestamp in **milliseconds**
+ * Returns days, hours, minutes, and seconds left until `endTimeMs`.
+ * @param endTimeMs - timestamp in milliseconds
  */
-export const getTimeLeft = (endTimeMs: number): { hours: number; minutes: number; seconds: number } => {
+export const getTimeLeft = (endTimeMs: number): { days: number; hours: number; minutes: number; seconds: number } => {
     const diffSec = Math.max(Math.floor((endTimeMs - Date.now()) / 1000), 0);
 
-    return {
-        hours: Math.floor(diffSec / 3600),
-        minutes: Math.floor((diffSec % 3600) / 60),
-        seconds: diffSec % 60
-    };
+    const days = Math.floor(diffSec / 86400);
+    const hours = Math.floor((diffSec % 86400) / 3600);
+    const minutes = Math.floor((diffSec % 3600) / 60);
+    const seconds = diffSec % 60;
+
+    return { days, hours, minutes, seconds };
 };

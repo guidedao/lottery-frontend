@@ -1,7 +1,8 @@
-import LanguageSwitcher from '@/components/header/LanguageSwitcher';
-import { WalletConnectButton } from '@/components/header/WalletConnectButton';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import LanguageSwitcher from '@/components/header/LanguageSwitcher';
+import { WalletConnectButton } from '@/components/header/WalletConnectButton';
 
 import { MobileMenu } from './MobileMenu';
 

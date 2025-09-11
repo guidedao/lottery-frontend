@@ -17,6 +17,25 @@ export default function Header() {
                     </Link>
                 </div>
 
+                {/* Navigation (desktop only) */}
+                <nav className='hidden lg:flex items-center gap-2 text-sm'>
+                    <Link
+                        href='/'
+                        className='inline-flex items-center h-8 rounded-md px-3 text-white hover:text-white hover:bg-white/10 transition-colors'>
+                        Home
+                    </Link>
+                    <Link
+                        href='/about'
+                        className='inline-flex items-center h-8 rounded-md px-3 text-white hover:text-white hover:bg-white/10 transition-colors'>
+                        About
+                    </Link>
+                    <Link
+                        href='/faq'
+                        className='inline-flex items-center h-8 rounded-md px-3 text-white hover:text-white hover:bg-white/10 transition-colors'>
+                        FAQ
+                    </Link>
+                </nav>
+
                 {/* Right - Language switcher, wallet button, mobile menu */}
                 <div className='flex items-center gap-3'>
                     <div className='hidden lg:flex'>

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Keania_One, Roboto } from 'next/font/google';
 import localFont from 'next/font/local';
 
+import SiteBackground from '@/components/CustomBackground';
 import { Footer } from '@/components/footer/Footer';
 import Header from '@/components/header/Header';
 import { Web3Provider } from '@/providers/Web3Provider';
@@ -51,6 +52,7 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} ${keaniaOne.variable} ${agave.variable} antialiased`}>
                 <Web3Provider>
+                    <SiteBackground />
                     <Header />
                     {children}
                     <Footer />

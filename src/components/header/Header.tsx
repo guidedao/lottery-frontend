@@ -8,7 +8,12 @@ import { MobileMenu } from './MobileMenu';
 
 export default function Header() {
     return (
-        <header className='fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-sm'>
+        <header
+            className='
+                fixed top-0 left-0 right-0 z-50
+                bg-black/20 backdrop-blur-xs
+                mask-b-from-[calc(100%-4px)] mask-b-to-[100%]
+            '>
             <div className='container mx-auto px-4 py-3 flex items-center justify-between'>
                 {/* Left - Logo */}
                 <div className='flex items-center'>

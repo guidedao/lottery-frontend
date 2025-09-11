@@ -10,7 +10,7 @@ export default function Header() {
     return (
         <header
             className='
-                fixed top-0 left-0 right-0 z-50
+                relative w-full z-50
                 bg-black/20 backdrop-blur-xs
                 mask-b-from-[calc(100%-4px)] mask-b-to-[100%]
             '>

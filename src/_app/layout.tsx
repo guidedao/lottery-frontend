@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Keania_One, Roboto } from 'next/font/google';
 import localFont from 'next/font/local';
 
+import { Footer } from '@/components/footer/Footer';
 import Header from '@/components/header/Header';
 import { Web3Provider } from '@/providers/Web3Provider';
 import '@/styles/globals.css';
@@ -52,6 +53,7 @@ export default function RootLayout({
                 <Web3Provider>
                     <Header />
                     {children}
+                    <Footer />
                 </Web3Provider>
             </body>
         </html>

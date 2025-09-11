@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import Waves from '@/blocks/Backgrounds/Waves/Waves';
 import TicketTimer from '@/components/Main/Timer/TicketTimer';
 import { TicketWidgets } from '@/components/Main/Widgets/TicketWidgets';
-import { Footer } from '@/components/footer/Footer';
 
 import { getTranslations } from 'next-globe-gen';
 
@@ -38,7 +37,7 @@ export default function Home() {
                 <div className='fixed inset-0 bg-black/40' />
 
                 {/* Content */}
-                <div className='container mx-auto relative z-10 flex flex-col px-4 pt-20 pb-32 gap-8'>
+                <div className='container mx-auto relative z-10 flex flex-col px-4 pt-20 pb-16 gap-8'>
                     <div className='flex lg:flex-row w-full flex-col lg:mt-[140px] mt-[48px] gap-10 sm:gap-12 items-start lg:gap-20'>
                         {/* Left: Timer  & lottery ticket */}
                         <TicketTimer />
@@ -47,8 +46,6 @@ export default function Home() {
                     </div>
                 </div>
             </main>
-
-            <Footer />
         </>
     );
 }

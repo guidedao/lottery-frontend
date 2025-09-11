@@ -20,7 +20,11 @@ type WalletControlsProps = {
 export default function WalletControls({ account, openAccountModal }: WalletControlsProps) {
     return (
         <div className='flex gap-2'>
-            <Button onClick={openAccountModal} variant='ghost' size='sm' className='text-white hover:bg-white/10'>
+            <Button
+                onClick={openAccountModal}
+                variant='ghost'
+                size='sm'
+                className='text-white bg-transparent border-none hover:bg-white/10 dark:hover:bg-white/10 hover:text-white'>
                 {account.displayName}
                 {account.displayBalance ? ` (${account.displayBalance})` : ''}
             </Button>

@@ -11,7 +11,7 @@ import {
     DialogTrigger
 } from '@/components/ui/dialog';
 
-import { LotteryStatusDisplay } from '../Widgets/LotteryStatusPanel';
+import { LotteryStatusDisplay } from '../UserWidgets/LotteryStatusPanel';
 import { Info } from 'lucide-react';
 import { useTranslations } from 'next-globe-gen';
 

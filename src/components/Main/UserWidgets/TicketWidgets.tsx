@@ -13,16 +13,12 @@ export const TicketWidgets = () => {
     const t = useTranslations();
     const { lotteryState } = useLotteryState();
     const { userTicketsCount } = useParticipantStatus();
-    const { participantsCount, ticketPrice, lastWinner } = lotteryState;
+    const { participantsCount, ticketPrice } = lotteryState;
 
     const ticketPriceETH = formatEther(ticketPrice);
-    const winner =
-        lastWinner && lastWinner !== '0x0000000000000000000000000000000000000000'
-            ? `${lastWinner.slice(0, 6)}...${lastWinner.slice(-4)}`
-            : '???';
 
     return (
-        <section className='flex flex-row flex-wrap gap-4 w-full lg:w-1/2'>
+        <section className='flex flex-row flex-wrap gap-4 w-full lg:w-1/2 lg:self-stretch'>
             <TicketWidget
                 title={`${participantsCount} ${t('home.participants')}`}
                 description={t('home.joined_for_now')}
@@ -34,13 +30,6 @@ export const TicketWidgets = () => {
                 actionButton={<ReturnTicketsModal />}
             />
             <TicketWidget title={`${ticketPriceETH} ETH`} description={t('home.ticket_price')} />
-
-            <section className='surface-glass p-6 rounded-xl w-full mt-6 lg:mt-8'>
-                <h2 className='flex justify-between text-[28px] sm:text-[46px] font-medium text-foreground gap-6'>
-                    <span>{t('home.winner')}:</span>
-                    <span className='overflow-hidden text-ellipsis'>{winner}</span>
-                </h2>
-            </section>
         </section>
     );
 };

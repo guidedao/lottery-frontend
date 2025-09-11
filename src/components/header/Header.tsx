@@ -19,7 +19,9 @@ export default function Header() {
 
                 {/* Right - Language switcher, wallet button, mobile menu */}
                 <div className='flex items-center gap-3'>
-                    <LanguageSwitcher />
+                    <div className='hidden lg:flex'>
+                        <LanguageSwitcher />
+                    </div>
                     <WalletConnectButton />
                     <div className='lg:hidden'>
                         <MobileMenu />

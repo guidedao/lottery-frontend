@@ -6,8 +6,8 @@ import useParticipantStatus from '@/hooks/useParticipantStatus';
 import { BuyTicketsModal } from '../Modals/BuyTicketsModal';
 import { ReturnTicketsModal } from '../Modals/ReturnTicketsModal';
 import { TicketWidget } from './TicketWidget';
-import { formatEther } from 'viem';
 import { useTranslations } from 'next-globe-gen';
+import { formatEther } from 'viem';
 
 export const TicketWidgets = () => {
     const t = useTranslations();

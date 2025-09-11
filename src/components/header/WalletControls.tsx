@@ -2,6 +2,8 @@
 
 import { Button } from '@/components/ui/button';
 
+import { Wallet } from 'lucide-react';
+
 type WalletControlsProps = {
     chain: {
         name?: string | null;
@@ -17,33 +19,15 @@ type WalletControlsProps = {
     openAccountModal: () => void;
 };
 
-export default function WalletControls({ chain, account, openChainModal, openAccountModal }: WalletControlsProps) {
+export default function WalletControls({ account, openAccountModal }: WalletControlsProps) {
     return (
         <div className='flex gap-2'>
-            <Button onClick={openChainModal} variant='ghost' size='sm' className='text-white hover:bg-white/10'>
-                {chain.hasIcon && (
-                    <div
-                        style={{
-                            background: chain.iconBackground,
-                            width: 12,
-                            height: 12,
-                            borderRadius: 999,
-                            overflow: 'hidden',
-                            marginRight: 4
-                        }}>
-                        {chain.iconUrl && (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img
-                                alt={chain.name ?? 'Chain icon'}
-                                src={chain.iconUrl}
-                                style={{ width: 12, height: 12 }}
-                            />
-                        )}
-                    </div>
-                )}
-                {chain.name}
-            </Button>
-            <Button onClick={openAccountModal} variant='ghost' size='sm' className='text-white hover:bg-white/10'>
+            <Button
+                onClick={openAccountModal}
+                variant='ghost'
+                size='sm'
+                className='text-white bg-transparent border-none hover:bg-white/10 dark:hover:bg-white/10 hover:text-white'>
+                <Wallet className='h-4 w-4' />
                 {account.displayName}
                 {account.displayBalance ? ` (${account.displayBalance})` : ''}
             </Button>

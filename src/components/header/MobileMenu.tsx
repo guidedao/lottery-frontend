@@ -1,9 +1,9 @@
 'use client';
 
+import LanguageSwitcher from '@/components/header/LanguageSwitcher';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 
-import LanguageSwitcher from '../LanguageSwitcher';
 import { Menu } from 'lucide-react';
 
 export function MobileMenu() {

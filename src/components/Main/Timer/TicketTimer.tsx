@@ -6,7 +6,7 @@ import { Timer } from './Timer';
 
 const TicketTimer = () => {
     return (
-        <div className='flex w-full lg:w-[50%] flex-col-reverse lg:flex-col items-center justify-center gap-6 lg:gap-12'>
+        <div className='flex w-full lg:w-[50%] flex-col-reverse lg:flex-col items-center justify-center gap-4 lg:gap-6'>
             <Image
                 src='/images/lottery-ticket.webp'
                 alt='guide dao lottery ticket'

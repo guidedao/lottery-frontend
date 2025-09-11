@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import TicketTimer from '@/components/Main/Timer/TicketTimer';
+import TicketTimer from '@/components/Main/LotteryWidget';
 import { TicketWidgets } from '@/components/Main/Widgets/TicketWidgets';
 
 import { getTranslations } from 'next-globe-gen';

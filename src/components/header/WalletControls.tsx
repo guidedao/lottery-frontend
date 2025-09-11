@@ -2,6 +2,8 @@
 
 import { Button } from '@/components/ui/button';
 
+import { Wallet } from 'lucide-react';
+
 type WalletControlsProps = {
     chain: {
         name?: string | null;
@@ -25,6 +27,7 @@ export default function WalletControls({ account, openAccountModal }: WalletCont
                 variant='ghost'
                 size='sm'
                 className='text-white bg-transparent border-none hover:bg-white/10 dark:hover:bg-white/10 hover:text-white'>
+                <Wallet className='h-4 w-4' />
                 {account.displayName}
                 {account.displayBalance ? ` (${account.displayBalance})` : ''}
             </Button>

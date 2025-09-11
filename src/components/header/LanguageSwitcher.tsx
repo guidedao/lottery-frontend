@@ -24,7 +24,7 @@ export default function LanguageSwitcher() {
     return (
         <Select value={activeLocale} onValueChange={handleLanguageChange}>
             <SelectTrigger className='w-[94px] bg-transparent border-none text-white hover:bg-white/10 cursor-pointer'>
-                <Globe className='h-4 w-4' />
+                <Globe className='h-4 w-4 text-white' />
 
                 <SelectValue>{getLanguageDisplay(activeLocale)}</SelectValue>
             </SelectTrigger>

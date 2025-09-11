@@ -1,6 +1,6 @@
 'use client';
 
-import { TicketWidgets } from './TicketWidgets';
+import WalletConnected from './WalletConnected';
 import WalletNotConnected from './WalletNotConnected';
 import { useSession } from 'next-auth/react';
 import { useAccount } from 'wagmi';
@@ -11,5 +11,5 @@ export default function UserWidgets() {
 
     if (!address || authStatus !== 'authenticated') return <WalletNotConnected />;
 
-    return <TicketWidgets />;
+    return <WalletConnected />;
 }

@@ -28,7 +28,7 @@ export function getLotteryStatusText(status: LotteryStatus): string {
 export function getLotteryStatusColor(status: LotteryStatus): string {
     switch (status) {
         case LotteryStatus.Closed:
-            return 'text-gray-500';
+            return 'text-muted-foreground';
         case LotteryStatus.OpenedForRegistration:
             return 'text-green-500';
         case LotteryStatus.RegistrationEnded:
@@ -38,7 +38,7 @@ export function getLotteryStatusColor(status: LotteryStatus): string {
         case LotteryStatus.Invalid:
             return 'text-red-500';
         default:
-            return 'text-gray-400';
+            return 'text-muted-foreground';
     }
 }
 

@@ -41,8 +41,7 @@ export function WalletConnectButton() {
                                             openConnectModal();
                                         }}
                                         variant='default'
-                                        size='sm'
-                                        className='text-black bg-green-400 hover:bg-green-500'>
+                                        size='sm'>
                                         {t('wallet.connect')}
                                     </Button>
                                 );

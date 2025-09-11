@@ -8,7 +8,7 @@ const TicketTimer = () => {
     return (
         <div className='flex w-full lg:w-[50%] flex-col-reverse lg:flex-col items-center justify-center gap-6 lg:gap-12'>
             <Image
-                src='/images/lottery-ticket.png'
+                src='/images/lottery-ticket.webp'
                 alt='guide dao lottery ticket'
                 width={300}
                 height={400}

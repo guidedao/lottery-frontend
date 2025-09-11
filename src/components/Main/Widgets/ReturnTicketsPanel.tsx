@@ -45,11 +45,11 @@ export default function ReturnTicketsPanel() {
     if (!canReturnSome) return null;
 
     return (
-        <div className='flex flex-col gap-3 bg-white'>
-            <h3 className='text-lg font-semibold text-gray-900'>{t('home.return_tickets')}</h3>
+        <div className='surface-glass flex flex-col gap-3 rounded-md p-4'>
+            <h3 className='text-lg font-semibold text-foreground'>{t('home.return_tickets')}</h3>
             <div className='flex items-end gap-2'>
                 <div className='flex-1'>
-                    <label htmlFor='return-amount' className='block text-sm font-medium text-gray-700 mb-2'>
+                    <label htmlFor='return-amount' className='block text-sm font-medium text-muted-foreground mb-2'>
                         {t('home.amount')}
                     </label>
                     <Input
@@ -62,19 +62,19 @@ export default function ReturnTicketsPanel() {
                         disabled={isLoading || !isReturnAllowed}
                         className='w-full'
                     />
-                    <div className='text-xs text-gray-500 mt-1'>
+                    <div className='text-xs text-muted-foreground mt-1'>
                         {t('home.Max')}: {maxReturnable}
                     </div>
                 </div>
             </div>
 
-            {!isReturnAllowed && <p className='text-xs text-gray-600'>{t('home.return_period_has_ended')}</p>}
+            {!isReturnAllowed && <p className='text-xs text-muted-foreground'>{t('home.return_period_has_ended')}</p>}
             {isError && error && (
-                <p className='text-xs text-red-600'>
+                <p className='text-xs text-destructive'>
                     {t('home.Error')}: {error.message}
                 </p>
             )}
-            {isSuccess && <p className='text-xs text-green-600'>{t('home.tickets_returned_successfully')}</p>}
+            {isSuccess && <p className='text-xs text-primary'>{t('home.tickets_returned_successfully')}</p>}
 
             <div className='flex gap-2'>
                 <Button

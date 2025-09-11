@@ -10,8 +10,8 @@ export default function Header() {
     return (
         <header
             className='
-                fixed top-0 left-0 right-0 z-50
-                bg-black/20 backdrop-blur-xs
+                relative w-full z-50
+                bg-background/20 backdrop-blur-xs
                 mask-b-from-[calc(100%-4px)] mask-b-to-[100%]
             '>
             <div className='container mx-auto px-4 py-3 flex items-center justify-between'>
@@ -26,17 +26,17 @@ export default function Header() {
                 <nav className='hidden lg:flex items-center gap-2 text-sm'>
                     <Link
                         href='/'
-                        className='inline-flex items-center h-8 rounded-md px-3 text-white hover:text-white hover:bg-white/10 transition-colors'>
+                        className='inline-flex items-center h-8 rounded-md px-3 text-foreground hover:text-foreground hover:bg-foreground/10 transition-colors'>
                         Home
                     </Link>
                     <Link
                         href='/about'
-                        className='inline-flex items-center h-8 rounded-md px-3 text-white hover:text-white hover:bg-white/10 transition-colors'>
+                        className='inline-flex items-center h-8 rounded-md px-3 text-foreground hover:text-foreground hover:bg-foreground/10 transition-colors'>
                         About
                     </Link>
                     <Link
                         href='/faq'
-                        className='inline-flex items-center h-8 rounded-md px-3 text-white hover:text-white hover:bg-white/10 transition-colors'>
+                        className='inline-flex items-center h-8 rounded-md px-3 text-foreground hover:text-foreground hover:bg-foreground/10 transition-colors'>
                         FAQ
                     </Link>
                 </nav>

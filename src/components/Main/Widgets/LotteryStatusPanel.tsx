@@ -20,7 +20,7 @@ export function LotteryStatusDisplay() {
     } = lotteryState;
 
     return (
-        <div className='text-white'>
+        <div className='text-foreground'>
             <div className='space-y-4'>
                 {/* Status Display */}
                 <div className='flex items-center justify-between'>
@@ -107,7 +107,7 @@ export function LotteryStatusDisplay() {
                     )}
 
                     {status === LotteryStatus.Closed && (
-                        <div className='text-center text-gray-400 font-medium'>Lottery is currently closed</div>
+                        <div className='text-center text-muted-foreground font-medium'>Lottery is currently closed</div>
                     )}
 
                     {status === LotteryStatus.Invalid && (
@@ -117,7 +117,7 @@ export function LotteryStatusDisplay() {
 
                 {/* Debug Info (remove in production) */}
                 <div className='mt-4 pt-4 shadow'>
-                    <div className='text-sm text-gray-400 space-y-1'>
+                    <div className='text-sm text-muted-foreground space-y-1'>
                         <div>Raw Status Value: {status}</div>
                         <div>Is Active: {isLotteryActive(status) ? 'Yes' : 'No'}</div>
                         <div>Can Register: {canRegister(status) ? 'Yes' : 'No'}</div>

@@ -21,15 +21,15 @@ export default function Home() {
             <main className='relative bg-black overflow-x-hidden min-h-screen'>
                 {/* Background Canvas Waves */}
                 <Waves
-                    lineColor='#fff'
+                    lineColor='rgba(255,255,255,0.35)'
                     backgroundColor='rgba(255, 255, 255, 0.1)'
-                    waveSpeedX={0.02}
+                    waveSpeedX={0.01}
                     waveSpeedY={0.01}
-                    waveAmpX={40}
-                    waveAmpY={20}
+                    waveAmpX={60}
+                    waveAmpY={40}
                     friction={0.9}
                     tension={0.01}
-                    maxCursorMove={0}
+                    maxCursorMove={40}
                     xGap={12}
                     yGap={36}
                 />

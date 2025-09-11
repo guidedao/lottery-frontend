@@ -2,6 +2,7 @@ import React from 'react';
 
 import Image from 'next/image';
 
+import LotteryStatus from './LotteryStatus';
 import { Timer } from './Timer';
 
 const TicketTimer = () => {
@@ -15,6 +16,7 @@ const TicketTimer = () => {
                 className='w-[90%] md:w-[80%] lg:w-full h-auto'
             />
             <Timer />
+            <LotteryStatus />
         </div>
     );
 };

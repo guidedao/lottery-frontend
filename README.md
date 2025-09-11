@@ -64,80 +64,111 @@ Main code lives in `src`:
 src/
   _app/                            # Shared layout/page used by localized routes
     layout.tsx
-    page.tsx                       # Composes Timer + Buy + State; adds Return panel (left column)
-    [...catchAll]/                 # next-globe-gen helper route
+    page.tsx
+    not-found.tsx
+    [...catchAll]/page.tsx         # next-globe-gen helper route
     admin/
-      page.tsx                     # Admin page (server-gated) with participants table
-    test-decrypt-temp/             # Admin-only test UI for encrypt/decrypt
-      page.tsx                     # Server-gated page (403 if not admin)
-      ClientPanel.tsx              # Client UI for encryption/decryption
+      page.tsx                     # Admin page (server-gated)
 
   app/
     (i18n)/                        # Localized routes generated via next-globe-gen
       en/
         layout.tsx
         page.tsx
+        not-found.tsx
+        [...catchAll]/page.tsx
         admin/
           page.tsx                 # i18n wrapper for _app/admin/page.tsx
       ru/
         layout.tsx
         page.tsx
+        not-found.tsx
+        [...catchAll]/page.tsx
         admin/
           page.tsx                 # i18n wrapper for _app/admin/page.tsx
     api/
-      auth/[...nextauth]/route.ts  # NextAuth + SIWE route
+      auth/[...nextauth]/route.ts  # NextAuth + SIWE
       admin/decrypt/route.ts       # Admin-only decrypt endpoint
+    apple-icon.png                 # App icons
+    icon.png
+    favicon.ico
 
-  blocks/                          # Visual blocks (e.g., backgrounds)
+  blocks/
+    Backgrounds/
+      Waves/
+        Waves.tsx
 
   components/
-    LanguageSwitcher.tsx           # Locale switcher (next-globe-gen)
     header/
       Header.tsx                   # App header
-      WalletConnectButton.tsx      # Connect button (gated by SIWE auth)
-      WalletControls.tsx           # Network/account buttons
+      LanguageSwitcher.tsx         # Locale switcher (next-globe-gen)
+      MobileMenu.tsx               # Mobile navigation drawer
+      WalletConnectButton.tsx      # Connect button (SIWE-gated)
+      WalletControls.tsx           # Network/account controls
     footer/
       Footer.tsx
     Admin/
-      AdminPanel.tsx               # Admin UI: lottery selector, table, decrypt view, CSV export
-      CopyIconButton.tsx           # Reusable copy-to-clipboard icon button
-      ExportCsvButton.tsx          # Export current table view to CSV
+      AdminPanel.tsx               # Admin UI: table, decrypt, CSV export
+      CopyIconButton.tsx
+      ExportCsvButton.tsx
     Main/
-      BuyTicketsTEMP.tsx           # Buy/Register with contact encryption (SIWE-gated)
-      ReturnTicketsPanel.tsx       # Return tickets (separate panel, status-gated)
-      LotteryStatusDisplayTEMP.tsx # Right-side state panel (status, price, last winner, etc.)
-      Timer/Timer.tsx              # Header timer for registration end
-    ui/                            # Reusable UI primitives (button, input, select, alert-dialog)
+      Modals/
+        BuyTicketsModal.tsx
+        LotteryStatusModal.tsx
+        ReturnTicketsModal.tsx
+      Timer/
+        TicketTimer.tsx
+        Timer.tsx
+      Widgets/
+        BuyTicketsForm.tsx
+        LotteryStatusPanel.tsx
+        ReturnTicketsPanel.tsx
+        TicketWidget.tsx
+        TicketWidgets.tsx
+    ui/                            # Reusable UI primitives (shadcn/ui)
+      alert-dialog.tsx
+      button.tsx
+      dialog.tsx
+      input.tsx
+      select.tsx
+      sheet.tsx
+      table.tsx
 
   config/
     projectConfig.ts               # Contract address and app constants
 
   hooks/
-    useLotteryState.ts             # Multicall read: status, numbers, price, end time, last winner, + constants
-    useParticipantStatus.ts        # Multicall read: isActualParticipant, userTicketsCount, refundAmount
-    useBuyTickets.ts               # Enter / buyMoreTickets with value; invalidates cached queries
-    useReturnTickets.ts            # Return tickets; invalidates cached queries
-    useParticipantsMulticall.ts    # Participants table loader (current or specific lottery via { lotteryNumber })
+    useBuyTickets.ts
+    useLotteryState.ts
+    useParticipantStatus.ts
+    useParticipantsMulticall.ts
+    useReturnTickets.ts
 
   lib/
     abis/
       lotteryABI.ts                # Contract ABI
     auth.ts                        # NextAuth SIWE options (shared)
-    utils.ts                       # Helpers (status text/color, time utils)
+    utils.ts                       # Helpers
     web3-config.ts                 # Wagmi/RainbowKit config
     xChaCha20/
-      encrypt-cha.ts               # Encrypt with admin X25519 public key
       decrypt-cha.ts               # Decrypt with admin X25519 private key
-      utils/hex.ts                 # Hex helpers
+      encrypt-cha.ts               # Encrypt with admin X25519 public key
+      utils/
+        gen-admin-keypair.mjs
+        hex.ts
 
-  messages/                        # i18n messages (en/ru)
+  messages/
+    en.json
+    ru.json
 
   providers/
     Web3Provider.tsx               # Wagmi + RainbowKit + SIWE + React Query
 
-  styles/                          # Global styles (Tailwind 4)
+  styles/
+    globals.css
 
-  types/                           # Enums and types
+  types/
+    enums.ts
 
   middleware.ts                    # Locale middleware (next-globe-gen)
 ```

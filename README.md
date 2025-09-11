@@ -296,9 +296,7 @@ npm run format
 
 ## Fonts
 
-- Agave — SIL Open Font License (OFL)
 - Roboto — Apache License 2.0
-- Keania One — SIL Open Font License (OFL)
 
 ## Troubleshooting
 

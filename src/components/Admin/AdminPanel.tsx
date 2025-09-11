@@ -186,7 +186,7 @@ export default function AdminPanel() {
                                         <TableCell className='text-center'>{p.ticketsBought}</TableCell>
                                         <TableCell>
                                             <div className='flex items-center gap-2'>
-                                                <span className='font-mono whitespace-nowrap'>{p.address}</span>
+                                                <span className='whitespace-nowrap'>{p.address}</span>
                                                 <CopyIconButton
                                                     value={p.address}
                                                     copiedMap={copiedAddr}
@@ -199,7 +199,7 @@ export default function AdminPanel() {
                                         </TableCell>
                                         <TableCell>
                                             <div className='flex items-center gap-2 max-w-[420px]'>
-                                                <code className='font-mono text-xs break-all'>{shortHex(enc, 20)}</code>
+                                                <code className='text-xs break-all'>{shortHex(enc, 20)}</code>
                                                 <CopyIconButton
                                                     value={enc}
                                                     copiedMap={copiedEnc}
@@ -214,7 +214,7 @@ export default function AdminPanel() {
                                             {d.loading ? (
                                                 <span className='text-muted-foreground'>Decrypting…</span>
                                             ) : d.error ? (
-                                                <span className='text-red-500 text-sm font-mono whitespace-pre-wrap break-words'>
+                                                <span className='text-red-500 text-sm whitespace-pre-wrap break-words'>
                                                     Error: {d.error}
                                                 </span>
                                             ) : (

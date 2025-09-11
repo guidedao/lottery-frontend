@@ -56,7 +56,7 @@ export function Timer() {
 
     return (
         <div className='flex flex-col justify-center'>
-            <div className='flex text-foreground text-6xl sm:text-7xl md:text-8xl lg:text-7xl font-bold tracking-wider font-roboto'>
+            <div className='flex text-foreground text-6xl sm:text-7xl md:text-8xl lg:text-7xl font-bold tracking-wider'>
                 {isLoading ? <LoadingTimer /> : timeLeft}
             </div>
         </div>

@@ -36,7 +36,7 @@ export const TicketWidgets = () => {
             <TicketWidget title={`${ticketPriceETH} ETH`} description={t('home.ticket_price')} />
 
             <section className='surface-glass p-6 rounded-xl w-full mt-10 lg:mt-[120px]'>
-                <h2 className='font-keania flex justify-between text-[28px] sm:text-[46px] font-medium text-foreground gap-6'>
+                <h2 className='flex justify-between text-[28px] sm:text-[46px] font-medium text-foreground gap-6'>
                     <span>{t('home.winner')}:</span>
                     <span className='overflow-hidden text-ellipsis'>{winner}</span>
                 </h2>

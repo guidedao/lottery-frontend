@@ -62,5 +62,11 @@
         "totalParticipants": "Total participants",
         "maxParticipants": "Participants limit",
         "winner": "Winner"
+    },
+    "timer": {
+        "d": "d",
+        "h": "h",
+        "m": "m",
+        "s": "s"
     }
 }

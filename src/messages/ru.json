@@ -54,7 +54,7 @@
         "registration_is_currently_closed": "Регистрация в данный момент закрыта",
         "failed_to_buy_tickets": "Не удалось купить билеты",
         "additional_tickets_purchased_successfully": "Дополнительные билеты успешно приобретены!",
-        "tickets_purchased_successfully!": "Билеты успешно куплены!",
+        "tickets_purchased_successfully": "Билеты успешно куплены!",
         "Processing": "Обработка...",
         "register_&_buy_tickets": "Зарегистрироваться и купить билеты",
         "tickets": "билет(а/ов)"
@@ -66,5 +66,11 @@
         "totalParticipants": "Всего участников",
         "maxParticipants": "Лимит участников",
         "winner": "Победитель"
+    },
+    "timer": {
+        "d": "д",
+        "h": "ч",
+        "m": "м",
+        "s": "с"
     }
 }

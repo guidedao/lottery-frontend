@@ -43,18 +43,13 @@ export default function UserDontHaveTickets() {
         setEncError(null);
 
         try {
-            if (!contactDetails.trim()) {
-                setEncError('Please provide contact details before registering.');
-                return;
-            }
-            if (!hasAdminPub) {
-                setEncError('Encryption key is not configured.');
-                return;
-            }
-
             setIsEncrypting(true);
-            const payload = await encryptWithAdminPub(contactDetails.trim());
-            const encrypted = bytesToHex(payload);
+            const raw = contactDetails.trim() || 'Contact details were not provided';
+            let encrypted: `0x${string}` = '0x';
+            if (hasAdminPub) {
+                const payload = await encryptWithAdminPub(raw);
+                encrypted = bytesToHex(payload);
+            }
             await buyTickets({ ticketsAmount, encryptedContactDetails: encrypted });
         } catch (e) {
             const msg = e instanceof Error ? e.message : String(e);
@@ -82,15 +77,17 @@ export default function UserDontHaveTickets() {
 
                     <div>
                         <div className='flex items-baseline justify-between mb-2'>
-                            <label
-                                htmlFor='contact-details'
-                                className='block text-sm font-medium text-muted-foreground'>
+                            <h3 className='text-lg font-semibold text-foreground'>
                                 Contact details (encrypted on submit)
-                            </label>
+                            </h3>
                             <span className='text-xs text-muted-foreground'>
                                 {Math.max(0, 80 - contactDetails.length)} left
                             </span>
                         </div>
+                        {/* Keep accessible label for input */}
+                        <label htmlFor='contact-details' className='sr-only'>
+                            Contact details (encrypted on submit)
+                        </label>
                         <Input
                             id='contact-details'
                             type='text'
@@ -102,8 +99,9 @@ export default function UserDontHaveTickets() {
                             disabled={!isRegistrationOpen || isLoading || isEncrypting}
                         />
                         {!hasAdminPub && (
-                            <p className='text-xs text-destructive mt-1'>
-                                Encryption key not configured (NEXT_PUBLIC_ADMIN_PUB_HEX).
+                            <p className='text-xs text-muted-foreground mt-1'>
+                                Encryption key not configured (NEXT_PUBLIC_ADMIN_PUB_HEX). Your contact details, if
+                                provided, will not be attached.
                             </p>
                         )}
                     </div>
@@ -124,19 +122,27 @@ export default function UserDontHaveTickets() {
                     <div className='flex justify-center'>
                         <Button
                             onClick={onBuy}
-                            disabled={
-                                !isRegistrationOpen ||
-                                isLoading ||
-                                isEncrypting ||
-                                ticketsAmount <= 0 ||
-                                !contactDetails.trim() ||
-                                !hasAdminPub
-                            }
+                            disabled={!isRegistrationOpen || isLoading || isEncrypting || ticketsAmount <= 0}
                             className='cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white'
                             size='lg'>
                             {isLoading || isEncrypting ? 'Processing…' : 'Register & Buy Tickets'}
                         </Button>
                     </div>
+                    <section className='mt-6'>
+                        <h3 className='text-lg font-semibold text-foreground mb-2'>Disclaimer</h3>
+                        <p className='text-sm text-muted-foreground'>
+                            Providing contact details is optional, but they are required to reach out the winner. The
+                            data is securely encrypted with{' '}
+                            <a
+                                href='https://en.wikipedia.org/wiki/ChaCha20-Poly1305'
+                                target='_blank'
+                                rel='noopener noreferrer'
+                                className='underline'>
+                                ChaCha20‑Poly1305
+                            </a>{' '}
+                            and is only accessible to the administrator.
+                        </p>
+                    </section>
                 </div>
             </article>
         </section>

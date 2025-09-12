@@ -106,130 +106,140 @@ export default function AdminPanel() {
     const rows = useMemo(() => participants ?? [], [participants]);
 
     return (
-        <div className='container mx-auto px-4 py-28'>
-            <div className='mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between'>
-                <div>
-                    <h1 className='text-2xl font-bold'>Admin Panel</h1>
-                    <div className='mt-2 text-sm text-muted-foreground'>Current lottery number: {lotteryNumber}</div>
-                </div>
-                <div className='flex items-center gap-2'>
-                    <div className='text-sm text-muted-foreground'>View lottery #</div>
-                    <div className='flex items-center gap-1'>
-                        <button
-                            type='button'
-                            className='h-9 w-9 inline-flex items-center justify-center rounded-md border text-muted-foreground hover:text-foreground hover:bg-accent'
-                            onClick={() => setSelectedLottery((n) => Math.max(0, n - 1))}
-                            aria-label='Previous lottery'>
-                            <ChevronLeft className='size-4' />
-                        </button>
-                        <Input
-                            type='number'
-                            inputMode='numeric'
-                            className='w-28 text-center'
-                            min={0}
-                            max={lotteryNumber}
-                            value={selectedLottery}
-                            onChange={(e) => {
-                                const v = Number(e.target.value);
-                                if (Number.isFinite(v)) setSelectedLottery(Math.max(0, Math.min(v, lotteryNumber)));
-                            }}
-                        />
-                        <button
-                            type='button'
-                            className='h-9 w-9 inline-flex items-center justify-center rounded-md border text-muted-foreground hover:text-foreground hover:bg-accent'
-                            onClick={() => setSelectedLottery((n) => Math.min(lotteryNumber, n + 1))}
-                            aria-label='Next lottery'>
-                            <ChevronRight className='size-4' />
-                        </button>
+        <div className='container mx-auto px-4 py-12 pt-18'>
+            <div className='surface-glass rounded-xl shadow-sm p-6 md:p-8'>
+                <div className='mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between'>
+                    <div>
+                        <h1 className='text-2xl md:text-3xl font-bold leading-tight'>Admin Panel</h1>
+                        <div className='mt-2 text-sm text-muted-foreground'>
+                            Current lottery number: {lotteryNumber}
+                        </div>
                     </div>
-                    <ExportCsvButton
-                        participants={rows}
-                        decMap={decMap}
-                        lotteryNumber={selectedLottery}
-                        disabled={isLoading || !hasParticipants}
-                    />
+                    <div className='flex items-center gap-2'>
+                        <div className='text-sm text-muted-foreground'>View lottery #</div>
+                        <div className='flex items-center gap-1'>
+                            <button
+                                type='button'
+                                className='h-9 w-9 inline-flex items-center justify-center rounded-md border text-muted-foreground hover:text-foreground hover:bg-accent'
+                                onClick={() => setSelectedLottery((n) => Math.max(0, n - 1))}
+                                aria-label='Previous lottery'>
+                                <ChevronLeft className='size-4' />
+                            </button>
+                            <Input
+                                type='number'
+                                inputMode='numeric'
+                                className='w-28 text-center'
+                                min={0}
+                                max={lotteryNumber}
+                                value={selectedLottery}
+                                onChange={(e) => {
+                                    const v = Number(e.target.value);
+                                    if (Number.isFinite(v)) setSelectedLottery(Math.max(0, Math.min(v, lotteryNumber)));
+                                }}
+                            />
+                            <button
+                                type='button'
+                                className='h-9 w-9 inline-flex items-center justify-center rounded-md border text-muted-foreground hover:text-foreground hover:bg-accent'
+                                onClick={() => setSelectedLottery((n) => Math.min(lotteryNumber, n + 1))}
+                                aria-label='Next lottery'>
+                                <ChevronRight className='size-4' />
+                            </button>
+                        </div>
+                        <ExportCsvButton
+                            participants={rows}
+                            decMap={decMap}
+                            lotteryNumber={selectedLottery}
+                            disabled={isLoading || !hasParticipants}
+                        />
+                    </div>
                 </div>
-            </div>
 
-            <div className='mb-6 text-sm text-muted-foreground'>
-                Showing participants for lottery #{selectedLottery}. Count: {participants?.length}
-            </div>
-
-            {isError && (
-                <div className='mb-4 text-sm text-red-500'>Failed to load participants. Check your connection.</div>
-            )}
-
-            {isLoading && <div className='text-sm text-muted-foreground'>Loading participants…</div>}
-
-            {!isLoading && !hasParticipants && <div className='text-sm text-muted-foreground'>No participants.</div>}
-
-            {hasParticipants && (
-                <div className='rounded-md border overflow-hidden'>
-                    <Table className='table-fixed'>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead className='w-24'>User #</TableHead>
-                                <TableHead className='w-24 text-center'>Tickets</TableHead>
-                                <TableHead className='w-[420px]'>Wallet address</TableHead>
-
-                                <TableHead className='w-[300px]'>Encrypted payload</TableHead>
-                                <TableHead className='w-[560px]'>Decrypted payload</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {rows.map((p: ParticipantInfoRow) => {
-                                const d = decMap[p.address] || {};
-                                const enc = p.encryptedContactDetails as string;
-                                return (
-                                    <TableRow key={`${p.participantIndex}-${p.address}`}>
-                                        <TableCell>{p.participantIndex}</TableCell>
-                                        <TableCell className='text-center'>{p.ticketsBought}</TableCell>
-                                        <TableCell>
-                                            <div className='flex items-center gap-2'>
-                                                <span className='whitespace-nowrap'>{p.address}</span>
-                                                <CopyIconButton
-                                                    value={p.address}
-                                                    copiedMap={copiedAddr}
-                                                    setCopiedMap={setCopiedAddr}
-                                                    ariaLabel='Copy address'
-                                                    titleIdle='Copy address'
-                                                    titleCopied='Copied!'
-                                                />
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className='flex items-center gap-2 max-w-[420px]'>
-                                                <code className='text-xs break-all'>{shortHex(enc, 20)}</code>
-                                                <CopyIconButton
-                                                    value={enc}
-                                                    copiedMap={copiedEnc}
-                                                    setCopiedMap={setCopiedEnc}
-                                                    ariaLabel='Copy payload'
-                                                    titleIdle='Copy payload'
-                                                    titleCopied='Copied!'
-                                                />
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>
-                                            {d.loading ? (
-                                                <span className='text-muted-foreground'>Decrypting…</span>
-                                            ) : d.error ? (
-                                                <span className='text-red-500 text-sm whitespace-pre-wrap break-words'>
-                                                    Error: {d.error}
-                                                </span>
-                                            ) : (
-                                                <span className='text-sm whitespace-pre-wrap break-words'>
-                                                    {d.value ?? '—'}
-                                                </span>
-                                            )}
-                                        </TableCell>
-                                    </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                    </Table>
+                <div className='mb-6 text-sm text-muted-foreground'>
+                    Showing participants for lottery #{selectedLottery}. Count: {participants?.length}
                 </div>
-            )}
+
+                {isError && (
+                    <div className='mb-4 text-sm text-red-500'>Failed to load participants. Check your connection.</div>
+                )}
+
+                {isLoading && <div className='text-sm text-muted-foreground'>Loading participants…</div>}
+
+                {!isLoading && !hasParticipants && (
+                    <div className='text-sm text-muted-foreground'>No participants.</div>
+                )}
+
+                {hasParticipants && (
+                    <div className='rounded-md border overflow-hidden bg-background/80 backdrop-blur-sm [&_[data-slot=table-container]]:overflow-visible'>
+                        <Table className='table-fixed'>
+                            <TableHeader className='[&_th]:sticky [&_th]:top-0 [&_th]:z-10 [&_th]:bg-background/80 [&_th]:backdrop-blur [&_th]:text-xs [&_th]:uppercase [&_th]:tracking-wide [&_th]:text-muted-foreground'>
+                                <TableRow>
+                                    <TableHead className='w-24'>User #</TableHead>
+                                    <TableHead className='w-24 text-center'>Tickets</TableHead>
+                                    <TableHead className='w-[420px]'>Wallet address</TableHead>
+
+                                    <TableHead className='w-[300px]'>Encrypted payload</TableHead>
+                                    <TableHead className='w-[560px]'>Decrypted payload</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody className='[&_td]:bg-background/10'>
+                                {rows.map((p: ParticipantInfoRow) => {
+                                    const d = decMap[p.address] || {};
+                                    const enc = p.encryptedContactDetails as string;
+                                    return (
+                                        <TableRow key={`${p.participantIndex}-${p.address}`}>
+                                            <TableCell>{p.participantIndex}</TableCell>
+                                            <TableCell className='text-center'>{p.ticketsBought}</TableCell>
+                                            <TableCell>
+                                                <div className='flex items-center gap-2'>
+                                                    <span className='whitespace-nowrap font-mono text-[13px]'>
+                                                        {p.address}
+                                                    </span>
+                                                    <CopyIconButton
+                                                        value={p.address}
+                                                        copiedMap={copiedAddr}
+                                                        setCopiedMap={setCopiedAddr}
+                                                        ariaLabel='Copy address'
+                                                        titleIdle='Copy address'
+                                                        titleCopied='Copied!'
+                                                    />
+                                                </div>
+                                            </TableCell>
+                                            <TableCell>
+                                                <div className='flex items-center gap-2 max-w-[420px]'>
+                                                    <code className='text-xs break-all font-mono'>
+                                                        {shortHex(enc, 20)}
+                                                    </code>
+                                                    <CopyIconButton
+                                                        value={enc}
+                                                        copiedMap={copiedEnc}
+                                                        setCopiedMap={setCopiedEnc}
+                                                        ariaLabel='Copy payload'
+                                                        titleIdle='Copy payload'
+                                                        titleCopied='Copied!'
+                                                    />
+                                                </div>
+                                            </TableCell>
+                                            <TableCell>
+                                                {d.loading ? (
+                                                    <span className='text-muted-foreground'>Decrypting…</span>
+                                                ) : d.error ? (
+                                                    <span className='text-red-500 text-sm whitespace-pre-wrap break-words'>
+                                                        Error: {d.error}
+                                                    </span>
+                                                ) : (
+                                                    <span className='text-sm whitespace-pre-wrap break-words'>
+                                                        {d.value ?? '—'}
+                                                    </span>
+                                                )}
+                                            </TableCell>
+                                        </TableRow>
+                                    );
+                                })}
+                            </TableBody>
+                        </Table>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

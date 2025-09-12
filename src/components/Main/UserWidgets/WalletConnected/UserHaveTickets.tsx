@@ -1,0 +1,83 @@
+'use client';
+
+import React, { useState } from 'react';
+
+import { Button } from '@/components/ui/button';
+import useBuyTickets from '@/hooks/useBuyTickets';
+import useLotteryState from '@/hooks/useLotteryState';
+import useParticipantStatus from '@/hooks/useParticipantStatus';
+import useTicketPurchaseMath from '@/hooks/useTicketPurchaseMath';
+import { LotteryStatus } from '@/types/enums';
+
+import ReturnTicketsPanel from './ReturnTicketsPanel';
+import TicketPurchaseRow from './TicketPurchaseRow';
+
+export default function UserHaveTickets() {
+    const [ticketsAmount, setTicketsAmount] = useState<number>(1);
+    const { buyTickets, isLoading, isError, error, isSuccess } = useBuyTickets();
+    const { lotteryState } = useLotteryState();
+    const { isActualParticipant, userTicketsCount } = useParticipantStatus();
+
+    const isRegistrationOpen = lotteryState.status === LotteryStatus.OpenedForRegistration;
+    const totalTickets = Number(lotteryState.totalTicketsCount ?? 0);
+    const yourTickets = isActualParticipant ? userTicketsCount : 0;
+    const { totalCost, yourChance, predictedChance } = useTicketPurchaseMath({
+        ticketPrice: lotteryState.ticketPrice,
+        totalTickets,
+        yourTickets,
+        ticketsAmount
+    });
+
+    function onBuy() {
+        if (!isRegistrationOpen || isLoading) return;
+        if (ticketsAmount <= 0) return;
+        // For existing participants we do not send contact details
+        buyTickets({ ticketsAmount, encryptedContactDetails: '0x' });
+    }
+
+    return (
+        <section className='flex flex-col gap-6 lg:gap-6 w-full lg:w-1/2 lg:self-stretch'>
+            <article className='surface-glass flex flex-col flex-1 h-full min-h-[220px] lg:min-h-[260px] basis-full p-6 rounded-xl gap-6'>
+                <h2 className='text-2xl font-bold text-foreground'>Buy more lottery tickets</h2>
+
+                <TicketPurchaseRow
+                    ticketsAmount={ticketsAmount}
+                    onChange={setTicketsAmount}
+                    disabled={!isRegistrationOpen || isLoading}
+                    yourTickets={yourTickets}
+                    yourChancePct={yourChance}
+                    predictedChancePct={predictedChance}
+                    totalCostWei={totalCost}
+                />
+
+                <div className='space-y-4'>
+                    {!isRegistrationOpen && (
+                        <p className='text-sm text-destructive text-center'>Registration is currently closed</p>
+                    )}
+
+                    {isError && (
+                        <p className='text-sm text-destructive text-center'>
+                            Error: {error?.message || 'Failed to buy tickets'}
+                        </p>
+                    )}
+                    {isSuccess && (
+                        <p className='text-sm text-primary text-center'>Additional tickets purchased successfully!</p>
+                    )}
+
+                    <div className='flex justify-center'>
+                        <Button
+                            onClick={onBuy}
+                            disabled={!isRegistrationOpen || isLoading || ticketsAmount <= 0}
+                            className='cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white border-1 border-emerald-300 hover:border-emerald-100'
+                            size='lg'>
+                            {isLoading ? 'Processing…' : 'Buy more tickets'}
+                        </Button>
+                    </div>
+                </div>
+            </article>
+
+            {/* Inline return tickets panel */}
+            <ReturnTicketsPanel />
+        </section>
+    );
+}

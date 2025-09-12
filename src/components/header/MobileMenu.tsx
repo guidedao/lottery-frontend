@@ -29,10 +29,10 @@ export function MobileMenu() {
                     <a href='/' className='hover:text-foreground transition-colors'>
                         Home
                     </a>
-                    <a href='/about' className='hover:text-foreground transition-colors'>
+                    <a href='/#about' className='hover:text-foreground transition-colors'>
                         About
                     </a>
-                    <a href='/faq' className='hover:text-foreground transition-colors'>
+                    <a href='/#faq' className='hover:text-foreground transition-colors'>
                         FAQ
                     </a>
                 </nav>

@@ -36,13 +36,13 @@
         "your_win_chance": "Your Win Chance",
         "number_of_tickets": "Number of Tickets",
         "contact_details": "Contact Details (encrypted on submit)",
-        "amount": "Amount",
-        "Max": "Max.",
+        "amount": "Refund ETH Amount TODO",
+        "Max": "Max",
         "return_period_has_ended": "Return period has ended.",
         "Error": "Error",
         "tickets_returned_successfully": "Tickets returned successfully.",
         "returning": "Returning…",
-        "return_selected": "Return selected",
+        "return_selected": "Return tickets",
         "return_all": "Return all",
         "contact_info_placeholder": "Email, Telegram, or other contact info",
         "total_cost": "Total Cost",
@@ -62,5 +62,11 @@
         "totalParticipants": "Total participants",
         "maxParticipants": "Participants limit",
         "winner": "Winner"
+    },
+    "timer": {
+        "d": "d",
+        "h": "h",
+        "m": "m",
+        "s": "s"
     }
 }

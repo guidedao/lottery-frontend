@@ -5,20 +5,22 @@ import { useEffect, useRef, useState } from 'react';
 import useLotteryState from '@/hooks/useLotteryState';
 import { formatTime, getTimeLeft } from '@/lib/utils';
 
-const LoadingTimer = ({ count = 3 }) => (
-    <div className='flex'>
-        {Array.from({ length: count }).map((_, idx, arr) => (
-            <span key={idx}>
-                <span className='animate-pulse'>--</span>
-                {idx < arr.length - 1 && ':'}
-            </span>
-        ))}
-        {/* Modal for debugging */}
-        {/* <LotteryStatusModal /> */}
-    </div>
-);
+import { useTranslations } from 'next-globe-gen';
+
+const LoadingTimer = () => {
+    const t = useTranslations();
+    return (
+        <div className='flex gap-3'>
+            <span className='animate-pulse'>00{t('timer.d')}</span>
+            <span className='animate-pulse'>00{t('timer.h')}</span>
+            <span className='animate-pulse'>00{t('timer.m')}</span>
+            <span className='animate-pulse'>00{t('timer.s')}</span>
+        </div>
+    );
+};
 
 export function Timer() {
+    const t = useTranslations();
     const { lotteryState, isLoading, refetch } = useLotteryState();
     const { registrationEndTime } = lotteryState;
     const [timeLeft, setTimeLeft] = useState('');
@@ -29,14 +31,16 @@ export function Timer() {
         const endTimeMs = Number(registrationEndTime) * 1000;
 
         const updateTime = () => {
-            const { hours, minutes, seconds } = getTimeLeft(endTimeMs);
+            const { days, hours, minutes, seconds } = getTimeLeft(endTimeMs);
 
             if (seconds !== prevSecond.current) {
                 prevSecond.current = seconds;
-                setTimeLeft(`${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`);
+                setTimeLeft(
+                    `${days}${t('timer.d')} ${formatTime(hours)}${t('timer.h')} ${formatTime(minutes)}${t('timer.m')} ${formatTime(seconds)}${t('timer.s')}`
+                );
             }
 
-            const isTimeOver = hours === 0 && minutes === 0 && seconds === 0;
+            const isTimeOver = days === 0 && hours === 0 && minutes === 0 && seconds === 0;
 
             if (isTimeOver) {
                 refetch();
@@ -52,11 +56,11 @@ export function Timer() {
                 cancelAnimationFrame(reqAnimFrameId.current);
             }
         };
-    }, [registrationEndTime, refetch]);
+    }, [registrationEndTime, refetch, t]);
 
     return (
         <div className='flex flex-col justify-center'>
-            <div className='flex text-foreground text-6xl sm:text-7xl md:text-8xl lg:text-7xl font-bold tracking-wider font-roboto'>
+            <div className='flex text-foreground text-5xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-7xl font-bold tracking-wider'>
                 {isLoading ? <LoadingTimer /> : timeLeft}
             </div>
         </div>

@@ -26,7 +26,7 @@ export default function WalletControls({ account, openAccountModal }: WalletCont
                 onClick={openAccountModal}
                 variant='ghost'
                 size='sm'
-                className='text-foreground bg-transparent border-none hover:bg-foreground/10 hover:text-foreground'>
+                className='text-foreground bg-transparent border-none hover:bg-foreground/10 hover:text-foreground hover:cursor-pointer'>
                 <Wallet className='h-4 w-4' />
                 {account.displayName}
                 {account.displayBalance ? ` (${account.displayBalance})` : ''}

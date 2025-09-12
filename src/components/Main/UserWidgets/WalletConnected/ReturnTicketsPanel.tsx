@@ -3,19 +3,20 @@
 import React, { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import useLotteryState from '@/hooks/useLotteryState';
 import useParticipantStatus from '@/hooks/useParticipantStatus';
 import useReturnTickets from '@/hooks/useReturnTickets';
 import { LotteryStatus } from '@/types/enums';
 
+import TicketReturnStats from './TicketReturnStats';
+import TicketStepper from './TicketStepper';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-globe-gen';
 import { useAccount } from 'wagmi';
 
 export default function ReturnTicketsPanel() {
     const t = useTranslations();
-    const { isActualParticipant, userTicketsCount } = useParticipantStatus();
+    const { isActualParticipant, userTicketsCount, refundAmount } = useParticipantStatus();
     const { returnTickets, isLoading, isError, error, isSuccess } = useReturnTickets();
     const { lotteryState } = useLotteryState();
     const { address } = useAccount();
@@ -35,37 +36,40 @@ export default function ReturnTicketsPanel() {
         returnTickets({ amount: amt });
     }
 
-    function handleReturnAll() {
-        if (!isReturnAllowed) return;
-        returnTickets({ amount: maxReturnable });
-    }
-
     // After hooks: guard rendering
     if (!address || authStatus !== 'authenticated') return null;
     if (!canReturnSome) return null;
 
     return (
-        <div className='surface-glass flex flex-col gap-3 rounded-md p-4'>
-            <h3 className='text-lg font-semibold text-foreground'>{t('home.return_tickets')}</h3>
-            <div className='flex items-end gap-2'>
-                <div className='flex-1'>
-                    <label htmlFor='return-amount' className='block text-sm font-medium text-muted-foreground mb-2'>
-                        {t('home.amount')}
-                    </label>
-                    <Input
-                        id='return-amount'
-                        type='number'
-                        min='1'
-                        max={maxReturnable}
+        <div className='surface-glass flex flex-col gap-6 rounded-xl p-6'>
+            <h2 className='text-2xl font-bold text-foreground'>{t('home.return_tickets')}</h2>
+
+            <div className='flex flex-col gap-4 sm:flex-row'>
+                {/* Left: amount stepper */}
+                <div className='flex-1 flex flex-col items-center justify-center text-center'>
+                    <TicketStepper
                         value={amount}
-                        onChange={(e) => setAmount(Math.max(1, Math.min(Number(e.target.value) || 1, maxReturnable)))}
+                        onChange={(n) => setAmount(Math.max(1, Math.min(n, maxReturnable)))}
+                        min={1}
+                        max={maxReturnable}
                         disabled={isLoading || !isReturnAllowed}
-                        className='w-full'
                     />
-                    <div className='text-xs text-muted-foreground mt-1'>
-                        {t('home.Max')}: {maxReturnable}
-                    </div>
+                    {/* Max moved to TicketReturnStats on the right */}
                 </div>
+
+                {/* Right: return stats (fill column like top panel) */}
+                <TicketReturnStats className='flex-1' refundWei={refundAmount} maxReturnable={maxReturnable} />
+            </div>
+
+            {/* Bottom: action button */}
+            <div className='flex justify-center'>
+                <Button
+                    onClick={handleReturnSelected}
+                    disabled={isLoading || !isReturnAllowed || amount <= 0 || amount > maxReturnable}
+                    size='lg'
+                    className='cursor-pointer bg-rose-500 hover:bg-rose-600 text-white border-1 border-rose-300 hover:border-rose-100'>
+                    {isLoading ? t('home.returning') : t('home.return_selected')}
+                </Button>
             </div>
 
             {!isReturnAllowed && <p className='text-xs text-muted-foreground'>{t('home.return_period_has_ended')}</p>}
@@ -75,23 +79,6 @@ export default function ReturnTicketsPanel() {
                 </p>
             )}
             {isSuccess && <p className='text-xs text-primary'>{t('home.tickets_returned_successfully')}</p>}
-
-            <div className='flex gap-2'>
-                <Button
-                    onClick={handleReturnSelected}
-                    disabled={isLoading || !isReturnAllowed || amount <= 0 || amount > maxReturnable}
-                    variant='default'
-                    className='cursor-pointer w-1/2'>
-                    {isLoading ? t('home.returning') : t('home.return_selected')}
-                </Button>
-                <Button
-                    onClick={handleReturnAll}
-                    disabled={isLoading || !isReturnAllowed}
-                    variant='destructive'
-                    className='cursor-pointer w-1/2'>
-                    {isLoading ? t('home.returning') : `${t('home.return_all')} (${maxReturnable})`}
-                </Button>
-            </div>
         </div>
     );
 }

@@ -18,13 +18,13 @@ export default function Home() {
         <>
             <main className='relative overflow-x-hidden min-h-screen'>
                 {/* Content */}
-                <div className='container mx-auto relative z-10 flex flex-col px-4 pt-8 pb-12'>
+                <div className='container mx-auto relative z-10 flex flex-col px-4 pt-16'>
                     <div className='flex flex-col gap-4 items-center'>
                         <h1 className='text-foreground text-[38px] lg:text-6xl font-extrabold text-shadow-lg'>
                             {'Win a GuideDAO Pass!'}
                         </h1>
                     </div>
-                    <div className='flex lg:flex-row w-full flex-col lg:mt-12 mt-6 gap-6 items-start lg:items-stretch lg:gap-10'>
+                    <div className='flex lg:flex-row w-full flex-col lg:mt-20 mt-6 gap-6 items-start lg:items-stretch'>
                         {/* Left: Timer  & lottery ticket */}
                         <TicketTimer />
                         {/* Right: User widgets or wallet connect prompt */}

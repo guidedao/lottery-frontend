@@ -41,6 +41,7 @@ export function WalletConnectButton() {
                                             openConnectModal();
                                         }}
                                         variant='default'
+                                        className='hover:cursor-pointer'
                                         size='sm'>
                                         {t('wallet.connect')}
                                     </Button>

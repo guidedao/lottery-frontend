@@ -11,7 +11,7 @@ export function Footer() {
     return (
         <footer
             className='
-                relative z-50
+                relative z-50 mt-16
                 bg-background/20 backdrop-blur-xs
             '
             style={{

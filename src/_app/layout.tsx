@@ -27,12 +27,15 @@ export default function RootLayout({
     const locale = useLocale();
     return (
         <html lang={locale} className='dark'>
-            <body className={`${roboto.className} ${roboto.variable} antialiased`}>
+            <body className={`${roboto.className} ${roboto.variable} antialiased min-h-screen`}>
                 <Web3Provider>
                     <SiteBackground />
-                    <Header />
-                    {children}
-                    <Footer />
+                    {/* App shell container ensures sticky footer regardless of background node */}
+                    <div className='min-h-[100dvh] grid grid-rows-[auto_1fr_auto]'>
+                        <Header />
+                        <div className='min-h-0'>{children}</div>
+                        <Footer />
+                    </div>
                 </Web3Provider>
             </body>
         </html>

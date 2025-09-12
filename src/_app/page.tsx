@@ -16,7 +16,7 @@ export function generateMetadata(): Metadata {
 export default function Home() {
     return (
         <>
-            <main className='relative overflow-x-hidden min-h-screen'>
+            <div className='relative overflow-x-hidden'>
                 {/* Content */}
                 <div className='container mx-auto relative z-10 flex flex-col px-4 pt-16'>
                     <div className='flex flex-col gap-4 items-center'>
@@ -31,7 +31,7 @@ export default function Home() {
                         <UserWidgets />
                     </div>
                 </div>
-            </main>
+            </div>
         </>
     );
 }

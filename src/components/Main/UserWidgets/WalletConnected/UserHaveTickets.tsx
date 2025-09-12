@@ -6,11 +6,11 @@ import { Button } from '@/components/ui/button';
 import useBuyTickets from '@/hooks/useBuyTickets';
 import useLotteryState from '@/hooks/useLotteryState';
 import useParticipantStatus from '@/hooks/useParticipantStatus';
+import useTicketPurchaseMath from '@/hooks/useTicketPurchaseMath';
 import { LotteryStatus } from '@/types/enums';
 
 import ReturnTicketsPanel from './ReturnTicketsPanel';
-import TicketPurchaseStats from './TicketPurchaseStats';
-import TicketStepper from './TicketStepper';
+import TicketPurchaseRow from './TicketPurchaseRow';
 
 export default function UserHaveTickets() {
     const [ticketsAmount, setTicketsAmount] = useState<number>(1);
@@ -19,13 +19,14 @@ export default function UserHaveTickets() {
     const { isActualParticipant, userTicketsCount } = useParticipantStatus();
 
     const isRegistrationOpen = lotteryState.status === LotteryStatus.OpenedForRegistration;
-    const totalCost = lotteryState.ticketPrice * BigInt(ticketsAmount);
     const totalTickets = Number(lotteryState.totalTicketsCount ?? 0);
     const yourTickets = isActualParticipant ? userTicketsCount : 0;
-    const yourChance = totalTickets > 0 ? (yourTickets / totalTickets) * 100 : 0;
-    const predictedTotal = totalTickets + (ticketsAmount || 0);
-    const predictedYours = yourTickets + (ticketsAmount || 0);
-    const predictedChance = predictedTotal > 0 ? (predictedYours / predictedTotal) * 100 : 0;
+    const { totalCost, yourChance, predictedChance } = useTicketPurchaseMath({
+        ticketPrice: lotteryState.ticketPrice,
+        totalTickets,
+        yourTickets,
+        ticketsAmount
+    });
 
     function onBuy() {
         if (!isRegistrationOpen || isLoading) return;
@@ -39,26 +40,15 @@ export default function UserHaveTickets() {
             <article className='surface-glass flex flex-col flex-1 h-full min-h-[220px] lg:min-h-[260px] basis-full p-6 rounded-xl gap-6'>
                 <h2 className='text-2xl font-bold text-foreground'>Buy more lottery tickets</h2>
 
-                <div className='flex flex-col gap-4 sm:flex-row'>
-                    <div className='flex-1 flex flex-col items-center justify-center text-center'>
-                        <label className='block text-sm font-medium text-muted-foreground mb-2'>
-                            Number of Tickets
-                        </label>
-                        <TicketStepper
-                            value={ticketsAmount}
-                            onChange={setTicketsAmount}
-                            min={1}
-                            disabled={!isRegistrationOpen || isLoading}
-                        />
-                    </div>
-                    <TicketPurchaseStats
-                        className='flex-1'
-                        yourTickets={yourTickets}
-                        yourChancePct={yourChance}
-                        predictedChancePct={predictedChance}
-                        totalCostWei={totalCost}
-                    />
-                </div>
+                <TicketPurchaseRow
+                    ticketsAmount={ticketsAmount}
+                    onChange={setTicketsAmount}
+                    disabled={!isRegistrationOpen || isLoading}
+                    yourTickets={yourTickets}
+                    yourChancePct={yourChance}
+                    predictedChancePct={predictedChance}
+                    totalCostWei={totalCost}
+                />
 
                 <div className='space-y-4'>
                     {!isRegistrationOpen && (

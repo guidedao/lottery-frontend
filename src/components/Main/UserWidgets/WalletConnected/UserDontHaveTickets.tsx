@@ -9,6 +9,8 @@ import useLotteryState from '@/hooks/useLotteryState';
 import { encryptWithAdminPub } from '@/lib/xChaCha20/encrypt-cha';
 import { LotteryStatus } from '@/types/enums';
 
+import TicketStepper from './TicketStepper';
+
 export default function UserDontHaveTickets() {
     const [ticketsAmount, setTicketsAmount] = useState<number>(1);
     const [contactDetails, setContactDetails] = useState<string>('');
@@ -24,6 +26,7 @@ export default function UserDontHaveTickets() {
     const totalCost = lotteryState.ticketPrice * BigInt(ticketsAmount);
     const totalTickets = Number(lotteryState.totalTicketsCount ?? 0);
     const yourTickets = 0;
+    const yourChance = totalTickets > 0 ? (yourTickets / totalTickets) * 100 : 0;
     const predictedTotal = totalTickets + (ticketsAmount || 0);
     const predictedYours = yourTickets + (ticketsAmount || 0);
     const predictedChance = predictedTotal > 0 ? (predictedYours / predictedTotal) * 100 : 0;
@@ -66,26 +69,36 @@ export default function UserDontHaveTickets() {
                 <h2 className='text-2xl font-bold text-foreground'>Register and buy tickets</h2>
 
                 <div className='space-y-4'>
-                    <div>
-                        <label
-                            htmlFor='tickets-amount'
-                            className='block text-sm font-medium text-muted-foreground mb-2'>
-                            Number of Tickets
-                        </label>
-                        <Input
-                            id='tickets-amount'
-                            type='number'
-                            min='1'
-                            value={ticketsAmount}
-                            onChange={(e) => {
-                                const v = parseInt(e.target.value);
-                                if (!Number.isNaN(v) && v > 0) {
-                                    setTicketsAmount(v);
-                                }
-                            }}
-                            className='w-full'
-                            disabled={!isRegistrationOpen || isLoading || isEncrypting}
-                        />
+                    <div className='flex flex-col gap-4 sm:flex-row'>
+                        <div className='flex-1 flex flex-col items-center justify-center text-center'>
+                            <label className='block text-sm font-medium text-muted-foreground mb-2'>
+                                Number of Tickets
+                            </label>
+                            <TicketStepper
+                                value={ticketsAmount}
+                                onChange={setTicketsAmount}
+                                min={1}
+                                disabled={!isRegistrationOpen || isLoading || isEncrypting}
+                            />
+                        </div>
+                        <div className='flex-1 surface-glass p-4 rounded-md'>
+                            <div className='flex justify-between items-center'>
+                                <span className='text-sm text-muted-foreground'>Your tickets:</span>
+                                <span className='font-medium'>{yourTickets}</span>
+                            </div>
+                            <div className='flex justify-between items-center mt-2'>
+                                <span className='text-sm text-muted-foreground'>Your win chance:</span>
+                                <span className='font-medium'>{fmtPct(yourChance)}%</span>
+                            </div>
+                            <div className='flex justify-between items-center mt-2'>
+                                <span className='text-sm text-muted-foreground'>Total cost:</span>
+                                <span className='text-lg font-bold'>{`${Number(totalCost) / 1e18} ETH`}</span>
+                            </div>
+                            <div className='flex justify-between items-center mt-2'>
+                                <span className='text-sm text-muted-foreground'>Chance after purchase:</span>
+                                <span className='font-medium'>{fmtPct(predictedChance)}%</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div>
@@ -116,26 +129,7 @@ export default function UserDontHaveTickets() {
                         )}
                     </div>
 
-                    <div className='surface-glass p-4 rounded-md'>
-                        <div className='flex justify-between items-center'>
-                            <span className='text-sm text-muted-foreground'>Ticket price:</span>
-                            <span className='font-medium'>
-                                {lotteryState.ticketPrice
-                                    ? `${Number(lotteryState.ticketPrice) / 1e18} ETH`
-                                    : 'Loading...'}
-                            </span>
-                        </div>
-                        <div className='flex justify-between items-center mt-2'>
-                            <span className='text-sm text-muted-foreground'>Total cost:</span>
-                            <span className='text-lg font-bold'>
-                                {totalCost ? `${Number(totalCost) / 1e18} ETH` : 'Loading...'}
-                            </span>
-                        </div>
-                        <div className='flex justify-between items-center mt-2'>
-                            <span className='text-sm text-muted-foreground'>Chance after purchase:</span>
-                            <span className='font-medium'>{fmtPct(predictedChance)}%</span>
-                        </div>
-                    </div>
+                    {/* Ticket price kept implicit via total cost */}
 
                     {!isRegistrationOpen && (
                         <p className='text-sm text-destructive text-center'>Registration is currently closed</p>

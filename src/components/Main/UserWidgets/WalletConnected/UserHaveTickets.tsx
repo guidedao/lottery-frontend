@@ -64,13 +64,15 @@ export default function UserHaveTickets() {
                         <p className='text-sm text-primary text-center'>Additional tickets purchased successfully!</p>
                     )}
 
-                    <Button
-                        onClick={onBuy}
-                        disabled={!isRegistrationOpen || isLoading || ticketsAmount <= 0}
-                        className='w-full cursor-pointer'
-                        size='lg'>
-                        {isLoading ? 'Processing…' : 'Buy more tickets'}
-                    </Button>
+                    <div className='flex justify-center'>
+                        <Button
+                            onClick={onBuy}
+                            disabled={!isRegistrationOpen || isLoading || ticketsAmount <= 0}
+                            className='cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white'
+                            size='lg'>
+                            {isLoading ? 'Processing…' : 'Buy more tickets'}
+                        </Button>
+                    </div>
                 </div>
             </article>
 

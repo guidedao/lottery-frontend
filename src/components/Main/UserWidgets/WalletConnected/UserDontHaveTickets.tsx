@@ -69,7 +69,7 @@ export default function UserDontHaveTickets() {
             <article className='surface-glass flex flex-col flex-1 h-full min-h-[220px] lg:min-h-[260px] basis-full p-6 rounded-xl gap-6'>
                 <h2 className='text-2xl font-bold text-foreground'>Register and buy tickets</h2>
 
-                <div className='space-y-4'>
+                <div className='space-y-10'>
                     <TicketPurchaseRow
                         ticketsAmount={ticketsAmount}
                         onChange={setTicketsAmount}
@@ -121,20 +121,22 @@ export default function UserDontHaveTickets() {
                     )}
                     {isSuccess && <p className='text-sm text-primary text-center'>Tickets purchased successfully!</p>}
 
-                    <Button
-                        onClick={onBuy}
-                        disabled={
-                            !isRegistrationOpen ||
-                            isLoading ||
-                            isEncrypting ||
-                            ticketsAmount <= 0 ||
-                            !contactDetails.trim() ||
-                            !hasAdminPub
-                        }
-                        className='w-full cursor-pointer'
-                        size='lg'>
-                        {isLoading || isEncrypting ? 'Processing…' : 'Register & Buy Tickets'}
-                    </Button>
+                    <div className='flex justify-center'>
+                        <Button
+                            onClick={onBuy}
+                            disabled={
+                                !isRegistrationOpen ||
+                                isLoading ||
+                                isEncrypting ||
+                                ticketsAmount <= 0 ||
+                                !contactDetails.trim() ||
+                                !hasAdminPub
+                            }
+                            className='cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white'
+                            size='lg'>
+                            {isLoading || isEncrypting ? 'Processing…' : 'Register & Buy Tickets'}
+                        </Button>
+                    </div>
                 </div>
             </article>
         </section>

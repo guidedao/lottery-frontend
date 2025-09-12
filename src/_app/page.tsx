@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 
 import TicketTimer from '@/components/Main/LotteryWidget';
 import UserWidgets from '@/components/Main/UserWidgets';
+import About from '@/components/Main/InfoBlocks/About';
+import FAQ from '@/components/Main/InfoBlocks/FAQ';
 
 import { getTranslations } from 'next-globe-gen';
 
@@ -16,7 +18,7 @@ export function generateMetadata(): Metadata {
 export default function Home() {
     return (
         <>
-            <div className='relative overflow-x-hidden'>
+            <div id='home' className='relative overflow-x-hidden'>
                 {/* Content */}
                 <div className='container mx-auto relative z-10 flex flex-col px-4 pt-16'>
                     <div className='flex flex-col gap-4 items-center'>
@@ -32,6 +34,9 @@ export default function Home() {
                     </div>
                 </div>
             </div>
+            {/* Info Blocks */}
+            <About />
+            <FAQ />
         </>
     );
 }

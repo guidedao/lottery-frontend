@@ -28,12 +28,12 @@ export function Footer() {
                             Home
                         </Link>
                         <Link
-                            href='/about'
+                            href='/#about'
                             className='inline-flex items-center h-8 rounded-md px-3 text-foreground hover:text-foreground hover:bg-foreground/10 transition-colors'>
                             {t('footer.about')}
                         </Link>
                         <Link
-                            href='/faq'
+                            href='/#faq'
                             className='inline-flex items-center h-8 rounded-md px-3 text-foreground hover:text-foreground hover:bg-foreground/10 transition-colors'>
                             {t('footer.faq')}
                         </Link>

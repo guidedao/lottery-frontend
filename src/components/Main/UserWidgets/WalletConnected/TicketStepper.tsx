@@ -10,19 +10,21 @@ type Props = {
     value: number;
     onChange: (next: number) => void;
     min?: number; // default 1
+    max?: number; // optional upper bound
     disabled?: boolean;
     className?: string;
 };
 
-export default function TicketStepper({ value, onChange, min = 1, disabled, className }: Props) {
+export default function TicketStepper({ value, onChange, min = 1, max, disabled, className }: Props) {
     const dec = () => {
         const next = Math.max(min, (Number.isFinite(value) ? value : min) - 1);
         if (next !== value) onChange(next);
     };
     const inc = () => {
         const base = Number.isFinite(value) ? value : min;
-        const next = base + 1; // no max limit
-        onChange(next);
+        const next = base + 1;
+        const clamped = typeof max === 'number' ? Math.min(next, max) : next;
+        if (clamped !== value) onChange(clamped);
     };
 
     const onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (e) => {
@@ -47,7 +49,7 @@ export default function TicketStepper({ value, onChange, min = 1, disabled, clas
                 type='button'
                 variant='outline'
                 size='icon'
-                className='!size-16 rounded-lg'
+                className='!size-16 rounded-lg cursor-pointer'
                 aria-label='Decrease tickets'
                 onClick={dec}
                 disabled={disabled || value <= min}>
@@ -60,10 +62,10 @@ export default function TicketStepper({ value, onChange, min = 1, disabled, clas
                 type='button'
                 variant='outline'
                 size='icon'
-                className='!size-16 rounded-lg'
+                className='!size-16 rounded-lg cursor-pointer'
                 aria-label='Increase tickets'
                 onClick={inc}
-                disabled={disabled}>
+                disabled={disabled || (typeof max === 'number' && value >= max)}>
                 <Plus className='size-5' />
             </Button>
         </div>

@@ -33,7 +33,7 @@ export default function RootLayout({
                     {/* App shell container ensures sticky footer regardless of background node */}
                     <div className='min-h-[100dvh] grid grid-rows-[auto_1fr_auto]'>
                         <Header />
-                        <div className='min-h-0'>{children}</div>
+                        <div className='overflow-x-auto'>{children}</div>
                         <Footer />
                     </div>
                 </Web3Provider>

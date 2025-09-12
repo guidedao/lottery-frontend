@@ -9,13 +9,14 @@ import useParticipantStatus from '@/hooks/useParticipantStatus';
 import { LotteryStatus } from '@/types/enums';
 
 import ReturnTicketsPanel from './ReturnTicketsPanel';
+import TicketPurchaseStats from './TicketPurchaseStats';
 import TicketStepper from './TicketStepper';
 
 export default function UserHaveTickets() {
     const [ticketsAmount, setTicketsAmount] = useState<number>(1);
     const { buyTickets, isLoading, isError, error, isSuccess } = useBuyTickets();
     const { lotteryState } = useLotteryState();
-    const { isActualParticipant, userTicketsCount, refundAmount } = useParticipantStatus();
+    const { isActualParticipant, userTicketsCount } = useParticipantStatus();
 
     const isRegistrationOpen = lotteryState.status === LotteryStatus.OpenedForRegistration;
     const totalCost = lotteryState.ticketPrice * BigInt(ticketsAmount);
@@ -25,7 +26,6 @@ export default function UserHaveTickets() {
     const predictedTotal = totalTickets + (ticketsAmount || 0);
     const predictedYours = yourTickets + (ticketsAmount || 0);
     const predictedChance = predictedTotal > 0 ? (predictedYours / predictedTotal) * 100 : 0;
-    const fmtPct = (v: number) => v.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
 
     function onBuy() {
         if (!isRegistrationOpen || isLoading) return;
@@ -51,30 +51,13 @@ export default function UserHaveTickets() {
                             disabled={!isRegistrationOpen || isLoading}
                         />
                     </div>
-                    <div className='flex-1 surface-glass p-4 rounded-md'>
-                        <div className='flex justify-between items-center'>
-                            <span className='text-sm text-muted-foreground'>Your tickets:</span>
-                            <span className='font-medium'>{userTicketsCount}</span>
-                        </div>
-                        <div className='flex justify-between items-center mt-2'>
-                            <span className='text-sm text-muted-foreground'>Your win chance:</span>
-                            <span className='font-medium'>{fmtPct(yourChance)}%</span>
-                        </div>
-                        <div className='flex justify-between items-center mt-2'>
-                            <span className='text-sm text-muted-foreground'>Your refund:</span>
-                            <span className='font-medium'>
-                                {refundAmount ? `${Number(refundAmount) / 1e18} ETH` : '0 ETH'}
-                            </span>
-                        </div>
-                        <div className='flex justify-between items-center mt-2'>
-                            <span className='text-sm text-muted-foreground'>Total cost:</span>
-                            <span className='font-bold text-lg'>{`${Number(totalCost) / 1e18} ETH`}</span>
-                        </div>
-                        <div className='flex justify-between items-center mt-2'>
-                            <span className='text-sm text-muted-foreground'>Chance after purchase:</span>
-                            <span className='font-medium'>{fmtPct(predictedChance)}%</span>
-                        </div>
-                    </div>
+                    <TicketPurchaseStats
+                        className='flex-1'
+                        yourTickets={yourTickets}
+                        yourChancePct={yourChance}
+                        predictedChancePct={predictedChance}
+                        totalCostWei={totalCost}
+                    />
                 </div>
 
                 <div className='space-y-4'>

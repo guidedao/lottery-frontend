@@ -9,6 +9,7 @@ import useLotteryState from '@/hooks/useLotteryState';
 import { encryptWithAdminPub } from '@/lib/xChaCha20/encrypt-cha';
 import { LotteryStatus } from '@/types/enums';
 
+import TicketPurchaseStats from './TicketPurchaseStats';
 import TicketStepper from './TicketStepper';
 
 export default function UserDontHaveTickets() {
@@ -30,7 +31,6 @@ export default function UserDontHaveTickets() {
     const predictedTotal = totalTickets + (ticketsAmount || 0);
     const predictedYours = yourTickets + (ticketsAmount || 0);
     const predictedChance = predictedTotal > 0 ? (predictedYours / predictedTotal) * 100 : 0;
-    const fmtPct = (v: number) => v.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
 
     const bytesToHex = (bytes: Uint8Array): `0x${string}` =>
         `0x${Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('')}` as `0x${string}`;
@@ -81,24 +81,13 @@ export default function UserDontHaveTickets() {
                                 disabled={!isRegistrationOpen || isLoading || isEncrypting}
                             />
                         </div>
-                        <div className='flex-1 surface-glass p-4 rounded-md'>
-                            <div className='flex justify-between items-center'>
-                                <span className='text-sm text-muted-foreground'>Your tickets:</span>
-                                <span className='font-medium'>{yourTickets}</span>
-                            </div>
-                            <div className='flex justify-between items-center mt-2'>
-                                <span className='text-sm text-muted-foreground'>Your win chance:</span>
-                                <span className='font-medium'>{fmtPct(yourChance)}%</span>
-                            </div>
-                            <div className='flex justify-between items-center mt-2'>
-                                <span className='text-sm text-muted-foreground'>Total cost:</span>
-                                <span className='text-lg font-bold'>{`${Number(totalCost) / 1e18} ETH`}</span>
-                            </div>
-                            <div className='flex justify-between items-center mt-2'>
-                                <span className='text-sm text-muted-foreground'>Chance after purchase:</span>
-                                <span className='font-medium'>{fmtPct(predictedChance)}%</span>
-                            </div>
-                        </div>
+                        <TicketPurchaseStats
+                            className='flex-1'
+                            yourTickets={yourTickets}
+                            yourChancePct={yourChance}
+                            predictedChancePct={predictedChance}
+                            totalCostWei={totalCost}
+                        />
                     </div>
 
                     <div>

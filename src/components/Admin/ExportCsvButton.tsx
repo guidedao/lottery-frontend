@@ -71,7 +71,7 @@ export default function ExportCsvButton({
     return (
         <Button size='sm' variant='outline' onClick={onClick} disabled={disabled || participants.length === 0}>
             <DownloadIcon className='size-4' />
-            <span className='hidden sm:inline'>Export CSV</span>
+            <span>Export CSV</span>
         </Button>
     );
 }

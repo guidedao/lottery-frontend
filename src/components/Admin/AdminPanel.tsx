@@ -107,15 +107,15 @@ export default function AdminPanel() {
 
     return (
         <div className='container mx-auto px-4 py-12 pt-18'>
-            <div className='surface-glass rounded-xl shadow-sm p-6 md:p-8'>
-                <div className='mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between'>
+            <div className='surface-glass rounded-xl shadow-sm p-4'>
+                <div className='mb-6 flex flex-col gap-3'>
                     <div>
                         <h1 className='text-2xl md:text-3xl font-bold leading-tight'>Admin Panel</h1>
                         <div className='mt-2 text-sm text-muted-foreground'>
                             Current lottery number: {lotteryNumber}
                         </div>
                     </div>
-                    <div className='flex items-center gap-2'>
+                    <div className='flex flex-wrap items-center gap-2'>
                         <div className='text-sm text-muted-foreground'>View lottery #</div>
                         <div className='flex items-center gap-1'>
                             <button
@@ -128,7 +128,7 @@ export default function AdminPanel() {
                             <Input
                                 type='number'
                                 inputMode='numeric'
-                                className='w-28 text-center'
+                                className='w-24 text-center'
                                 min={0}
                                 max={lotteryNumber}
                                 value={selectedLottery}
@@ -169,9 +169,9 @@ export default function AdminPanel() {
                 )}
 
                 {hasParticipants && (
-                    <div className='rounded-md border overflow-hidden bg-background/80 backdrop-blur-sm [&_[data-slot=table-container]]:overflow-visible'>
+                    <div className='rounded-md border overflow-hidden bg-background/80 backdrop-blur-sm'>
                         <Table className='table-fixed'>
-                            <TableHeader className='[&_th]:sticky [&_th]:top-0 [&_th]:z-10 [&_th]:bg-background/80 [&_th]:backdrop-blur [&_th]:text-xs [&_th]:uppercase [&_th]:tracking-wide [&_th]:text-muted-foreground'>
+                            <TableHeader className='[&_th]:bg-background/80 [&_th]:backdrop-blur [&_th]:text-xs [&_th]:uppercase [&_th]:tracking-wide [&_th]:text-muted-foreground'>
                                 <TableRow>
                                     <TableHead className='w-24'>User #</TableHead>
                                     <TableHead className='w-24 text-center'>Tickets</TableHead>

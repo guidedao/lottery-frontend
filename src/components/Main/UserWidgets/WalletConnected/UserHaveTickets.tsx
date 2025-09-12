@@ -68,7 +68,7 @@ export default function UserHaveTickets() {
                         <Button
                             onClick={onBuy}
                             disabled={!isRegistrationOpen || isLoading || ticketsAmount <= 0}
-                            className='cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white'
+                            className='cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white border-1 border-emerald-300 hover:border-emerald-100'
                             size='lg'>
                             {isLoading ? 'Processing…' : 'Buy more tickets'}
                         </Button>

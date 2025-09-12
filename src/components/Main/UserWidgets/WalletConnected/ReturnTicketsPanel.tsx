@@ -67,7 +67,7 @@ export default function ReturnTicketsPanel() {
                     onClick={handleReturnSelected}
                     disabled={isLoading || !isReturnAllowed || amount <= 0 || amount > maxReturnable}
                     size='lg'
-                    className='cursor-pointer bg-rose-500 hover:bg-rose-600 text-white'>
+                    className='cursor-pointer bg-rose-500 hover:bg-rose-600 text-white border-1 border-rose-300 hover:border-rose-100'>
                     {isLoading ? t('home.returning') : t('home.return_selected')}
                 </Button>
             </div>

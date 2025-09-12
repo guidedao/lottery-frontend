@@ -44,7 +44,7 @@ export default function ReturnTicketsPanel() {
         <div className='surface-glass flex flex-col gap-6 rounded-xl p-6'>
             <h2 className='text-2xl font-bold text-foreground'>{t('home.return_tickets')}</h2>
 
-            <div className='flex flex-col gap-4 sm:flex-row sm:items-center'>
+            <div className='flex flex-col gap-4 sm:flex-row'>
                 {/* Left: amount stepper */}
                 <div className='flex-1 flex flex-col items-center justify-center text-center'>
                     <TicketStepper
@@ -57,10 +57,8 @@ export default function ReturnTicketsPanel() {
                     {/* Max moved to TicketReturnStats on the right */}
                 </div>
 
-                {/* Right: return stats */}
-                <div className='flex-1 flex flex-col items-center justify-center'>
-                    <TicketReturnStats refundWei={refundAmount} maxReturnable={maxReturnable} />
-                </div>
+                {/* Right: return stats (fill column like top panel) */}
+                <TicketReturnStats className='flex-1' refundWei={refundAmount} maxReturnable={maxReturnable} />
             </div>
 
             {/* Bottom: action button */}

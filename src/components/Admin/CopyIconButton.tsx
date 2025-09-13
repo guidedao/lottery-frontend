@@ -3,6 +3,7 @@
 import { type Dispatch, type SetStateAction } from 'react';
 
 import { Button } from '@/components/ui/button';
+import { showCopyErrorToast, showCopySuccessToast } from '@/lib/toast-utils';
 
 import { CheckIcon, CopyIcon } from 'lucide-react';
 
@@ -46,12 +47,15 @@ export default function CopyIconButton({
         <Button
             size='icon'
             variant='ghost'
-            className='text-muted-foreground hover:text-foreground'
+            className='text-muted-foreground hover:text-foreground hover:cursor-pointer'
             onClick={async () => {
                 const ok = await copyToClipboard(value);
                 if (ok) {
                     setCopiedMap((prev) => ({ ...prev, [value]: true }));
                     setTimeout(() => setCopiedMap((prev) => ({ ...prev, [value]: false })), 1300);
+                    showCopySuccessToast();
+                } else {
+                    showCopyErrorToast();
                 }
             }}
             aria-label={ariaLabel}

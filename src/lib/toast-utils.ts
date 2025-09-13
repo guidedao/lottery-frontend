@@ -1,35 +1,44 @@
 import { toast } from 'sonner';
 
-const BASE_TOAST_CLASSES = `
-!relative
-!bg-zinc-900/30
-!backdrop-blur-sm
-!border
-!shadow-lg
-!rounded-xl
-!before:absolute
-!before:inset-0
-!before:rounded-xl
-!before:bg-gradient-to-r
-!before:to-transparent
-!before:blur-lg
-!before:-z-10
-`;
+const BASE_TOAST_CLASSES =
+    '!bg-zinc-900/30 !backdrop-blur-sm !border !shadow-lg !rounded-xl !before:absolute !before:inset-0 !before:rounded-xl !before:bg-gradient-to-r !before:to-transparent !before:blur-lg !before:-z-10';
 
-const makeVariant = (color: string) => `
-${BASE_TOAST_CLASSES}
-!border-${color}-500/40
-!text-${color}-300
-!shadow-${color}-500/20
-!before:from-${color}-500/20
-`;
+const VARIANT_COLORS = {
+    emerald: {
+        border: '!border-emerald-500/40',
+        text: '!text-emerald-300',
+        shadow: '!shadow-emerald-500/20',
+        before: '!before:from-emerald-500/20'
+    },
+    rose: {
+        border: '!border-rose-500/40',
+        text: '!text-rose-300',
+        shadow: '!shadow-rose-500/20',
+        before: '!before:from-rose-500/20'
+    },
+    amber: {
+        border: '!border-amber-500/40',
+        text: '!text-amber-300',
+        shadow: '!shadow-amber-500/20',
+        before: '!before:from-amber-500/20'
+    },
+    blue: {
+        border: '!border-blue-500/40',
+        text: '!text-blue-300',
+        shadow: '!shadow-blue-500/20',
+        before: '!before:from-blue-500/20'
+    }
+};
+
+const makeVariant = (color: keyof typeof VARIANT_COLORS) =>
+    `${BASE_TOAST_CLASSES} ${VARIANT_COLORS[color].border} ${VARIANT_COLORS[color].text} ${VARIANT_COLORS[color].shadow} ${VARIANT_COLORS[color].before}`;
 
 // Toast styling constants
 export const TOAST_STYLES = {
     success: {
         richColors: true,
         duration: 4000,
-        position: 'bottom-center' as const,
+        position: 'bottom-right' as const,
         className: makeVariant('emerald')
     },
     error: {
@@ -47,7 +56,7 @@ export const TOAST_STYLES = {
     info: {
         richColors: true,
         duration: 4000,
-        position: 'bottom-center' as const,
+        position: 'bottom-right' as const,
         className: makeVariant('blue')
     }
 } as const;
@@ -79,7 +88,7 @@ export const showCopyErrorToast = () => {
 };
 
 export const showExportSuccessToast = (filename: string) => {
-    showSuccessToast(`Exported successfully: ${filename} 📁`);
+    showSuccessToast(`Exported successfully: ${filename}`);
 };
 
 export const showExportErrorToast = () => {
@@ -113,12 +122,16 @@ export const showLoadingToast = (message: string) => {
     });
 };
 
-export const showDecryptionSuccessToast = () => {
-    showSuccessToast('Decryption completed successfully 🔓');
+export const showDecryptionSuccessToast = (address: string) => {
+    showSuccessToast(`Successfully decrypted address: ${address.slice(0, 6)}...${address.slice(-4)} 🔓`);
 };
 
 export const showDecryptionErrorToast = (error: string) => {
     showErrorToast(`Decryption failed: ${error}`);
+};
+
+export const showEcryptionErrorToast = (error: string) => {
+    showErrorToast(`Encryption failed: ${error}`);
 };
 
 export const showTransactionPendingToast = (message: string) => {

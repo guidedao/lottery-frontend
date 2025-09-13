@@ -7,6 +7,7 @@ import useBuyTickets from '@/hooks/useBuyTickets';
 import useLotteryState from '@/hooks/useLotteryState';
 import useParticipantStatus from '@/hooks/useParticipantStatus';
 import useTicketPurchaseMath from '@/hooks/useTicketPurchaseMath';
+import { showFormValidationToast } from '@/lib/toast-utils';
 import { LotteryStatus } from '@/types/enums';
 
 import ReturnTicketsPanel from './ReturnTicketsPanel';
@@ -14,7 +15,7 @@ import TicketPurchaseRow from './TicketPurchaseRow';
 
 export default function UserHaveTickets() {
     const [ticketsAmount, setTicketsAmount] = useState<number>(1);
-    const { buyTickets, isLoading, isError, error, isSuccess } = useBuyTickets();
+    const { buyTickets, isLoading } = useBuyTickets();
     const { lotteryState } = useLotteryState();
     const { isActualParticipant, userTicketsCount } = useParticipantStatus();
 
@@ -30,9 +31,14 @@ export default function UserHaveTickets() {
 
     function onBuy() {
         if (!isRegistrationOpen || isLoading) return;
-        if (ticketsAmount <= 0) return;
+
+        if (ticketsAmount <= 0) {
+            showFormValidationToast('Please enter a valid number of tickets');
+            return;
+        }
+
         // For existing participants we do not send contact details
-        buyTickets({ ticketsAmount, encryptedContactDetails: '0x' });
+        buyTickets({ ticketsAmount, encryptedContactDetails: '0x', hasTickets: true });
     }
 
     return (
@@ -53,15 +59,6 @@ export default function UserHaveTickets() {
                 <div className='space-y-4'>
                     {!isRegistrationOpen && (
                         <p className='text-sm text-destructive text-center'>Registration is currently closed</p>
-                    )}
-
-                    {isError && (
-                        <p className='text-sm text-destructive text-center'>
-                            Error: {error?.message || 'Failed to buy tickets'}
-                        </p>
-                    )}
-                    {isSuccess && (
-                        <p className='text-sm text-primary text-center'>Additional tickets purchased successfully!</p>
                     )}
 
                     <div className='flex justify-center'>

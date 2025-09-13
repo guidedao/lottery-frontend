@@ -7,18 +7,19 @@ import { Input } from '@/components/ui/input';
 import useBuyTickets from '@/hooks/useBuyTickets';
 import useLotteryState from '@/hooks/useLotteryState';
 import useTicketPurchaseMath from '@/hooks/useTicketPurchaseMath';
+import { showEcryptionErrorToast, showFormValidationToast } from '@/lib/toast-utils';
 import { encryptWithAdminPub } from '@/lib/xChaCha20/encrypt-cha';
 import { LotteryStatus } from '@/types/enums';
 
 import TicketPurchaseRow from './TicketPurchaseRow';
+import { toast } from 'sonner';
 
 export default function UserDontHaveTickets() {
     const [ticketsAmount, setTicketsAmount] = useState<number>(1);
     const [contactDetails, setContactDetails] = useState<string>('');
-    const [encError, setEncError] = useState<string | null>(null);
     const [isEncrypting, setIsEncrypting] = useState<boolean>(false);
 
-    const { buyTickets, isLoading, isError, error, isSuccess } = useBuyTickets();
+    const { buyTickets, isLoading } = useBuyTickets();
     const { lotteryState } = useLotteryState();
 
     const hasAdminPub = !!process.env.NEXT_PUBLIC_ADMIN_PUB_HEX;
@@ -38,9 +39,11 @@ export default function UserDontHaveTickets() {
 
     async function onBuy() {
         if (!isRegistrationOpen || isLoading || isEncrypting) return;
-        if (ticketsAmount <= 0) return;
 
-        setEncError(null);
+        if (ticketsAmount <= 0) {
+            showFormValidationToast('Please enter a valid number of tickets');
+            return;
+        }
 
         try {
             setIsEncrypting(true);
@@ -50,10 +53,11 @@ export default function UserDontHaveTickets() {
                 const payload = await encryptWithAdminPub(raw);
                 encrypted = bytesToHex(payload);
             }
-            await buyTickets({ ticketsAmount, encryptedContactDetails: encrypted });
+            await buyTickets({ ticketsAmount, encryptedContactDetails: encrypted, hasTickets: false });
         } catch (e) {
             const msg = e instanceof Error ? e.message : String(e);
-            setEncError(`Encryption failed: ${msg}`);
+            toast.error(`Encryption failed: ${msg}`);
+            showEcryptionErrorToast(msg);
         } finally {
             setIsEncrypting(false);
         }
@@ -111,13 +115,6 @@ export default function UserDontHaveTickets() {
                     {!isRegistrationOpen && (
                         <p className='text-sm text-destructive text-center'>Registration is currently closed</p>
                     )}
-
-                    {(isError || encError) && (
-                        <p className='text-sm text-destructive text-center'>
-                            Error: {encError || error?.message || 'Failed to buy tickets'}
-                        </p>
-                    )}
-                    {isSuccess && <p className='text-sm text-primary text-center'>Tickets purchased successfully!</p>}
 
                     <div className='flex justify-center'>
                         <Button

@@ -80,7 +80,7 @@ export const handleTransactionError = (error: Error) => {
             error.cause?.details?.includes('MetaMask Tx Signature: User denied transaction signature');
 
         if (userCanceledTransaction) {
-            showTransactionErrorToast('Transaction cancelled by user.');
+            showTransactionErrorToast('Transaction cancelled by user');
             console.error(error);
         }
         return;

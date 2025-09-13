@@ -5,13 +5,12 @@ import { useEffect } from 'react';
 import { showErrorToast, showSuccessToast } from '@/lib/toast-utils';
 
 import { useSession } from 'next-auth/react';
-import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import { useAccount, useConnect } from 'wagmi';
 
 export function useWalletToasts() {
-    const { address, isConnected, status, chain } = useAccount();
+    const { address, chain } = useAccount();
     const { error: connectError } = useConnect();
-    const { disconnect } = useDisconnect();
-    const { data: session, status: authStatus } = useSession();
+    const { status: authStatus } = useSession();
 
     type ExtendedChain = typeof chain & { unsupported?: boolean };
     const extendedChain = chain as ExtendedChain;
@@ -33,14 +32,4 @@ export function useWalletToasts() {
             showErrorToast('Unsupported network. Please switch to the correct network.');
         }
     }, [extendedChain]);
-
-    return {
-        isConnected,
-        address,
-        chain,
-        disconnect,
-        walletStatus: status,
-        authStatus,
-        session
-    };
 }

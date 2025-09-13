@@ -1,16 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import WalletControls from '@/components/header/WalletControls';
 import { Button } from '@/components/ui/button';
+import { useWalletToasts } from '@/hooks/useWalletToasts';
+import { showErrorToast } from '@/lib/toast-utils';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 import { useTranslations } from 'next-globe-gen';
+import { useAccount } from 'wagmi';
 
 export function WalletConnectButton() {
     const t = useTranslations();
-    const [, /*unused*/ setPending] = useState(false);
+    const [pending, setPending] = useState(false);
+    const { isConnected } = useAccount();
+
+    useEffect(() => {
+        if (isConnected) {
+            setPending(false);
+        }
+    }, [isConnected]);
+
+    useWalletToasts();
 
     return (
         <ConnectButton.Custom>
@@ -42,15 +54,22 @@ export function WalletConnectButton() {
                                         }}
                                         variant='default'
                                         className='hover:cursor-pointer'
-                                        size='sm'>
-                                        {t('wallet.connect')}
+                                        size='sm'
+                                        disabled={pending}>
+                                        {pending ? t('wallet.connecting') : t('wallet.connect')}
                                     </Button>
                                 );
                             }
 
                             if (chain.unsupported) {
                                 return (
-                                    <Button onClick={openChainModal} variant='destructive' size='sm'>
+                                    <Button
+                                        onClick={() => {
+                                            showErrorToast('Please switch to the correct network');
+                                            openChainModal();
+                                        }}
+                                        variant='destructive'
+                                        size='sm'>
                                         {t('wallet.wrongNetwork')}
                                     </Button>
                                 );

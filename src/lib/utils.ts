@@ -1,5 +1,6 @@
 import { LotteryStatus } from '@/types/enums';
 
+import { showTransactionErrorToast } from './toast-utils';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -65,4 +66,26 @@ export const getTimeLeft = (endTimeMs: number): { days: number; hours: number; m
     const seconds = diffSec % 60;
 
     return { days, hours, minutes, seconds };
+};
+
+function isViemErrorCause(obj: unknown): obj is { message?: string; shortMessage?: string; details?: string } {
+    return typeof obj === 'object' && obj !== null;
+}
+
+export const handleTransactionError = (error: Error) => {
+    if (isViemErrorCause(error.cause)) {
+        const userCanceledTransaction =
+            error.cause?.message?.includes('User rejected the request') ||
+            error.cause?.shortMessage?.includes('User rejected the request') ||
+            error.cause?.details?.includes('MetaMask Tx Signature: User denied transaction signature');
+
+        if (userCanceledTransaction) {
+            showTransactionErrorToast('Transaction cancelled by user.');
+            console.error(error);
+        }
+        return;
+    }
+
+    showTransactionErrorToast(error?.message || 'Failed to buy tickets');
+    console.error(error);
 };

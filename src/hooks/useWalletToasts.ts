@@ -34,12 +34,6 @@ export function useWalletToasts() {
         }
     }, [extendedChain]);
 
-    useEffect(() => {
-        if (status === 'disconnected') {
-            showInfoToast('Wallet disconnected');
-        }
-    }, [status]);
-
     return {
         isConnected,
         address,

@@ -16,7 +16,7 @@ interface BuyTicketsParams {
 
 export default function useBuyTickets() {
     const config = useConfig();
-    const { address } = useAccount();
+    const { address, chain } = useAccount();
     const queryClient = useQueryClient();
 
     const buyTicketsMutation = useMutation({
@@ -68,6 +68,7 @@ export default function useBuyTickets() {
         },
         onSuccess: async (hash, variables) => {
             const { hasTickets } = variables;
+            const explorerUrl = chain?.blockExplorers?.default?.url || 'https://etherscan.io';
 
             // Wait for transaction to be confirmed before invalidating queries
             if (hash) {
@@ -75,11 +76,11 @@ export default function useBuyTickets() {
                     await waitForTransactionReceipt(config, { hash });
                     queryClient.invalidateQueries({ queryKey: [TanstackKeys.useLotteryState] });
                     queryClient.invalidateQueries({ queryKey: [TanstackKeys.useParticipantStatus] });
-                    showTransactionSuccessToast(
-                        hasTickets
-                            ? 'Additional tickets purchased successfully! 🎟️'
-                            : 'Tickets purchased successfully! 🎉'
-                    );
+                    showTransactionSuccessToast({
+                        message: hasTickets ? 'Additional tickets purchased! 🎟️' : 'Tickets purchased successfully! 🎉',
+                        explorerUrl,
+                        txHash: hash
+                    });
                 } catch (error) {
                     console.error('Error waiting for transaction confirmation:', error);
                     queryClient.invalidateQueries({ queryKey: [TanstackKeys.useLotteryState] });

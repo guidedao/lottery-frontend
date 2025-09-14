@@ -6,7 +6,7 @@ import { TanstackKeys } from '@/types/enums';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { useTranslations } from 'next-globe-gen';
-import { useConfig } from 'wagmi';
+import { useAccount, useConfig } from 'wagmi';
 import { waitForTransactionReceipt, writeContract } from 'wagmi/actions';
 
 interface ReturnTicketsParams {
@@ -17,6 +17,7 @@ export default function useReturnTickets() {
     const config = useConfig();
     const queryClient = useQueryClient();
     const t = useTranslations();
+    const { chain } = useAccount();
 
     const mutation = useMutation({
         mutationFn: async ({ amount }: ReturnTicketsParams) => {
@@ -34,6 +35,8 @@ export default function useReturnTickets() {
             });
         },
         onSuccess: async (hash) => {
+            const explorerUrl = chain?.blockExplorers?.default?.url || 'https://etherscan.io';
+
             // Wait for transaction to be confirmed before invalidating queries
             if (hash) {
                 try {
@@ -41,7 +44,11 @@ export default function useReturnTickets() {
 
                     queryClient.invalidateQueries({ queryKey: [TanstackKeys.useLotteryState] });
                     queryClient.invalidateQueries({ queryKey: [TanstackKeys.useParticipantStatus] });
-                    showTransactionSuccessToast(`${t('home.tickets_returned_successfully')} 🔁`);
+                    showTransactionSuccessToast({
+                        message: `${t('home.tickets_returned_successfully')}`,
+                        explorerUrl,
+                        txHash: hash
+                    });
                 } catch (error) {
                     console.error('Error waiting for transaction confirmation:', error);
                     queryClient.invalidateQueries({ queryKey: [TanstackKeys.useLotteryState] });

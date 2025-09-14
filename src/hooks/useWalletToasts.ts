@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import { showErrorToast, showInfoToast, showSuccessToast } from '@/lib/toast-utils';
+import { showErrorToast, showInfoToast, showSuccessToast, showWalletConnectedToast } from '@/lib/toast-utils';
 
 import { useSession } from 'next-auth/react';
 import { useAccount, useAccountEffect, useConnect } from 'wagmi';
@@ -17,7 +17,7 @@ export function useWalletToasts() {
 
     useEffect(() => {
         if (authStatus === 'authenticated' && address) {
-            showSuccessToast(`Signed in as: ${address.slice(0, 6)}…${address.slice(-4)}`);
+            showWalletConnectedToast(address);
         }
     }, [authStatus, address]);
 

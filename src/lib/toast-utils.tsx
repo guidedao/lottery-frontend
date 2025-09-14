@@ -1,4 +1,8 @@
-import { toast } from 'sonner';
+import { JSX } from 'react';
+
+import { Button } from '@/components/ui/button';
+
+import { ExternalToast, toast } from 'sonner';
 
 const BASE_TOAST_CLASSES =
     '!bg-zinc-900/30 !backdrop-blur-sm !border !shadow-lg !rounded-xl !before:absolute !before:inset-0 !before:rounded-xl !before:bg-gradient-to-r !before:to-transparent !before:blur-lg !before:-z-10';
@@ -62,19 +66,19 @@ export const TOAST_STYLES = {
 } as const;
 
 // Utility functions for common toast patterns
-export const showSuccessToast = (message: string, options?: Partial<typeof TOAST_STYLES.success>) => {
+export const showSuccessToast = (message: string | JSX.Element, options?: ExternalToast) => {
     toast.success(message, { ...TOAST_STYLES.success, ...options });
 };
 
-export const showErrorToast = (message: string, options?: Partial<typeof TOAST_STYLES.error>) => {
+export const showErrorToast = (message: string | JSX.Element, options?: ExternalToast) => {
     toast.error(message, { ...TOAST_STYLES.error, ...options });
 };
 
-export const showWarningToast = (message: string, options?: Partial<typeof TOAST_STYLES.warning>) => {
+export const showWarningToast = (message: string | JSX.Element, options?: ExternalToast) => {
     toast.warning(message, { ...TOAST_STYLES.warning, ...options });
 };
 
-export const showInfoToast = (message: string, options?: Partial<typeof TOAST_STYLES.info>) => {
+export const showInfoToast = (message: string | JSX.Element, options?: ExternalToast) => {
     toast.info(message, { ...TOAST_STYLES.info, ...options });
 };
 
@@ -142,9 +146,35 @@ export const showTransactionPendingToast = (message: string) => {
     });
 };
 
-export const showTransactionSuccessToast = (message: string) => {
+interface TransactionToastOptions {
+    message: string | JSX.Element;
+    txHash?: string;
+    explorerUrl?: string;
+}
+
+export const showTransactionSuccessToast = ({ message, txHash, explorerUrl }: TransactionToastOptions) => {
     toast.dismiss('transaction-pending');
-    showSuccessToast(message);
+
+    if (txHash && explorerUrl) {
+        const txLink = `${explorerUrl}/tx/${txHash}`;
+        showSuccessToast(
+            <div className='flex gap-1 items-center justify-between'>
+                <p>{message}</p>
+                <Button
+                    size='sm'
+                    variant='link'
+                    onClick={() => window.open(txLink, '_blank', 'noopener,noreferrer')}
+                    className='rounded hover:cursor-pointer text-sm font-medium w-fit ml-auto text-foreground transition-colors'>
+                    View tx
+                </Button>
+            </div>,
+            {
+                duration: 6000
+            }
+        );
+    } else {
+        showSuccessToast(message);
+    }
 };
 
 export const showTransactionErrorToast = (message: string) => {

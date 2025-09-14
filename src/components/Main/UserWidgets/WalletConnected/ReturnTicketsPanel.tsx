@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import useLotteryState from '@/hooks/useLotteryState';
 import useParticipantStatus from '@/hooks/useParticipantStatus';
 import useReturnTickets from '@/hooks/useReturnTickets';
+import { showFormValidationToast } from '@/lib/toast-utils';
 import { LotteryStatus } from '@/types/enums';
 
 import TicketReturnStats from './TicketReturnStats';
@@ -17,7 +18,7 @@ import { useAccount } from 'wagmi';
 export default function ReturnTicketsPanel() {
     const t = useTranslations();
     const { isActualParticipant, userTicketsCount, refundAmount } = useParticipantStatus();
-    const { returnTickets, isLoading, isError, error, isSuccess } = useReturnTickets();
+    const { returnTickets, isLoading } = useReturnTickets();
     const { lotteryState } = useLotteryState();
     const { address } = useAccount();
     const { status: authStatus } = useSession();
@@ -32,7 +33,22 @@ export default function ReturnTicketsPanel() {
 
     function handleReturnSelected() {
         const amt = Math.min(Math.max(1, amount || 0), maxReturnable);
-        if (amt <= 0 || !isReturnAllowed) return;
+
+        if (amt <= 0) {
+            showFormValidationToast('Please enter a valid number of tickets to return');
+            return;
+        }
+
+        if (amt > maxReturnable) {
+            showFormValidationToast(`You can only return up to ${maxReturnable} tickets`);
+            return;
+        }
+
+        if (!isReturnAllowed) {
+            showFormValidationToast('Return period has ended');
+            return;
+        }
+
         returnTickets({ amount: amt });
     }
 
@@ -73,12 +89,6 @@ export default function ReturnTicketsPanel() {
             </div>
 
             {!isReturnAllowed && <p className='text-xs text-muted-foreground'>{t('home.return_period_has_ended')}</p>}
-            {isError && error && (
-                <p className='text-xs text-destructive'>
-                    {t('home.Error')}: {error.message}
-                </p>
-            )}
-            {isSuccess && <p className='text-xs text-primary'>{t('home.tickets_returned_successfully')}</p>}
         </div>
     );
 }

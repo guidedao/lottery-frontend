@@ -8,6 +8,7 @@ import { Web3Provider } from '@/providers/Web3Provider';
 import '@/styles/globals.css';
 
 import { useLocale } from 'next-globe-gen';
+import { Toaster } from 'sonner';
 
 export const roboto = Roboto({
     subsets: ['latin'],
@@ -34,6 +35,7 @@ export default function RootLayout({
                     <div className='min-h-[100dvh] grid grid-rows-[auto_1fr_auto]'>
                         <Header />
                         <div className='overflow-x-auto'>{children}</div>
+                        <Toaster />
                         <Footer />
                     </div>
                 </Web3Provider>

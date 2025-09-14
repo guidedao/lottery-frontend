@@ -140,6 +140,7 @@ src/
     useParticipantStatus.ts
     useParticipantsMulticall.ts
     useReturnTickets.ts
+    useWalletToasts.ts
 
   lib/
     abis/

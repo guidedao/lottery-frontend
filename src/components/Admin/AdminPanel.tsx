@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import useLotteryState from '@/hooks/useLotteryState';
 import useParticipantsMulticall, { type ParticipantInfoRow } from '@/hooks/useParticipantsMulticall';
+import { showDecryptionSuccessToast, showErrorToast, showInfoToast } from '@/lib/toast-utils';
 
 import CopyIconButton from './CopyIconButton';
 import ExportCsvButton from './ExportCsvButton';
@@ -34,6 +35,13 @@ export default function AdminPanel() {
     }, [lotteryNumber]);
 
     const { participants, isLoading, isError } = useParticipantsMulticall({ lotteryNumber: selectedLottery });
+
+    // Show error toast when data loading fails
+    useEffect(() => {
+        if (isError) {
+            showErrorToast('Failed to load participants data');
+        }
+    }, [isError]);
 
     const [decMap, setDecMap] = useState<Record<string, DecryptState>>({});
     const [copiedAddr, setCopiedAddr] = useState<Record<string, boolean>>({});
@@ -87,6 +95,7 @@ export default function AdminPanel() {
                             ...prev,
                             [p.address]: { value: data.message ?? null, loading: false }
                         }));
+                        showDecryptionSuccessToast(p.address);
                     } catch (e) {
                         if (cancelled) return;
                         const msg = e instanceof Error ? e.message : String(e);
@@ -120,8 +129,14 @@ export default function AdminPanel() {
                         <div className='flex items-center gap-1'>
                             <button
                                 type='button'
-                                className='h-9 w-9 inline-flex items-center justify-center rounded-md border text-muted-foreground hover:text-foreground hover:bg-accent'
-                                onClick={() => setSelectedLottery((n) => Math.max(0, n - 1))}
+                                className='h-9 w-9 inline-flex items-center justify-center rounded-md border text-muted-foreground hover:text-foreground hover:bg-accent hover:cursor-pointer'
+                                onClick={() => {
+                                    const newLottery = Math.max(0, selectedLottery - 1);
+                                    if (newLottery === selectedLottery) return;
+
+                                    setSelectedLottery(newLottery);
+                                    showInfoToast(`Switched to lottery #${newLottery}`);
+                                }}
                                 aria-label='Previous lottery'>
                                 <ChevronLeft className='size-4' />
                             </button>
@@ -134,13 +149,23 @@ export default function AdminPanel() {
                                 value={selectedLottery}
                                 onChange={(e) => {
                                     const v = Number(e.target.value);
-                                    if (Number.isFinite(v)) setSelectedLottery(Math.max(0, Math.min(v, lotteryNumber)));
+                                    if (Number.isFinite(v)) {
+                                        const newLottery = Math.max(0, Math.min(v, lotteryNumber));
+                                        setSelectedLottery(newLottery);
+                                        showInfoToast(`Switched to lottery #${newLottery}`);
+                                    }
                                 }}
                             />
                             <button
                                 type='button'
-                                className='h-9 w-9 inline-flex items-center justify-center rounded-md border text-muted-foreground hover:text-foreground hover:bg-accent'
-                                onClick={() => setSelectedLottery((n) => Math.min(lotteryNumber, n + 1))}
+                                className='h-9 w-9 inline-flex items-center justify-center rounded-md border text-muted-foreground hover:text-foreground hover:bg-accent hover:cursor-pointer'
+                                onClick={() => {
+                                    const newLottery = Math.min(lotteryNumber, selectedLottery + 1);
+                                    if (newLottery === selectedLottery) return;
+
+                                    setSelectedLottery(newLottery);
+                                    showInfoToast(`Switched to lottery #${newLottery}`);
+                                }}
                                 aria-label='Next lottery'>
                                 <ChevronRight className='size-4' />
                             </button>

@@ -1,5 +1,7 @@
 import { projectConfig } from '@/config/projectConfig';
 import lotteryABI from '@/lib/abis/lotteryABI';
+import { showTransactionErrorToast, showTransactionPendingToast, showTransactionSuccessToast } from '@/lib/toast-utils';
+import { handleTransactionError } from '@/lib/utils';
 import { TanstackKeys } from '@/types/enums';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -8,12 +10,13 @@ import { readContract, waitForTransactionReceipt, writeContract } from 'wagmi/ac
 
 interface BuyTicketsParams {
     ticketsAmount: number;
+    hasTickets: boolean;
     encryptedContactDetails?: string;
 }
 
 export default function useBuyTickets() {
     const config = useConfig();
-    const { address } = useAccount();
+    const { address, chain } = useAccount();
     const queryClient = useQueryClient();
 
     const buyTicketsMutation = useMutation({
@@ -21,6 +24,8 @@ export default function useBuyTickets() {
             if (!address) {
                 throw new Error('Wallet not connected');
             }
+
+            showTransactionPendingToast('Processing tickets purchase...');
 
             // Check if user is already a participant
             const isActualParticipant = await readContract(config, {
@@ -61,28 +66,37 @@ export default function useBuyTickets() {
                 });
             }
         },
-        onSuccess: async (hash) => {
+        onSuccess: async (hash, variables) => {
+            const { hasTickets } = variables;
+            const explorerUrl = chain?.blockExplorers?.default?.url || 'https://arbiscan.io/';
+
             // Wait for transaction to be confirmed before invalidating queries
             if (hash) {
                 try {
                     await waitForTransactionReceipt(config, { hash });
                     queryClient.invalidateQueries({ queryKey: [TanstackKeys.useLotteryState] });
                     queryClient.invalidateQueries({ queryKey: [TanstackKeys.useParticipantStatus] });
+                    showTransactionSuccessToast({
+                        message: hasTickets ? 'Additional tickets purchased! 🎟️' : 'Tickets purchased successfully! 🎉',
+                        explorerUrl,
+                        txHash: hash
+                    });
                 } catch (error) {
                     console.error('Error waiting for transaction confirmation:', error);
                     queryClient.invalidateQueries({ queryKey: [TanstackKeys.useLotteryState] });
                     queryClient.invalidateQueries({ queryKey: [TanstackKeys.useParticipantStatus] });
+                    showTransactionErrorToast('Failed to buy tickets');
                 }
             }
+        },
+        onError: (error) => {
+            handleTransactionError(error);
         }
     });
 
     return {
         buyTickets: buyTicketsMutation.mutate,
         buyTicketsAsync: buyTicketsMutation.mutateAsync,
-        isLoading: buyTicketsMutation.isPending,
-        isError: buyTicketsMutation.isError,
-        error: buyTicketsMutation.error,
-        isSuccess: buyTicketsMutation.isSuccess
+        isLoading: buyTicketsMutation.isPending
     };
 }

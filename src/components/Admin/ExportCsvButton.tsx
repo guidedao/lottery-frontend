@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import type { ParticipantInfoRow } from '@/hooks/useParticipantsMulticall';
+import { showExportErrorToast, showExportSuccessToast } from '@/lib/toast-utils';
 
 import { DownloadIcon } from 'lucide-react';
 
@@ -63,13 +64,24 @@ export default function ExportCsvButton({
     disabled?: boolean;
 }) {
     const onClick = () => {
-        const csv = buildCsv(participants, decMap);
-        const name = `participants-lottery-${lotteryNumber ?? 'unknown'}.csv`;
-        downloadCsv(name, csv);
+        try {
+            const csv = buildCsv(participants, decMap);
+            const name = `participants-lottery-${lotteryNumber ?? 'unknown'}.csv`;
+            downloadCsv(name, csv);
+            showExportSuccessToast(name);
+        } catch (error) {
+            console.error('Export failed:', error);
+            showExportErrorToast();
+        }
     };
 
     return (
-        <Button size='sm' variant='outline' onClick={onClick} disabled={disabled || participants.length === 0}>
+        <Button
+            size='sm'
+            variant='outline'
+            className='hover:cursor-pointer'
+            onClick={onClick}
+            disabled={disabled || participants.length === 0}>
             <DownloadIcon className='size-4' />
             <span>Export CSV</span>
         </Button>

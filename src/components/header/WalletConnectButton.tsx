@@ -4,6 +4,8 @@ import { useState } from 'react';
 
 import WalletControls from '@/components/header/WalletControls';
 import { Button } from '@/components/ui/button';
+import { useWalletToasts } from '@/hooks/useWalletToasts';
+import { showErrorToast } from '@/lib/toast-utils';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 import { useTranslations } from 'next-globe-gen';
@@ -11,6 +13,8 @@ import { useTranslations } from 'next-globe-gen';
 export function WalletConnectButton() {
     const t = useTranslations();
     const [, /*unused*/ setPending] = useState(false);
+
+    useWalletToasts();
 
     return (
         <ConnectButton.Custom>
@@ -50,7 +54,13 @@ export function WalletConnectButton() {
 
                             if (chain.unsupported) {
                                 return (
-                                    <Button onClick={openChainModal} variant='destructive' size='sm'>
+                                    <Button
+                                        onClick={() => {
+                                            showErrorToast('Please switch to the correct network');
+                                            openChainModal();
+                                        }}
+                                        variant='destructive'
+                                        size='sm'>
                                         {t('wallet.wrongNetwork')}
                                     </Button>
                                 );

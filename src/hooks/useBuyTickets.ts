@@ -68,7 +68,7 @@ export default function useBuyTickets() {
         },
         onSuccess: async (hash, variables) => {
             const { hasTickets } = variables;
-            const explorerUrl = chain?.blockExplorers?.default?.url || 'https://etherscan.io';
+            const explorerUrl = chain?.blockExplorers?.default?.url || 'https://arbiscan.io/';
 
             // Wait for transaction to be confirmed before invalidating queries
             if (hash) {

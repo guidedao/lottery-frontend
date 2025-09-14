@@ -35,7 +35,7 @@ export default function useReturnTickets() {
             });
         },
         onSuccess: async (hash) => {
-            const explorerUrl = chain?.blockExplorers?.default?.url || 'https://etherscan.io';
+            const explorerUrl = chain?.blockExplorers?.default?.url || 'https://arbiscan.io/';
 
             // Wait for transaction to be confirmed before invalidating queries
             if (hash) {

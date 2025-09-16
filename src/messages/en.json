@@ -1,13 +1,15 @@
 {
     "title": "GuideDAO Lottery",
-    "description": "GuideDAO Lottery",
+    "description": "Win a GuideDAO Pass! Join our blockchain lottery with fair odds, transparent smart contract, and a chance to become a part of the astonishing DAO. Buy tickets, increase your chances, and participate in the decentralized lottery experience.",
 
     "notFound": {
         "title": "Not found (404)",
         "description": "This page cannot be found!"
     },
     "header": {
-        "title": "Hello GuideDAO"
+        "title": "Hello GuideDAO",
+        "languageSelector": "Select language",
+        "mobileMenuButton": "Open mobile navigation menu"
     },
     "wallet": {
         "connect": "Connect Wallet",

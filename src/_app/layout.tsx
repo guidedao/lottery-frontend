@@ -13,11 +13,22 @@ import { Toaster } from 'sonner';
 export const roboto = Roboto({
     subsets: ['latin'],
     weight: ['400', '700'],
-    variable: '--font-roboto'
+    variable: '--font-roboto',
+    display: 'swap'
 });
 
 export const metadata: Metadata = {
-    title: { template: '%s | GuideDAO Lottery', default: 'GuideDAO Lottery' }
+    title: { template: '%s | GuideDAO Lottery', default: 'GuideDAO Lottery' },
+    description:
+        'Win a GuideDAO Pass! Join our blockchain lottery with fair odds, transparent smart contract, and a chance to become a part of the astonishing DAO. Buy tickets, increase your chances, and participate in the decentralized lottery experience.',
+    metadataBase: new URL(process.env.NEXTAUTH_URL ?? 'http://localhost:3000'),
+    alternates: {
+        languages: {
+            en: '/en',
+            ru: '/ru',
+            'x-default': '/'
+        }
+    }
 };
 
 export default function RootLayout({

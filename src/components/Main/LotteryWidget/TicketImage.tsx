@@ -12,6 +12,7 @@ const TicketImage = () => {
                 height={400}
                 className='w-full h-auto rounded-2xl shadow-lg'
                 priority
+                fetchPriority='high'
             />
             {/* Glass overlay */}
             <div className='glass-overlay rounded-xl'>

@@ -20,7 +20,7 @@ export const roboto = Roboto({
 export const metadata: Metadata = {
     title: { template: '%s | GuideDAO Lottery', default: 'GuideDAO Lottery' },
     description:
-        'Win a GuideDAO Pass! Join our blockchain lottery with fair odds, transparent smart contract, and a chance to become a part of the astonishing DAO. Buy tickets, increase your chances, and participate in the decentralized lottery experience.',
+        'Win a GuideDAO Pass! Join our blockchain lottery with fair odds, transparent smart contract, and a chance to become a part of the astonishing DAO. A community of crypto enthusiasts, developers, cryptographers, engineers, auditors and investors who learn from each other and build teams. Buy tickets, increase your chances to join and improve your skills!',
     metadataBase: new URL(process.env.NEXTAUTH_URL ?? 'http://localhost:3000'),
     alternates: {
         languages: {

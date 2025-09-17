@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
-import TicketTimer from '@/components/Main/LotteryWidget';
-import UserWidgets from '@/components/Main/UserWidgets';
 import About from '@/components/Main/InfoBlocks/About';
 import FAQ from '@/components/Main/InfoBlocks/FAQ';
+import TicketTimer from '@/components/Main/LotteryWidget';
+import UserWidgets from '@/components/Main/UserWidgets';
 
 import { getTranslations } from 'next-globe-gen';
 

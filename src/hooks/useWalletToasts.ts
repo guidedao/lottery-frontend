@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import { showErrorToast, showInfoToast, showSuccessToast, showWalletConnectedToast } from '@/lib/toast-utils';
+import { showErrorToast, showInfoToast, showWalletConnectedToast } from '@/lib/toast-utils';
 
 import { useSession } from 'next-auth/react';
 import { useAccount, useAccountEffect, useConnect } from 'wagmi';

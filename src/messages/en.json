@@ -6,9 +6,16 @@
         "description": "This page cannot be found!"
     },
     "header": {
-        "title": "Hello GuideDAO",
         "languageSelector": "Select language",
-        "mobileMenuButton": "Open mobile navigation menu"
+        "mobileMenuButton": "Open mobile navigation menu",
+        "mobileMenuTitle": "Mobile Navigation menu",
+        "ariaMainNav": "Main navigation",
+        "home": "Home",
+        "about": "About",
+        "goHomeAria": "Go to homepage",
+        "goAboutAria": "Go to about section",
+        "logoAlt": "GuideDAO",
+        "language": "Language"
     },
     "wallet": {
         "connect": "Connect Wallet",
@@ -37,7 +44,6 @@
         "your_win_chance": "Your Win Chance",
         "number_of_tickets": "Number of Tickets",
         "contact_details": "Contact Details (encrypted on submit)",
-        "amount": "Refund ETH Amount TODO",
         "Max": "Max",
         "return_period_has_ended": "Return period has ended.",
         "Error": "Error",
@@ -55,19 +61,132 @@
         "tickets_purchased_successfully": "Tickets purchased successfully!",
         "Processing": "Processing…",
         "register_&_buy_tickets": "Register & Buy Tickets",
-        "tickets": "ticket(s)"
+        "tickets": "ticket(s)",
+        "connect_wallet_prompt": "Connect your wallet to participate in the lottery",
+        "enter_valid_tickets": "Please enter a valid number of tickets",
+        "enter_valid_return": "Please enter a valid number of tickets to return",
+        "only_return_up_to": "You can only return up to {n} tickets",
+        "select_number_of_tickets": "Select number of tickets",
+        "decrease_tickets": "Decrease tickets",
+        "increase_tickets": "Increase tickets",
+        "left": "left",
+        "contact_details_not_provided": "Contact details were not provided",
+        "encryption_failed_prefix": "Encryption failed",
+        "encryption_key_not_configured": "Encryption key not configured (NEXT_PUBLIC_ADMIN_PUB_HEX). Your contact details, if provided, will not be attached.",
+        "disclaimer": "Disclaimer",
+        "disclaimer_text_prefix": "Providing contact details is optional, but they are required to reach out the winner. The data is securely encrypted with",
+        "disclaimer_text_suffix": "and is only accessible to the administrator."
     },
     "footer": {
+        "ariaNav": "Footer",
+        "home": "Home",
         "about": "About",
-        "faq": "FAQ",
-        "totalParticipants": "Total participants",
-        "maxParticipants": "Participants limit",
-        "winner": "Winner"
+        "socials": {
+            "telegram": "Telegram",
+            "x": "X (Twitter)",
+            "discord": "Discord",
+            "github": "GitHub",
+            "email": "Email"
+        },
+        "logoAlt": "GuideDAO",
+        "copyright": "© {year} GuideDAO. All rights reserved."
     },
     "timer": {
         "d": "d",
         "h": "h",
         "m": "m",
         "s": "s"
+    },
+    "widget": {
+        "status": "Lottery Status",
+        "ticketEthPrice": "Ticket ETH Price",
+        "participants": "Participants",
+        "totalTickets": "Total Tickets"
+    },
+    "lotteryStatus": {
+        "closed": "Closed",
+        "open": "Registration Open",
+        "regEnded": "Registration Ended",
+        "waiting": "Waiting for Winner",
+        "invalid": "Invalid",
+        "unknown": "Unknown"
+    },
+    "about": {
+        "title": "About",
+        "intro": "GuideDAO Lottery is a student-built, open-source project to fairly raffle access to the GuideDAO platform via an NFT Pass. The goal is production-grade code with transparent smart contracts and a simple, friendly interface.",
+        "featuresTitle": "How it works",
+        "bullet_open": "Open-source and transparent: the lottery runs on Ethereum-compatible networks via smart contracts.",
+        "bullet_vrf": "Fair winner selection: uses verifiable randomness (VRF) to pick the winner.",
+        "bullet_refund": "Flexible participation: tickets can be refunded (exited) before the lottery ends.",
+        "bullet_nft": "Winner reward: the winner receives a GuideDAO Pass (NFT) for platform access.",
+        "bullet_admin": "Safety levers: admins may extend deadlines or cancel if participation is too low, with refunds.",
+        "bullet_status": "Live updates: real-time timer, status, and on-chain events visible in the app.",
+        "linksTitle": "Useful links",
+        "link_guidedao": "GuideDAO website",
+        "link_frontend": "Frontend repository",
+        "link_backend": "Backend repository",
+        "link_wiki": "Project wiki (overview)",
+        "note": "This is an educational initiative by GuideDAO students aiming for production-ready quality."
+    },
+    "aboutCards": {
+        "open": {
+            "title": "Open-source & Transparent",
+            "desc": "The lottery runs on Ethereum-compatible networks via smart contracts."
+        },
+        "vrf": {
+            "title": "Fair Randomness (VRF)",
+            "desc": "Winner is selected using verifiable randomness for trustworthy results."
+        },
+        "refund": {
+            "title": "Refund Before End",
+            "desc": "Participants can exit and refund tickets before the lottery ends."
+        },
+        "nft": {
+            "title": "NFT Pass Reward",
+            "desc": "The winner receives a GuideDAO Pass (NFT) granting platform access."
+        },
+        "admin": {
+            "title": "Admin Safeguards",
+            "desc": "Admins may extend deadlines or cancel for low participation with refunds."
+        },
+        "status": {
+            "title": "Live Status & Events",
+            "desc": "Real-time timer, status and on-chain events are shown in the app."
+        }
+    }
+    ,
+    "admin": {
+        "title": "Admin Panel",
+        "currentLottery": "Current lottery number: {n}",
+        "viewLottery": "View lottery #",
+        "switchedToLottery": "Switched to lottery #{n}",
+        "prevLotteryAria": "Previous lottery",
+        "nextLotteryAria": "Next lottery",
+        "showingParticipants": "Showing participants for lottery #{n}. Count: {count}",
+        "participantsLoadErrorToast": "Failed to load participants data",
+        "participantsLoadErrorInline": "Failed to load participants. Check your connection.",
+        "loading": "Loading participants…",
+        "noParticipants": "No participants.",
+        "table": {
+            "user": "User #",
+            "tickets": "Tickets",
+            "address": "Wallet address",
+            "encrypted": "Encrypted payload",
+            "decrypted": "Decrypted payload"
+        },
+        "copy": {
+            "addressAria": "Copy address",
+            "addressIdle": "Copy address",
+            "payloadAria": "Copy payload",
+            "payloadIdle": "Copy payload",
+            "copied": "Copied!"
+        },
+        "decryptFailed": "Decrypt failed",
+        "decrypting": "Decrypting…",
+        "errorPrefix": "Error",
+        "exportCsv": "Export CSV",
+        "decryptSuccessToast": "Successfully decrypted: {addr} 🔓",
+        "exportSuccessToast": "Exported successfully: {filename}",
+        "exportErrorToast": "Failed to export file"
     }
 }

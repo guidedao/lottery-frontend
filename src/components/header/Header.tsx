@@ -5,8 +5,10 @@ import LanguageSwitcher from '@/components/header/LanguageSwitcher';
 import { WalletConnectButton } from '@/components/header/WalletConnectButton';
 
 import { MobileMenu } from './MobileMenu';
+import { useTranslations } from 'next-globe-gen';
 
 export default function Header() {
+    const t = useTranslations();
     return (
         <header
             className='
@@ -17,27 +19,24 @@ export default function Header() {
             <div className='container mx-auto px-4 py-3 grid items-center grid-cols-2 lg:grid-cols-[1fr_auto_1fr]'>
                 {/* Left - Logo */}
                 <div className='flex items-center justify-self-start'>
-                    <Link href='/' aria-label='Go to homepage' className='inline-flex items-center'>
-                        <Image src='/images/logo.svg' alt='Guide DAO' width={80} height={18} priority />
+                    <Link href='/' aria-label={t('header.goHomeAria')} className='inline-flex items-center'>
+                        <Image src='/images/logo.svg' alt={t('header.logoAlt')} width={80} height={18} priority />
                     </Link>
                 </div>
 
                 {/* Navigation (desktop only) */}
-                <nav className='hidden lg:flex items-center gap-2 text-sm justify-self-center lg:col-start-2'>
+                <nav
+                    className='hidden lg:flex items-center gap-2 text-sm justify-self-center lg:col-start-2'
+                    aria-label={t('header.ariaMainNav')}>
                     <Link
                         href='/'
                         className='inline-flex items-center h-8 rounded-md px-3 text-foreground hover:text-foreground hover:bg-foreground/10 transition-colors'>
-                        Home
+                        {t('header.home')}
                     </Link>
                     <Link
                         href='/#about'
                         className='inline-flex items-center h-8 rounded-md px-3 text-foreground hover:text-foreground hover:bg-foreground/10 transition-colors'>
-                        About
-                    </Link>
-                    <Link
-                        href='/#faq'
-                        className='inline-flex items-center h-8 rounded-md px-3 text-foreground hover:text-foreground hover:bg-foreground/10 transition-colors'>
-                        FAQ
+                        {t('header.about')}
                     </Link>
                 </nav>
 

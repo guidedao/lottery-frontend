@@ -35,17 +35,17 @@ export default function ReturnTicketsPanel() {
         const amt = Math.min(Math.max(1, amount || 0), maxReturnable);
 
         if (amt <= 0) {
-            showFormValidationToast('Please enter a valid number of tickets to return');
+            showFormValidationToast(t('home.enter_valid_return'));
             return;
         }
 
         if (amt > maxReturnable) {
-            showFormValidationToast(`You can only return up to ${maxReturnable} tickets`);
+            showFormValidationToast(t('home.only_return_up_to', { n: maxReturnable }));
             return;
         }
 
         if (!isReturnAllowed) {
-            showFormValidationToast('Return period has ended');
+            showFormValidationToast(t('home.return_period_has_ended'));
             return;
         }
 

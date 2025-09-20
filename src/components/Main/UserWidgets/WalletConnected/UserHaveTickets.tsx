@@ -12,8 +12,10 @@ import { LotteryStatus } from '@/types/enums';
 
 import ReturnTicketsPanel from './ReturnTicketsPanel';
 import TicketPurchaseRow from './TicketPurchaseRow';
+import { useTranslations } from 'next-globe-gen';
 
 export default function UserHaveTickets() {
+    const t = useTranslations();
     const [ticketsAmount, setTicketsAmount] = useState<number>(1);
     const { buyTickets, isLoading } = useBuyTickets();
     const { lotteryState } = useLotteryState();
@@ -33,7 +35,7 @@ export default function UserHaveTickets() {
         if (!isRegistrationOpen || isLoading) return;
 
         if (ticketsAmount <= 0) {
-            showFormValidationToast('Please enter a valid number of tickets');
+            showFormValidationToast(t('home.enter_valid_tickets'));
             return;
         }
 
@@ -44,7 +46,7 @@ export default function UserHaveTickets() {
     return (
         <section className='flex flex-col gap-6 lg:gap-6 w-full lg:w-1/2 lg:self-stretch'>
             <article className='surface-glass flex flex-col flex-1 h-full min-h-[220px] lg:min-h-[260px] basis-full p-6 rounded-xl gap-6'>
-                <h2 className='text-2xl font-bold text-foreground'>Buy more lottery tickets</h2>
+                <h2 className='text-2xl font-bold text-foreground'>{t('home.buy_more_lottery_tickets')}</h2>
 
                 <TicketPurchaseRow
                     ticketsAmount={ticketsAmount}
@@ -58,7 +60,9 @@ export default function UserHaveTickets() {
 
                 <div className='space-y-4'>
                     {!isRegistrationOpen && (
-                        <p className='text-sm text-destructive text-center'>Registration is currently closed</p>
+                        <p className='text-sm text-destructive text-center'>
+                            {t('home.registration_is_currently_closed')}
+                        </p>
                     )}
 
                     <div className='flex justify-center'>
@@ -67,7 +71,7 @@ export default function UserHaveTickets() {
                             disabled={!isRegistrationOpen || isLoading || ticketsAmount <= 0}
                             className='cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white border-1 border-emerald-300 hover:border-emerald-100'
                             size='lg'>
-                            {isLoading ? 'Processing…' : 'Buy more tickets'}
+                            {isLoading ? t('home.Processing') : t('home.buy_more_tickets')}
                         </Button>
                     </div>
                 </div>

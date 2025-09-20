@@ -56,7 +56,7 @@ export function WalletConnectButton() {
                                 return (
                                     <Button
                                         onClick={() => {
-                                            showErrorToast('Please switch to the correct network');
+                                            showErrorToast(t('wallet.wrongNetwork'));
                                             openChainModal();
                                         }}
                                         variant='destructive'

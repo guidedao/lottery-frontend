@@ -28,32 +28,29 @@ export function MobileMenu() {
                 side='right'
                 className='w-72 bg-popover/95 backdrop-blur-xl border-l border-border text-popover-foreground p-6 flex flex-col justify-between'>
                 <SheetHeader>
-                    <SheetTitle className='sr-only'>Mobile Navigation menu</SheetTitle>
+                    <SheetTitle className='sr-only'>{t('header.mobileMenuTitle')}</SheetTitle>
                 </SheetHeader>
 
                 {/* Navigation */}
                 <nav
                     className='flex flex-col space-y-6 text-lg font-medium'
                     role='navigation'
-                    aria-label='Main navigation'>
-                    <a href='/' className='hover:text-foreground transition-colors' aria-label='Go to home page'>
-                        Home
+                    aria-label={t('header.ariaMainNav')}>
+                    <a href='/' className='hover:text-foreground transition-colors' aria-label={t('header.goHomeAria')}>
+                        {t('header.home')}
                     </a>
                     <a
                         href='/#about'
                         className='hover:text-foreground transition-colors'
-                        aria-label='Go to about section'>
-                        About
-                    </a>
-                    <a href='/#faq' className='hover:text-foreground transition-colors' aria-label='Go to FAQ section'>
-                        FAQ
+                        aria-label={t('header.goAboutAria')}>
+                        {t('header.about')}
                     </a>
                 </nav>
 
                 {/* Bottom section */}
                 <div className='mt-12 pt-6 border-t border-border flex items-center justify-between'>
                     <span className='text-sm text-muted-foreground' id='language-label'>
-                        Language
+                        {t('header.language')}
                     </span>
                     <LanguageSwitcher />
                 </div>

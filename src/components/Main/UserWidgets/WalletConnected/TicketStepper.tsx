@@ -5,6 +5,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 
 import { Minus, Plus } from 'lucide-react';
+import { useTranslations } from 'next-globe-gen';
 
 type Props = {
     value: number;
@@ -16,6 +17,7 @@ type Props = {
 };
 
 export default function TicketStepper({ value, onChange, min = 1, max, disabled, className }: Props) {
+    const t = useTranslations();
     const dec = () => {
         const next = Math.max(min, (Number.isFinite(value) ? value : min) - 1);
         if (next !== value) onChange(next);
@@ -43,14 +45,14 @@ export default function TicketStepper({ value, onChange, min = 1, max, disabled,
         <div
             className={`inline-flex items-center gap-4 ${className ?? ''}`}
             role='group'
-            aria-label='Select number of tickets'
+            aria-label={t('home.select_number_of_tickets')}
             onKeyDown={onKeyDown}>
             <Button
                 type='button'
                 variant='outline'
                 size='icon'
                 className='!size-16 rounded-lg cursor-pointer'
-                aria-label='Decrease tickets'
+                aria-label={t('home.decrease_tickets')}
                 onClick={dec}
                 disabled={disabled || value <= min}>
                 <Minus className='size-5' />
@@ -63,7 +65,7 @@ export default function TicketStepper({ value, onChange, min = 1, max, disabled,
                 variant='outline'
                 size='icon'
                 className='!size-16 rounded-lg cursor-pointer'
-                aria-label='Increase tickets'
+                aria-label={t('home.increase_tickets')}
                 onClick={inc}
                 disabled={disabled || (typeof max === 'number' && value >= max)}>
                 <Plus className='size-5' />

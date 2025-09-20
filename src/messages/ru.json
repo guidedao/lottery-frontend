@@ -8,9 +8,16 @@
     },
 
     "header": {
-        "title": "Привет GuideDAO",
         "languageSelector": "Выберите язык",
-        "mobileMenuButton": "Открыть мобильное меню навигации"
+        "mobileMenuButton": "Открыть мобильное меню",
+        "mobileMenuTitle": "Мобильное меню навигации",
+        "ariaMainNav": "Основная навигация",
+        "home": "Главная",
+        "about": "О нас",
+        "goHomeAria": "Перейти на главную",
+        "goAboutAria": "Перейти к разделу О нас",
+        "logoAlt": "GuideDAO",
+        "language": "Язык"
     },
 
     "wallet": {

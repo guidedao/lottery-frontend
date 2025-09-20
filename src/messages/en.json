@@ -6,9 +6,16 @@
         "description": "This page cannot be found!"
     },
     "header": {
-        "title": "Hello GuideDAO",
         "languageSelector": "Select language",
-        "mobileMenuButton": "Open mobile navigation menu"
+        "mobileMenuButton": "Open mobile navigation menu",
+        "mobileMenuTitle": "Mobile Navigation menu",
+        "ariaMainNav": "Main navigation",
+        "home": "Home",
+        "about": "About",
+        "goHomeAria": "Go to homepage",
+        "goAboutAria": "Go to about section",
+        "logoAlt": "GuideDAO",
+        "language": "Language"
     },
     "wallet": {
         "connect": "Connect Wallet",

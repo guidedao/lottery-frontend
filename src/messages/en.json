@@ -113,4 +113,39 @@
             "desc": "Real-time timer, status and on-chain events are shown in the app."
         }
     }
+    ,
+    "admin": {
+        "title": "Admin Panel",
+        "currentLottery": "Current lottery number: {n}",
+        "viewLottery": "View lottery #",
+        "switchedToLottery": "Switched to lottery #{n}",
+        "prevLotteryAria": "Previous lottery",
+        "nextLotteryAria": "Next lottery",
+        "showingParticipants": "Showing participants for lottery #{n}. Count: {count}",
+        "participantsLoadErrorToast": "Failed to load participants data",
+        "participantsLoadErrorInline": "Failed to load participants. Check your connection.",
+        "loading": "Loading participants…",
+        "noParticipants": "No participants.",
+        "table": {
+            "user": "User #",
+            "tickets": "Tickets",
+            "address": "Wallet address",
+            "encrypted": "Encrypted payload",
+            "decrypted": "Decrypted payload"
+        },
+        "copy": {
+            "addressAria": "Copy address",
+            "addressIdle": "Copy address",
+            "payloadAria": "Copy payload",
+            "payloadIdle": "Copy payload",
+            "copied": "Copied!"
+        },
+        "decryptFailed": "Decrypt failed",
+        "decrypting": "Decrypting…",
+        "errorPrefix": "Error",
+        "exportCsv": "Export CSV",
+        "decryptSuccessToast": "Successfully decrypted: {addr} 🔓",
+        "exportSuccessToast": "Exported successfully: {filename}",
+        "exportErrorToast": "Failed to export file"
+    }
 }

@@ -1,8 +1,9 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { useTranslations } from 'next-globe-gen';
 import type { ParticipantInfoRow } from '@/hooks/useParticipantsMulticall';
-import { showExportErrorToast, showExportSuccessToast } from '@/lib/toast-utils';
+import { showErrorToast, showSuccessToast } from '@/lib/toast-utils';
 
 import { DownloadIcon } from 'lucide-react';
 
@@ -63,15 +64,16 @@ export default function ExportCsvButton({
     lotteryNumber?: number;
     disabled?: boolean;
 }) {
+    const t = useTranslations();
     const onClick = () => {
         try {
             const csv = buildCsv(participants, decMap);
             const name = `participants-lottery-${lotteryNumber ?? 'unknown'}.csv`;
             downloadCsv(name, csv);
-            showExportSuccessToast(name);
+            showSuccessToast(t('admin.exportSuccessToast', { filename: name }));
         } catch (error) {
             console.error('Export failed:', error);
-            showExportErrorToast();
+            showErrorToast(t('admin.exportErrorToast'));
         }
     };
 
@@ -83,7 +85,7 @@ export default function ExportCsvButton({
             onClick={onClick}
             disabled={disabled || participants.length === 0}>
             <DownloadIcon className='size-4' />
-            <span>Export CSV</span>
+            <span>{t('admin.exportCsv')}</span>
         </Button>
     );
 }

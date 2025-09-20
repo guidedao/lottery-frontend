@@ -12,9 +12,11 @@ import { encryptWithAdminPub } from '@/lib/xChaCha20/encrypt-cha';
 import { LotteryStatus } from '@/types/enums';
 
 import TicketPurchaseRow from './TicketPurchaseRow';
+import { useTranslations } from 'next-globe-gen';
 import { toast } from 'sonner';
 
 export default function UserDontHaveTickets() {
+    const t = useTranslations();
     const [ticketsAmount, setTicketsAmount] = useState<number>(1);
     const [contactDetails, setContactDetails] = useState<string>('');
     const [isEncrypting, setIsEncrypting] = useState<boolean>(false);
@@ -41,13 +43,13 @@ export default function UserDontHaveTickets() {
         if (!isRegistrationOpen || isLoading || isEncrypting) return;
 
         if (ticketsAmount <= 0) {
-            showFormValidationToast('Please enter a valid number of tickets');
+            showFormValidationToast(t('home.enter_valid_tickets'));
             return;
         }
 
         try {
             setIsEncrypting(true);
-            const raw = contactDetails.trim() || 'Contact details were not provided';
+            const raw = contactDetails.trim() || t('home.contact_details_not_provided');
             let encrypted: `0x${string}` = '0x';
             if (hasAdminPub) {
                 const payload = await encryptWithAdminPub(raw);
@@ -56,7 +58,7 @@ export default function UserDontHaveTickets() {
             await buyTickets({ ticketsAmount, encryptedContactDetails: encrypted, hasTickets: false });
         } catch (e) {
             const msg = e instanceof Error ? e.message : String(e);
-            toast.error(`Encryption failed: ${msg}`);
+            toast.error(`${t('home.encryption_failed_prefix')}: ${msg}`);
             showEcryptionErrorToast(msg);
         } finally {
             setIsEncrypting(false);
@@ -66,7 +68,7 @@ export default function UserDontHaveTickets() {
     return (
         <section className='flex flex-col gap-4 w-full lg:w-1/2 lg:self-stretch'>
             <article className='surface-glass flex flex-col flex-1 h-full min-h-[220px] lg:min-h-[260px] basis-full p-6 rounded-xl gap-6'>
-                <h2 className='text-2xl font-bold text-foreground'>Register and buy tickets</h2>
+                <h2 className='text-2xl font-bold text-foreground'>{t('home.buy_lottery_tickets')}</h2>
 
                 <div className='space-y-10'>
                     <TicketPurchaseRow
@@ -81,31 +83,28 @@ export default function UserDontHaveTickets() {
 
                     <div>
                         <div className='flex items-baseline justify-between mb-2'>
-                            <h3 className='text-lg font-semibold text-foreground'>
-                                Contact details (encrypted on submit)
-                            </h3>
+                            <h3 className='text-lg font-semibold text-foreground'>{t('home.contact_details')}</h3>
                             <span className='text-xs text-muted-foreground'>
-                                {Math.max(0, 80 - contactDetails.length)} left
+                                {Math.max(0, 80 - contactDetails.length)} {t('home.left')}
                             </span>
                         </div>
                         {/* Keep accessible label for input */}
                         <label htmlFor='contact-details' className='sr-only'>
-                            Contact details (encrypted on submit)
+                            {t('home.contact_details')}
                         </label>
                         <Input
                             id='contact-details'
                             type='text'
                             value={contactDetails}
                             onChange={(e) => setContactDetails(e.target.value)}
-                            placeholder='Email, Telegram, or other contact info'
+                            placeholder={t('home.contact_info_placeholder')}
                             className='w-full'
                             maxLength={80}
                             disabled={!isRegistrationOpen || isLoading || isEncrypting}
                         />
                         {!hasAdminPub && (
                             <p className='text-xs text-muted-foreground mt-1'>
-                                Encryption key not configured (NEXT_PUBLIC_ADMIN_PUB_HEX). Your contact details, if
-                                provided, will not be attached.
+                                {t('home.encryption_key_not_configured')}
                             </p>
                         )}
                     </div>
@@ -113,7 +112,9 @@ export default function UserDontHaveTickets() {
                     {/* Ticket price kept implicit via total cost */}
 
                     {!isRegistrationOpen && (
-                        <p className='text-sm text-destructive text-center'>Registration is currently closed</p>
+                        <p className='text-sm text-destructive text-center'>
+                            {t('home.registration_is_currently_closed')}
+                        </p>
                     )}
 
                     <div className='flex justify-center'>
@@ -122,14 +123,13 @@ export default function UserDontHaveTickets() {
                             disabled={!isRegistrationOpen || isLoading || isEncrypting || ticketsAmount <= 0}
                             className='cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white border-1 border-emerald-300 hover:border-emerald-100'
                             size='lg'>
-                            {isLoading || isEncrypting ? 'Processing…' : 'Register & Buy Tickets'}
+                            {isLoading || isEncrypting ? t('home.Processing') : t('home.register_&_buy_tickets')}
                         </Button>
                     </div>
                     <section className='mt-6'>
-                        <h3 className='text-lg font-semibold text-foreground mb-2'>Disclaimer</h3>
+                        <h3 className='text-lg font-semibold text-foreground mb-2'>{t('home.disclaimer')}</h3>
                         <p className='text-sm text-muted-foreground'>
-                            Providing contact details is optional, but they are required to reach out the winner. The
-                            data is securely encrypted with{' '}
+                            {t('home.disclaimer_text_prefix')}{' '}
                             <a
                                 href='https://en.wikipedia.org/wiki/ChaCha20-Poly1305'
                                 target='_blank'
@@ -137,7 +137,7 @@ export default function UserDontHaveTickets() {
                                 className='underline'>
                                 ChaCha20‑Poly1305
                             </a>{' '}
-                            and is only accessible to the administrator.
+                            {t('home.disclaimer_text_suffix')}
                         </p>
                     </section>
                 </div>

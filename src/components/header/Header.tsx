@@ -34,11 +34,6 @@ export default function Header() {
                         className='inline-flex items-center h-8 rounded-md px-3 text-foreground hover:text-foreground hover:bg-foreground/10 transition-colors'>
                         About
                     </Link>
-                    <Link
-                        href='/#faq'
-                        className='inline-flex items-center h-8 rounded-md px-3 text-foreground hover:text-foreground hover:bg-foreground/10 transition-colors'>
-                        FAQ
-                    </Link>
                 </nav>
 
                 {/* Right - Language switcher, wallet button, mobile menu */}

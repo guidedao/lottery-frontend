@@ -45,9 +45,6 @@ export function MobileMenu() {
                         aria-label='Go to about section'>
                         About
                     </a>
-                    <a href='/#faq' className='hover:text-foreground transition-colors' aria-label='Go to FAQ section'>
-                        FAQ
-                    </a>
                 </nav>
 
                 {/* Bottom section */}

@@ -69,5 +69,48 @@
         "h": "h",
         "m": "m",
         "s": "s"
+    },
+    "about": {
+        "title": "About",
+        "intro": "GuideDAO Lottery is a student-built, open-source project to fairly raffle access to the GuideDAO platform via an NFT Pass. The goal is production-grade code with transparent smart contracts and a simple, friendly interface.",
+        "featuresTitle": "How it works",
+        "bullet_open": "Open-source and transparent: the lottery runs on Ethereum-compatible networks via smart contracts.",
+        "bullet_vrf": "Fair winner selection: uses verifiable randomness (VRF) to pick the winner.",
+        "bullet_refund": "Flexible participation: tickets can be refunded (exited) before the lottery ends.",
+        "bullet_nft": "Winner reward: the winner receives a GuideDAO Pass (NFT) for platform access.",
+        "bullet_admin": "Safety levers: admins may extend deadlines or cancel if participation is too low, with refunds.",
+        "bullet_status": "Live updates: real-time timer, status, and on-chain events visible in the app.",
+        "linksTitle": "Useful links",
+        "link_guidedao": "GuideDAO website",
+        "link_frontend": "Frontend repository",
+        "link_backend": "Backend repository",
+        "link_wiki": "Project wiki (overview)",
+        "note": "This is an educational initiative by GuideDAO students aiming for production-ready quality."
+    },
+    "aboutCards": {
+        "open": {
+            "title": "Open-source & Transparent",
+            "desc": "The lottery runs on Ethereum-compatible networks via smart contracts."
+        },
+        "vrf": {
+            "title": "Fair Randomness (VRF)",
+            "desc": "Winner is selected using verifiable randomness for trustworthy results."
+        },
+        "refund": {
+            "title": "Refund Before End",
+            "desc": "Participants can exit and refund tickets before the lottery ends."
+        },
+        "nft": {
+            "title": "NFT Pass Reward",
+            "desc": "The winner receives a GuideDAO Pass (NFT) granting platform access."
+        },
+        "admin": {
+            "title": "Admin Safeguards",
+            "desc": "Admins may extend deadlines or cancel for low participation with refunds."
+        },
+        "status": {
+            "title": "Live Status & Events",
+            "desc": "Real-time timer, status and on-chain events are shown in the app."
+        }
     }
 }

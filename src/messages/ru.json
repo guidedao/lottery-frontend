@@ -63,11 +63,19 @@
     },
 
     "footer": {
+        "ariaNav": "Подвал",
+        "home": "Главная",
         "about": "О нас",
         "faq": "ЧаВо",
-        "totalParticipants": "Всего участников",
-        "maxParticipants": "Лимит участников",
-        "winner": "Победитель"
+        "socials": {
+            "telegram": "Telegram",
+            "x": "X (Твиттер)",
+            "discord": "Discord",
+            "github": "GitHub",
+            "email": "Почта"
+        },
+        "logoAlt": "GuideDAO",
+        "copyright": "© {year} GuideDAO. Все права защищены."
     },
     "timer": {
         "d": "д",

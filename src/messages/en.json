@@ -58,11 +58,18 @@
         "tickets": "ticket(s)"
     },
     "footer": {
+        "ariaNav": "Footer",
+        "home": "Home",
         "about": "About",
-        "faq": "FAQ",
-        "totalParticipants": "Total participants",
-        "maxParticipants": "Participants limit",
-        "winner": "Winner"
+        "socials": {
+            "telegram": "Telegram",
+            "x": "X (Twitter)",
+            "discord": "Discord",
+            "github": "GitHub",
+            "email": "Email"
+        },
+        "logoAlt": "GuideDAO",
+        "copyright": "© {year} GuideDAO. All rights reserved."
     },
     "timer": {
         "d": "d",

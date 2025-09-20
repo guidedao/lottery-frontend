@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { useTranslations } from 'next-globe-gen';
 
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -12,6 +11,7 @@ import { showErrorToast, showInfoToast, showSuccessToast } from '@/lib/toast-uti
 import CopyIconButton from './CopyIconButton';
 import ExportCsvButton from './ExportCsvButton';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useTranslations } from 'next-globe-gen';
 
 type DecryptState = {
     value?: string | null;
@@ -39,7 +39,7 @@ export default function AdminPanel() {
     const { participants, isLoading, isError } = useParticipantsMulticall({ lotteryNumber: selectedLottery });
 
     // Show error toast when data loading fails
-     
+
     useEffect(() => {
         if (isError) {
             showErrorToast(t('admin.participantsLoadErrorToast'));
@@ -124,7 +124,9 @@ export default function AdminPanel() {
                 <div className='mb-6 flex flex-col gap-3'>
                     <div>
                         <h1 className='text-2xl md:text-3xl font-bold leading-tight'>{t('admin.title')}</h1>
-                        <div className='mt-2 text-sm text-muted-foreground'>{t('admin.currentLottery', { n: lotteryNumber })}</div>
+                        <div className='mt-2 text-sm text-muted-foreground'>
+                            {t('admin.currentLottery', { n: lotteryNumber })}
+                        </div>
                     </div>
                     <div className='flex flex-wrap items-center gap-2'>
                         <div className='text-sm text-muted-foreground'>{t('admin.viewLottery')}</div>
@@ -185,9 +187,7 @@ export default function AdminPanel() {
                     {t('admin.showingParticipants', { n: selectedLottery, count: participants?.length ?? 0 })}
                 </div>
 
-                {isError && (
-                    <div className='mb-4 text-sm text-red-500'>{t('admin.participantsLoadErrorInline')}</div>
-                )}
+                {isError && <div className='mb-4 text-sm text-red-500'>{t('admin.participantsLoadErrorInline')}</div>}
 
                 {isLoading && <div className='text-sm text-muted-foreground'>{t('admin.loading')}</div>}
 
@@ -248,7 +248,9 @@ export default function AdminPanel() {
                                             </TableCell>
                                             <TableCell>
                                                 {d.loading ? (
-                                                    <span className='text-muted-foreground'>{t('admin.decrypting')}</span>
+                                                    <span className='text-muted-foreground'>
+                                                        {t('admin.decrypting')}
+                                                    </span>
                                                 ) : d.error ? (
                                                     <span className='text-red-500 text-sm whitespace-pre-wrap break-words'>
                                                         {t('admin.errorPrefix')}: {d.error}

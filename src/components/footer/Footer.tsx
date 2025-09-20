@@ -21,21 +21,18 @@ export function Footer() {
             <div className='container mx-auto px-4 py-4 lg:py-5 text-foreground'>
                 {/* Top: navigation */}
                 <div className='flex flex-col items-center gap-3'>
-                    <nav aria-label='Footer' className='flex items-center flex-wrap justify-center gap-2 text-sm'>
+                    <nav
+                        aria-label={t('footer.ariaNav')}
+                        className='flex items-center flex-wrap justify-center gap-2 text-sm'>
                         <Link
                             href='/'
                             className='inline-flex items-center h-8 rounded-md px-3 text-foreground hover:text-foreground hover:bg-foreground/10 transition-colors'>
-                            Home
+                            {t('footer.home')}
                         </Link>
                         <Link
                             href='/#about'
                             className='inline-flex items-center h-8 rounded-md px-3 text-foreground hover:text-foreground hover:bg-foreground/10 transition-colors'>
                             {t('footer.about')}
-                        </Link>
-                        <Link
-                            href='/#faq'
-                            className='inline-flex items-center h-8 rounded-md px-3 text-foreground hover:text-foreground hover:bg-foreground/10 transition-colors'>
-                            {t('footer.faq')}
                         </Link>
                     </nav>
 
@@ -45,11 +42,11 @@ export function Footer() {
                             href='https://t.me/guidedao_eth'
                             target='_blank'
                             rel='noopener noreferrer'
-                            aria-label='Telegram'
+                            aria-label={t('footer.socials.telegram')}
                             className='group inline-flex items-center justify-center w-8 h-8 rounded-md hover:bg-foreground/10 transition-colors'>
                             <Image
                                 src='/icons/telegram.svg'
-                                alt='Telegram'
+                                alt={t('footer.socials.telegram')}
                                 width={16}
                                 height={16}
                                 className='invert opacity-80 transition-opacity group-hover:opacity-100'
@@ -59,11 +56,11 @@ export function Footer() {
                             href='https://twitter.com/GuideDAO'
                             target='_blank'
                             rel='noopener noreferrer'
-                            aria-label='X (Twitter)'
+                            aria-label={t('footer.socials.x')}
                             className='group inline-flex items-center justify-center w-8 h-8 rounded-md hover:bg-foreground/10 transition-colors'>
                             <Image
                                 src='/icons/twitter-x.svg'
-                                alt='X'
+                                alt={t('footer.socials.x')}
                                 width={16}
                                 height={16}
                                 className='invert opacity-80 transition-opacity group-hover:opacity-100'
@@ -73,11 +70,11 @@ export function Footer() {
                             href='https://discord.gg/8X9P9r3udx'
                             target='_blank'
                             rel='noopener noreferrer'
-                            aria-label='Discord'
+                            aria-label={t('footer.socials.discord')}
                             className='group inline-flex items-center justify-center w-8 h-8 rounded-md hover:bg-foreground/10 transition-colors'>
                             <Image
                                 src='/icons/discord.svg'
-                                alt='Discord'
+                                alt={t('footer.socials.discord')}
                                 width={16}
                                 height={16}
                                 className='invert opacity-80 transition-opacity group-hover:opacity-100'
@@ -87,11 +84,11 @@ export function Footer() {
                             href='https://github.com/guidedao'
                             target='_blank'
                             rel='noopener noreferrer'
-                            aria-label='GitHub'
+                            aria-label={t('footer.socials.github')}
                             className='group inline-flex items-center justify-center w-8 h-8 rounded-md hover:bg-foreground/10 transition-colors'>
                             <Image
                                 src='/icons/github.svg'
-                                alt='GitHub'
+                                alt={t('footer.socials.github')}
                                 width={16}
                                 height={16}
                                 className='invert opacity-80 transition-opacity group-hover:opacity-100'
@@ -99,11 +96,11 @@ export function Footer() {
                         </a>
                         <a
                             href='mailto:yo@guidedao.xyz'
-                            aria-label='Email'
+                            aria-label={t('footer.socials.email')}
                             className='group inline-flex items-center justify-center w-8 h-8 rounded-md hover:bg-foreground/10 transition-colors'>
                             <Image
                                 src='/icons/envelope-fill.svg'
-                                alt='Email'
+                                alt={t('footer.socials.email')}
                                 width={16}
                                 height={16}
                                 className='invert opacity-80 transition-opacity group-hover:opacity-100'
@@ -114,8 +111,8 @@ export function Footer() {
 
                 {/* Bottom: centered logo + copyright */}
                 <div className='mt-4 pt-2 text-center text-xs sm:text-sm text-foreground/60 flex items-center justify-center gap-2'>
-                    <Image src='/images/logo.svg' alt='Guide DAO' width={80} height={18} />
-                    <span>© 2025 GuideDAO. All rights reserved.</span>
+                    <Image src='/images/logo.svg' alt={t('footer.logoAlt')} width={80} height={18} />
+                    <span>{t('footer.copyright', { year: new Date().getFullYear() })}</span>
                 </div>
             </div>
         </footer>

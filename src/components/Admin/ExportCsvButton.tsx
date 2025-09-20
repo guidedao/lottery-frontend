@@ -1,11 +1,11 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { useTranslations } from 'next-globe-gen';
 import type { ParticipantInfoRow } from '@/hooks/useParticipantsMulticall';
 import { showErrorToast, showSuccessToast } from '@/lib/toast-utils';
 
 import { DownloadIcon } from 'lucide-react';
+import { useTranslations } from 'next-globe-gen';
 
 type DecryptMap = Record<string, { value?: string | null; error?: string | null }>;
 

@@ -84,6 +84,20 @@
         "m": "m",
         "s": "s"
     },
+    "widget": {
+        "status": "Lottery Status",
+        "ticketEthPrice": "Ticket ETH Price",
+        "participants": "Participants",
+        "totalTickets": "Total Tickets"
+    },
+    "lotteryStatus": {
+        "closed": "Closed",
+        "open": "Registration Open",
+        "regEnded": "Registration Ended",
+        "waiting": "Waiting for Winner",
+        "invalid": "Invalid",
+        "unknown": "Unknown"
+    },
     "about": {
         "title": "About",
         "intro": "GuideDAO Lottery is a student-built, open-source project to fairly raffle access to the GuideDAO platform via an NFT Pass. The goal is production-grade code with transparent smart contracts and a simple, friendly interface.",

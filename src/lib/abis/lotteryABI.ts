@@ -99,6 +99,7 @@ export default [
     },
     { inputs: [{ internalType: 'address', name: 'receiver', type: 'address' }], name: 'WithdrawFailed', type: 'error' },
     { inputs: [], name: 'ZeroAddress', type: 'error' },
+    { inputs: [], name: 'ZeroLengthContactDetails', type: 'error' },
     { inputs: [], name: 'ZeroNftFallbackRecipientAddress', type: 'error' },
     { inputs: [], name: 'ZeroOrganizerAddress', type: 'error' },
     { inputs: [], name: 'ZeroOrganizerBalance', type: 'error' },
@@ -469,13 +470,6 @@ export default [
         type: 'function'
     },
     {
-        inputs: [],
-        name: 'lastWinner',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function'
-    },
-    {
         inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
         name: 'latestContactDetails',
         outputs: [{ internalType: 'bytes', name: '', type: 'bytes' }],
@@ -486,6 +480,13 @@ export default [
         inputs: [],
         name: 'lotteryNumber',
         outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function'
+    },
+    {
+        inputs: [{ internalType: 'uint256', name: 'lotteryNumber', type: 'uint256' }],
+        name: 'lotteryWinner',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
         stateMutability: 'view',
         type: 'function'
     },

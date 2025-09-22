@@ -33,6 +33,11 @@ export function Footer() {
                             className='inline-flex items-center h-8 rounded-md px-3 text-foreground hover:text-foreground hover:bg-foreground/10 transition-colors'>
                             {t('footer.about')}
                         </Link>
+                        <Link
+                            href='/admin'
+                            className='inline-flex items-center h-8 rounded-md px-3 text-foreground hover:text-foreground hover:bg-foreground/10 transition-colors'>
+                            {t('footer.admin')}
+                        </Link>
                     </nav>
 
                     {/* Below: socials (icons only, including email) */}

@@ -217,9 +217,13 @@ Useful links:
 - Network: Arbitrum Sepolia (testnet)
 
 Key hooks:
-- `useLotteryState` – reads `status`, `lotteryNumber`, `participantsCount`, `ticketPrice`, `registrationEndTime`, `lastWinner`.
-- `useParticipantStatus` – checks if the connected address is a current participant.
-- `useBuyTickets` – calls `enter` or `buyMoreTickets` depending on participant status; invalidates queries after success.
+- `useLotteryState` – fetches overall lottery metrics (`status`, `lotteryNumber`, `participantsCount`, `ticketPrice`, `registrationEndTime`, `maxParticipantsNumber`, `registrationDuration`, `refundWindow`, `totalTicketsCount`).
+- `useParticipantsMulticall` – loads participant rosters (current or historical) via batched on-chain reads.
+- `useParticipantStatus` – checks the connected wallet’s participation flags, ticket count, and refundable amount.
+- `useBuyTickets` – sends `enter` / `buyMoreTickets`, handles transaction toasts, and invalidates state queries.
+- `useReturnTickets` – processes ticket refunds and refreshes state.
+- `useTicketPurchaseMath` – derives totals and win probabilities for ticket purchase UI.
+- `useWinners` – fetches winners for lotteries 1…current via multicall.
 
 ## Terms Signature Flow
 
@@ -233,8 +237,7 @@ The previous custom Wagmi message-signing flow has been replaced with RainbowKit
 - Customization: adjust the SIWE message statement via `getSiweMessageOptions` in `Web3Provider.tsx`.
 
 Server-side session usage:
-- Import `authOptions` from `@/lib/auth` and pass it to `getServerSession(authOptions)`.
-- Example: `src/_app/test-decrypt-temp/page.tsx`.
+- Import `authOptions` from `@/lib/auth` and pass it to `getServerSession(authOptions)` (see `src/_app/admin/page.tsx`).
 
 SIWE domain policy (strict):
 - The server derives the expected SIWE domain strictly from `NEXTAUTH_URL` (host only). No other fallbacks are used.
@@ -270,8 +273,7 @@ This project includes simple x25519 + XChaCha20-Poly1305 helpers to encrypt data
   - POST JSON `{ payloadHex: string }` (hex string, `0x` optional).
   - Requires SIWE-authenticated session and that `token.sub` equals `ADMIN_WALLET`.
   - Returns `{ message }` or an error with proper status codes (401/403/400).
-- Admin-only UI (demo): `src/_app/test-decrypt-temp/page.tsx`
-  - Server-gated page (403 if not admin) that shows a client panel to encrypt and call the decrypt API.
+- Admin-only UI: `src/_app/admin/page.tsx` renders `AdminPanel`, which auto-decrypts participant contacts for authorized admins.
 
 Environment variables (see `example.env.local`):
 - `NEXT_PUBLIC_ADMIN_PUB_HEX` — admin public x25519 key (client-visible, safe).

@@ -3,8 +3,11 @@ import lotteryABI from '@/lib/abis/lotteryABI';
 import { LotteryStatus, TanstackKeys } from '@/types/enums';
 import { useQuery } from '@tanstack/react-query';
 
+import type { Abi } from 'viem';
 import { useConfig } from 'wagmi';
 import { readContracts } from 'wagmi/actions';
+
+const lotteryAbi = lotteryABI as Abi;
 
 interface LotteryState {
     status: LotteryStatus;
@@ -12,7 +15,6 @@ interface LotteryState {
     participantsCount: number;
     ticketPrice: bigint;
     registrationEndTime: bigint;
-    lastWinner: string;
     maxParticipantsNumber: number;
     registrationDuration: bigint;
     refundWindow: bigint;
@@ -25,7 +27,6 @@ const DEFAULT_LOTTERY_STATE: LotteryState = {
     participantsCount: 0,
     ticketPrice: 0n,
     registrationEndTime: 0n,
-    lastWinner: '0x0000000000000000000000000000000000000000',
     maxParticipantsNumber: 0,
     registrationDuration: 0n,
     refundWindow: 0n,
@@ -46,7 +47,6 @@ export default function useLotteryState() {
                 participantsCount,
                 ticketPrice,
                 registrationEndTime,
-                lastWinner,
                 maxParticipantsNumber,
                 registrationDuration,
                 refundWindow,
@@ -54,26 +54,26 @@ export default function useLotteryState() {
             ] = await readContracts(config, {
                 allowFailure: false,
                 contracts: [
-                    { address, abi: lotteryABI, functionName: 'status' },
-                    { address, abi: lotteryABI, functionName: 'lotteryNumber' },
-                    { address, abi: lotteryABI, functionName: 'participantsCount' },
-                    { address, abi: lotteryABI, functionName: 'ticketPrice' },
-                    { address, abi: lotteryABI, functionName: 'registrationEndTime' },
-                    { address, abi: lotteryABI, functionName: 'lastWinner' },
-                    { address, abi: lotteryABI, functionName: 'MAX_PARTICIPANTS_NUMBER' },
-                    { address, abi: lotteryABI, functionName: 'REGISTRATION_DURATION' },
-                    { address, abi: lotteryABI, functionName: 'REFUND_WINDOW' },
-                    { address, abi: lotteryABI, functionName: 'totalTicketsCount' }
+                    { address, abi: lotteryAbi, functionName: 'status' },
+                    { address, abi: lotteryAbi, functionName: 'lotteryNumber' },
+                    { address, abi: lotteryAbi, functionName: 'participantsCount' },
+                    { address, abi: lotteryAbi, functionName: 'ticketPrice' },
+                    { address, abi: lotteryAbi, functionName: 'registrationEndTime' },
+                    { address, abi: lotteryAbi, functionName: 'MAX_PARTICIPANTS_NUMBER' },
+                    { address, abi: lotteryAbi, functionName: 'REGISTRATION_DURATION' },
+                    { address, abi: lotteryAbi, functionName: 'REFUND_WINDOW' },
+                    { address, abi: lotteryAbi, functionName: 'totalTicketsCount' }
                 ]
             });
 
+            const currentLotteryNumber = lotteryNumber as unknown as bigint;
+
             return {
-                status: status as unknown as LotteryStatus,
-                lotteryNumber: Number(lotteryNumber),
+                status: Number(status) as LotteryStatus,
+                lotteryNumber: Number(currentLotteryNumber),
                 participantsCount: Number(participantsCount),
                 ticketPrice: ticketPrice as unknown as bigint,
                 registrationEndTime: registrationEndTime as unknown as bigint,
-                lastWinner: lastWinner as unknown as string,
                 maxParticipantsNumber: Number(maxParticipantsNumber),
                 registrationDuration: registrationDuration as unknown as bigint,
                 refundWindow: refundWindow as unknown as bigint,

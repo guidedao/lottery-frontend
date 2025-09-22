@@ -1,7 +1,8 @@
 export enum TanstackKeys {
     useLotteryState = 'useLotteryState',
     useParticipantStatus = 'useParticipantStatus',
-    useParticipantsMulticall = 'useParticipantsMulticall'
+    useParticipantsMulticall = 'useParticipantsMulticall',
+    useWinners = 'useWinners'
 }
 
 export enum LotteryStatus {

@@ -111,6 +111,14 @@
         "invalid": "Invalid",
         "unknown": "Unknown"
     },
+    "winnersMarquee": {
+        "title": "Lottery Winners",
+        "loading": "Fetching…",
+        "empty": "No lottery results yet.",
+        "item": "Lottery #{n} — {address}",
+        "pendingCurrent": "Lottery #{n} — Winner pending reveal",
+        "notDefinedPast": "Lottery #{n} — Winner was not determined"
+    },
     "about": {
         "title": "About",
         "intro": "GuideDAO Lottery is a student-built, open-source project to fairly raffle access to the GuideDAO platform via an NFT Pass. The goal is production-grade code with transparent smart contracts and a simple, friendly interface.",

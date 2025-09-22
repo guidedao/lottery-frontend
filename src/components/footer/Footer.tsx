@@ -1,9 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 
-import { useTranslations } from 'next-globe-gen';
+import { Link, useTranslations } from 'next-globe-gen';
 
 export function Footer() {
     const t = useTranslations();
@@ -30,7 +29,7 @@ export function Footer() {
                             {t('footer.home')}
                         </Link>
                         <Link
-                            href='/#about'
+                            href={{ pathname: '/', hash: 'about' }}
                             className='inline-flex items-center h-8 rounded-md px-3 text-foreground hover:text-foreground hover:bg-foreground/10 transition-colors'>
                             {t('footer.about')}
                         </Link>

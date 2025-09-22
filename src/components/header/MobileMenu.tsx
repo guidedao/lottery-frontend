@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 
 import { Menu } from 'lucide-react';
-import { useTranslations } from 'next-globe-gen';
+import { Link, useTranslations } from 'next-globe-gen';
 
 export function MobileMenu() {
     const t = useTranslations();
@@ -36,15 +36,18 @@ export function MobileMenu() {
                     className='flex flex-col space-y-6 text-lg font-medium'
                     role='navigation'
                     aria-label={t('header.ariaMainNav')}>
-                    <a href='/' className='hover:text-foreground transition-colors' aria-label={t('header.goHomeAria')}>
+                    <Link
+                        href='/'
+                        className='hover:text-foreground transition-colors'
+                        aria-label={t('header.goHomeAria')}>
                         {t('header.home')}
-                    </a>
-                    <a
-                        href='/#about'
+                    </Link>
+                    <Link
+                        href={{ pathname: '/', hash: 'about' }}
                         className='hover:text-foreground transition-colors'
                         aria-label={t('header.goAboutAria')}>
                         {t('header.about')}
-                    </a>
+                    </Link>
                 </nav>
 
                 {/* Bottom section */}

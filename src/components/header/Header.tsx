@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import Link from 'next/link';
 
 import LanguageSwitcher from '@/components/header/LanguageSwitcher';
 import { WalletConnectButton } from '@/components/header/WalletConnectButton';
 
 import { MobileMenu } from './MobileMenu';
+import { Link } from 'next-globe-gen';
 import { useTranslations } from 'next-globe-gen';
 
 export default function Header() {
@@ -34,7 +34,7 @@ export default function Header() {
                         {t('header.home')}
                     </Link>
                     <Link
-                        href='/#about'
+                        href={{ pathname: '/', hash: 'about' }}
                         className='inline-flex items-center h-8 rounded-md px-3 text-foreground hover:text-foreground hover:bg-foreground/10 transition-colors'>
                         {t('header.about')}
                     </Link>

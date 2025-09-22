@@ -162,6 +162,10 @@ src/
   messages/
     en.json
     ru.json
+    de.json
+    pl.json
+    by.json
+    ua.json
 
   providers/
     Web3Provider.tsx               # Wagmi + RainbowKit + React Query + SIWE

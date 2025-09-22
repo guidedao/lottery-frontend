@@ -19,7 +19,16 @@ export default function LanguageSwitcher() {
     };
 
     const getLanguageDisplay = (locale: string) => {
-        return locale === 'en' ? 'EN' : 'RU';
+        const labels: Record<string, string> = {
+            en: 'EN',
+            ru: 'RU',
+            de: 'DE',
+            pl: 'PL',
+            by: 'BY',
+            ua: 'UA'
+        };
+
+        return labels[locale] ?? locale.toUpperCase();
     };
 
     return (

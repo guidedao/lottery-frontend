@@ -15,17 +15,18 @@ export function generateMetadata(): Metadata {
 }
 
 export default function Home() {
+    const t = getTranslations();
     return (
         <>
             <div id='home' className='relative overflow-x-hidden'>
                 {/* Content */}
-                <div className='container mx-auto relative z-10 flex flex-col px-4 pt-16'>
+                <div className='container mx-auto relative z-10 flex flex-col px-4 pt-8'>
                     <div className='flex flex-col gap-4 items-center'>
                         <h1 className='text-foreground text-[38px] lg:text-6xl font-extrabold text-shadow-lg'>
-                            {'Win a GuideDAO Pass!'}
+                            {t('title')}
                         </h1>
                     </div>
-                    <div className='flex lg:flex-row w-full flex-col lg:mt-20 mt-6 gap-6 items-start lg:items-stretch'>
+                    <div className='flex lg:flex-row w-full flex-col lg:mt-12 mt-6 gap-6 items-start lg:items-stretch'>
                         {/* Left: Timer  & lottery ticket */}
                         <TicketTimer />
                         {/* Right: User widgets or wallet connect prompt */}

@@ -147,6 +147,15 @@
 @layer utilities {
     .surface-glass { @apply bg-input/15 border border-border backdrop-blur-xs; }
     .surface-glass-md { @apply bg-input/40 border border-border backdrop-blur; }
+    @keyframes marquee-scroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+    .marquee-track { animation: marquee-scroll var(--marquee-duration, 24s) linear infinite; }
     /* Custom animations for glass effect on ticket */
     /* Overlay element that inherits border radius and adds subtle glass tint */
     .glass-overlay {

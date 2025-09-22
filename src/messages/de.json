@@ -1,0 +1,200 @@
+{
+    "title": "Gewinne einen GuideDAO Pass!",
+    "description": "Gewinne einen GuideDAO Pass! Nimm an unserer Blockchain-Lotterie mit fairen Chancen, transparentem Smart Contract und der Möglichkeit teil, Teil des erstaunlichen DAO zu werden. Wir sind eine Community aus Krypto-Enthusiasten, Entwicklern, Kryptografen, Ingenieuren, Auditoren und Investoren, die voneinander lernen und Teams bilden. Kaufe Tickets, erhöhe deine Chancen auf den Beitritt und verbessere deine Skills!",
+    "notFound": {
+        "title": "Nicht gefunden (404)",
+        "description": "Diese Seite wurde nicht gefunden!"
+    },
+    "header": {
+        "languageSelector": "Sprache auswählen",
+        "mobileMenuButton": "Mobiles Navigationsmenü öffnen",
+        "mobileMenuTitle": "Mobiles Navigationsmenü",
+        "ariaMainNav": "Hauptnavigation",
+        "home": "Startseite",
+        "about": "Über",
+        "goHomeAria": "Zur Startseite",
+        "goAboutAria": "Zum Über-Bereich",
+        "logoAlt": "GuideDAO",
+        "language": "Sprache"
+    },
+    "wallet": {
+        "connect": "Wallet verbinden",
+        "connecting": "Verbindung wird hergestellt...",
+        "connected": "Verbunden",
+        "wrongNetwork": "Falsches Netzwerk"
+    },
+    "home": {
+        "title": "Lotterie startet bald... 🎁 ",
+        "footer_text": "erstellt von GuideDAO",
+        "join": "Beitreten",
+        "return_tickets": "Tickets zurückgeben",
+        "buy_tickets": "Tickets kaufen",
+        "buy_lottery_tickets": "Lotterietickets kaufen",
+        "buy_more_tickets": "Mehr Tickets kaufen",
+        "buy_more_lottery_tickets": "Mehr Lotterietickets kaufen",
+        "joined_for_now": "bisher beigetreten",
+        "you_already_have": "du hast bereits",
+        "ticket_price": "Ticketpreis",
+        "participants": "Teilnehmer:innen",
+        "winner": "Gewinner",
+        "close": "Schließen",
+        "already_registered_in_this_lottery": "Du bist bereits für diese Lotterie registriert. Du kannst zusätzliche Tickets kaufen.",
+        "your_tickets": "Deine Tickets",
+        "your_refund": "Deine Rückerstattung",
+        "your_win_chance": "Deine Gewinnchance",
+        "number_of_tickets": "Anzahl der Tickets",
+        "contact_details": "Kontaktdaten (bei Versand verschlüsselt)",
+        "Max": "Max",
+        "return_period_has_ended": "Die Rückerstattungsfrist ist abgelaufen.",
+        "Error": "Fehler",
+        "tickets_returned_successfully": "Tickets erfolgreich zurückgegeben!",
+        "returning": "Wird zurückgegeben…",
+        "return_selected": "Ausgewählte zurückgeben",
+        "return_all": "Alle zurückgeben",
+        "contact_info_placeholder": "E-Mail, Telegram oder andere Kontaktdaten",
+        "total_cost": "Gesamtkosten",
+        "Loading": "Laden...",
+        "chance_after_purchase": "Chance nach dem Kauf",
+        "registration_is_currently_closed": "Die Registrierung ist derzeit geschlossen",
+        "failed_to_buy_tickets": "Tickets konnten nicht gekauft werden",
+        "additional_tickets_purchased_successfully": "Zusätzliche Tickets erfolgreich gekauft!",
+        "tickets_purchased_successfully": "Tickets erfolgreich gekauft!",
+        "Processing": "Verarbeitung…",
+        "register_&_buy_tickets": "Registrieren & Tickets kaufen",
+        "tickets": "Ticket(s)",
+        "connect_wallet_prompt": "Verbinde dein Wallet, um an der Lotterie teilzunehmen",
+        "enter_valid_tickets": "Bitte gib eine gültige Ticketanzahl ein",
+        "enter_valid_return": "Bitte gib eine gültige Anzahl an Tickets zur Rückgabe ein",
+        "only_return_up_to": "Du kannst höchstens {n} Tickets zurückgeben",
+        "select_number_of_tickets": "Ticketanzahl auswählen",
+        "decrease_tickets": "Tickets verringern",
+        "increase_tickets": "Tickets erhöhen",
+        "left": "verbleibend",
+        "contact_details_not_provided": "Kontaktdaten wurden nicht angegeben",
+        "encryption_failed_prefix": "Verschlüsselung fehlgeschlagen",
+        "encryption_key_not_configured": "Verschlüsselungsschlüssel nicht konfiguriert (NEXT_PUBLIC_ADMIN_PUB_HEX). Falls du Kontaktdaten angibst, werden sie nicht angehängt.",
+        "disclaimer": "Hinweis",
+        "disclaimer_text_prefix": "Kontaktdaten sind optional, aber nötig, um die Gewinner zu erreichen. Die Daten werden sicher verschlüsselt mit",
+        "disclaimer_text_suffix": "und sind nur für die Administration zugänglich."
+    },
+    "footer": {
+        "ariaNav": "Fußbereich",
+        "home": "Startseite",
+        "about": "Über",
+        "admin": "Admin-Panel",
+        "socials": {
+            "telegram": "Telegram",
+            "x": "X (Twitter)",
+            "discord": "Discord",
+            "github": "GitHub",
+            "email": "E-Mail"
+        },
+        "logoAlt": "GuideDAO",
+        "copyright": "© {year} GuideDAO. Alle Rechte vorbehalten."
+    },
+    "timer": {
+        "d": "T",
+        "h": "Std",
+        "m": "Min",
+        "s": "Sek"
+    },
+    "widget": {
+        "status": "Lotteriestatus",
+        "ticketEthPrice": "Ticketpreis in ETH",
+        "participants": "Teilnehmende",
+        "totalTickets": "Tickets gesamt"
+    },
+    "lotteryStatus": {
+        "closed": "Geschlossen",
+        "open": "Registrierung geöffnet",
+        "regEnded": "Registrierung beendet",
+        "waiting": "Warten auf Gewinner",
+        "invalid": "Ungültig",
+        "unknown": "Unbekannt"
+    },
+    "winnersMarquee": {
+        "title": "Lotteriegewinner",
+        "loading": "Wird geladen…",
+        "empty": "Noch keine Lotterieergebnisse.",
+        "item": "Lotterie #{n} — {address}",
+        "pendingCurrent": "Lotterie #{n} — Gewinner wird ermittelt",
+        "notDefinedPast": "Lotterie #{n} — Gewinner wurde nicht bestimmt"
+    },
+    "about": {
+        "title": "Über",
+        "intro": "Die GuideDAO-Lotterie ist ein von Studierenden entwickeltes Open-Source-Projekt, das den Zugang zur GuideDAO-Plattform über einen NFT Pass fair verlost. Ziel ist produktionsreifer Code mit transparenten Smart Contracts und einer einfachen, freundlichen Oberfläche.",
+        "featuresTitle": "So funktioniert es",
+        "bullet_open": "Open Source und transparent: Die Lotterie läuft auf Ethereum-kompatiblen Netzwerken über Smart Contracts.",
+        "bullet_vrf": "Faires Gewinnerlos: Verwendet verifizierbare Zufälligkeit (VRF), um den Gewinner zu bestimmen.",
+        "bullet_refund": "Flexible Teilnahme: Tickets können vor Ende der Lotterie zurückerstattet werden.",
+        "bullet_nft": "Gewinnerprämie: Der Gewinner erhält einen GuideDAO Pass (NFT) für den Plattformzugang.",
+        "bullet_admin": "Sicherheitshebel: Admins können Fristen verlängern oder bei zu wenig Teilnahme abbrechen und Rückerstattungen auslösen.",
+        "bullet_status": "Live-Updates: Echtzeit-Timer, Status und On-Chain-Ereignisse sind in der App sichtbar.",
+        "linksTitle": "Nützliche Links",
+        "link_guidedao": "GuideDAO-Website",
+        "link_frontend": "Frontend-Repository",
+        "link_backend": "Backend-Repository",
+        "link_wiki": "Projekt-Wiki (Übersicht)",
+        "note": "Dies ist eine Bildungsinitiative von GuideDAO-Studierenden mit dem Anspruch auf produktionsreife Qualität."
+    },
+    "aboutCards": {
+        "open": {
+            "title": "Open Source & Transparent",
+            "desc": "Die Lotterie läuft auf Ethereum-kompatiblen Netzwerken über Smart Contracts."
+        },
+        "vrf": {
+            "title": "Faire Zufälligkeit (VRF)",
+            "desc": "Der Gewinner wird mithilfe verifizierbarer Zufälligkeit bestimmt."
+        },
+        "refund": {
+            "title": "Rückerstattung vor Ende",
+            "desc": "Teilnehmende können Tickets vor Lotterieende zurückgeben."
+        },
+        "nft": {
+            "title": "NFT-Pass als Gewinn",
+            "desc": "Der Gewinner erhält einen GuideDAO Pass (NFT) für den Plattformzugang."
+        },
+        "admin": {
+            "title": "Admin-Schutzmechanismen",
+            "desc": "Admins können Fristen verlängern oder bei geringer Teilnahme abbrechen, inklusive Rückerstattung."
+        },
+        "status": {
+            "title": "Live-Status & Events",
+            "desc": "Timer, Status und On-Chain-Ereignisse werden in Echtzeit angezeigt."
+        }
+    },
+    "admin": {
+        "title": "Admin-Panel",
+        "currentLottery": "Aktuelle Lotterienummer: {n}",
+        "viewLottery": "Lotterie ansehen #",
+        "switchedToLottery": "Zu Lotterie #{n} gewechselt",
+        "prevLotteryAria": "Vorherige Lotterie",
+        "nextLotteryAria": "Nächste Lotterie",
+        "showingParticipants": "Teilnehmende der Lotterie #{n} werden angezeigt. Anzahl: {count}",
+        "participantsLoadErrorToast": "Teilnehmerdaten konnten nicht geladen werden",
+        "participantsLoadErrorInline": "Teilnehmende konnten nicht geladen werden. Prüfe deine Verbindung.",
+        "loading": "Teilnehmende werden geladen…",
+        "noParticipants": "Keine Teilnehmenden.",
+        "table": {
+            "user": "Nutzer #",
+            "tickets": "Tickets",
+            "address": "Wallet-Adresse",
+            "encrypted": "Verschlüsselter Payload",
+            "decrypted": "Entschlüsselter Payload"
+        },
+        "copy": {
+            "addressAria": "Adresse kopieren",
+            "addressIdle": "Adresse kopieren",
+            "payloadAria": "Payload kopieren",
+            "payloadIdle": "Payload kopieren",
+            "copied": "Kopiert!"
+        },
+        "decryptFailed": "Entschlüsselung fehlgeschlagen",
+        "decrypting": "Wird entschlüsselt…",
+        "errorPrefix": "Fehler",
+        "exportCsv": "CSV exportieren",
+        "decryptSuccessToast": "Erfolgreich entschlüsselt: {addr} 🔓",
+        "exportSuccessToast": "Erfolgreich exportiert: {filename}",
+        "exportErrorToast": "Datei konnte nicht exportiert werden"
+    }
+}

@@ -1,5 +1,5 @@
 {
-    "title": "GuideDAO Lottery",
+    "title": "Win a GuideDAO Pass!",
     "description": "Win a GuideDAO Pass! Join our blockchain lottery with fair odds, transparent smart contract, and a chance to become a part of the astonishing DAO. We are a community of crypto enthusiasts, developers, cryptographers, engineers, auditors and investors who learn from each other and build teams. Buy tickets, increase your chances to join and improve your skills!",
     "notFound": {
         "title": "Not found (404)",
@@ -81,6 +81,7 @@
         "ariaNav": "Footer",
         "home": "Home",
         "about": "About",
+        "admin": "Admin panel",
         "socials": {
             "telegram": "Telegram",
             "x": "X (Twitter)",
@@ -110,6 +111,14 @@
         "waiting": "Waiting for Winner",
         "invalid": "Invalid",
         "unknown": "Unknown"
+    },
+    "winnersMarquee": {
+        "title": "Lottery Winners",
+        "loading": "Fetching…",
+        "empty": "No lottery results yet.",
+        "item": "Lottery #{n} — {address}",
+        "pendingCurrent": "Lottery #{n} — Winner pending reveal",
+        "notDefinedPast": "Lottery #{n} — Winner was not determined"
     },
     "about": {
         "title": "About",
@@ -153,8 +162,7 @@
             "title": "Live Status & Events",
             "desc": "Real-time timer, status and on-chain events are shown in the app."
         }
-    }
-    ,
+    },
     "admin": {
         "title": "Admin Panel",
         "currentLottery": "Current lottery number: {n}",

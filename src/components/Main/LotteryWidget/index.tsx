@@ -1,3 +1,4 @@
+import LotteriesWinners from './LotteriesWinners';
 import LotteryStatus from './LotteryStatus';
 import TicketImage from './TicketImage';
 import { Timer } from './Timer';
@@ -8,6 +9,7 @@ const LotteryWidget = () => {
             <TicketImage />
             <Timer />
             <LotteryStatus />
+            <LotteriesWinners />
         </div>
     );
 };

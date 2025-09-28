@@ -34,22 +34,22 @@ export default function About() {
                         <p className='text-lg leading-relaxed text-foreground/90'>{t('about.intro')}</p>
 
                         <div className='flex flex-wrap gap-3'>
-                            <Button asChild variant='outline'>
+                            <Button asChild variant='outline' className='flex-1'>
                                 <a href='https://www.guidedao.xyz' target='_blank' rel='noreferrer'>
                                     <Globe className='size-4 opacity-80' /> {t('about.link_guidedao')}
                                 </a>
                             </Button>
-                            <Button asChild variant='outline'>
+                            <Button asChild variant='outline' className='flex-1'>
                                 <a href='https://github.com/guidedao/lottery-frontend' target='_blank' rel='noreferrer'>
                                     <Github className='size-4 opacity-80' /> {t('about.link_frontend')}
                                 </a>
                             </Button>
-                            <Button asChild variant='outline'>
+                            <Button asChild variant='outline' className='flex-1'>
                                 <a href='https://github.com/guidedao/lottery-backend' target='_blank' rel='noreferrer'>
                                     <Github className='size-4 opacity-80' /> {t('about.link_backend')}
                                 </a>
                             </Button>
-                            <Button asChild variant='outline'>
+                            <Button asChild variant='outline' className='flex-1'>
                                 <a
                                     href='https://github.com/guidedao/lottery-backend/wiki/%D0%9E%D0%B1%D1%89%D0%B0%D1%8F-%D0%98%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8F-%D0%BE-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B5'
                                     target='_blank'
@@ -66,7 +66,7 @@ export default function About() {
                     <div className='lg:col-span-2 grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
                         {features.map(({ icon: Icon, title, desc }) => (
                             <div key={title} className='surface-glass p-4 rounded-lg h-full'>
-                                <div className='flex items-start gap-3'>
+                                <div className='flex items-start gap-3 break-words'>
                                     <div className='rounded-md bg-primary/15 text-primary p-2'>
                                         <Icon className='size-5' />
                                     </div>

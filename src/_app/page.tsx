@@ -22,7 +22,7 @@ export default function Home() {
                 {/* Content */}
                 <div className='container mx-auto relative z-10 flex flex-col px-4 pt-8'>
                     <div className='flex flex-col gap-4 items-center'>
-                        <h1 className='text-foreground text-[38px] lg:text-6xl font-extrabold text-shadow-lg'>
+                        <h1 className='text-foreground text-4xl lg:text-6xl font-extrabold text-shadow-lg text-center'>
                             {t('title')}
                         </h1>
                     </div>
